@@ -4,6 +4,27 @@ import '../form.css';
 export default function Form() {
   const [currentStep, setCurrentStep] = useState(1);
 
+  const [formData, setFormData] = useState({
+    monthlyGrossIncome : '',
+    netIncome: '',
+    housingCost: '',
+    utilities: '',
+    foodAndGroceries: '',
+    transport: '',
+    insurance: '',
+    entertainment: '',
+    healthcare: '',
+    education: '',
+    savings: '',
+    others: '',
+    totalDebt: '',
+    repaymentPlans: '',
+    investment: '',
+    pfFunds: '',
+    property: '',
+    emergencyFunds: ''
+  });
+
   useEffect(() => {
     const step1Link = document.getElementById('step1-link');
     const step2Link = document.getElementById('step2-link');
@@ -56,6 +77,31 @@ export default function Form() {
     }
   }, [currentStep]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const handleNextStepClick = (event) => {
     event.preventDefault();
     if (currentStep < 3) {
@@ -73,7 +119,7 @@ export default function Form() {
   return (
     <div className="formbold-main-wrapper">
       <div className="formbold-form-wrapper">
-        <form action="https://formbold.com/s/FORM_ID" method="POST">
+        <form onSubmit={handleSubmit}>
           <div className="formbold-steps">
             <ul>
               <li className="formbold-step-menu1 active">
@@ -97,35 +143,38 @@ export default function Form() {
             </p>
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="gross-income" className="formbold-form-label"> Monthly Gross Income </label>
+                <label htmlFor="monthlyGrossIncome" className="formbold-form-label"> Monthly Gross Income </label>
                 <input
                   type="text"
-                  name="gross-income"
+                  name="monthlyGrossIncome"
                   placeholder=""
-                  id="gross-income"
+                  id="monthlyGrossIncome"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="net-income" className="formbold-form-label"> Net Income </label>
+                <label htmlFor="netIncome" className="formbold-form-label"> Net Income </label>
                 <input
                   type="text"
-                  name="net-income"
+                  name="netIncome"
                   placeholder=""
-                  id="net-income"
+                  id="netIncome"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="housing-cost" className="formbold-form-label"> Housing Cost </label>
+                <label htmlFor="housingCost" className="formbold-form-label"> Housing Cost </label>
                 <input
                   type="text"
-                  name="housing-cost"
-                  id="housing-cost"
+                  name="housingCost"
+                  id="housingCost"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -136,18 +185,20 @@ export default function Form() {
                   placeholder=""
                   id="utilities"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="food-groceries" className="formbold-form-label"> Food and Groceries </label>
+                <label htmlFor="foodAndGroceries" className="formbold-form-label"> Food and Groceries </label>
                 <input
                   type="text"
-                  name="food-groceries"
-                  id="food-groceries"
+                  name="foodAndGroceries"
+                  id="foodAndGroceries"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -158,6 +209,7 @@ export default function Form() {
                   placeholder=""
                   id="transport"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -170,6 +222,7 @@ export default function Form() {
                 id="insurance"
                 placeholder=""
                 className="formbold-form-input"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -187,6 +240,7 @@ export default function Form() {
                   placeholder=""
                   id="entertainment"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -197,6 +251,7 @@ export default function Form() {
                   placeholder=""
                   id="healthcare"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -210,6 +265,7 @@ export default function Form() {
                   placeholder=""
                   id="education"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
@@ -220,6 +276,7 @@ export default function Form() {
                   placeholder=""
                   id="savings"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -232,6 +289,7 @@ export default function Form() {
                 id="others"
                 placeholder=""
                 className="formbold-form-input"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -242,23 +300,25 @@ export default function Form() {
             </p>
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="total-debt" className="formbold-form-label"> Total Debt </label>
+                <label htmlFor="totalDebt" className="formbold-form-label"> Total Debt </label>
                 <input
                   type="text"
-                  name="total-debt"
+                  name="totalDebt"
                   placeholder=""
-                  id="total-debt"
+                  id="totalDebt"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="repayment-plans" className="formbold-form-label"> Repayment Plans </label>
+                <label htmlFor="repaymentPlans" className="formbold-form-label"> Repayment Plans </label>
                 <input
                   type="text"
-                  name="repayment-plans"
+                  name="repaymentPlans"
                   placeholder=""
-                  id="repayment-plans"
+                  id="repaymentPlans"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -272,16 +332,18 @@ export default function Form() {
                   placeholder=""
                   id="investment"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="pf-funds" className="formbold-form-label"> PF Funds </label>
+                <label htmlFor="pfFunds" className="formbold-form-label"> PF Funds </label>
                 <input
                   type="text"
-                  name="pf-funds"
+                  name="pfFunds"
                   placeholder=""
-                  id="pf-funds"
+                  id="pfFunds"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -295,16 +357,18 @@ export default function Form() {
                   placeholder=""
                   id="property"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="emergency-funds" className="formbold-form-label"> Emergency Funds </label>
+                <label htmlFor="emergencyFunds" className="formbold-form-label"> Emergency Funds </label>
                 <input
                   type="text"
-                  name="emergency-funds"
+                  name="emergencyFunds"
                   placeholder=""
-                  id="emergency-funds"
+                  id="emergencyFunds"
                   className="formbold-form-input"
+                  onChange={handleChange}
                 />
               </div>
             </div>
