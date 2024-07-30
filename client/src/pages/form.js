@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../form.css';
 
 export default function Form() {
   const [currentStep, setCurrentStep] = useState(1);
-
   const [formData, setFormData] = useState({
     monthlyGrossIncome: '',
     netIncome: '',
@@ -29,63 +29,57 @@ export default function Form() {
     email: ''
   });
 
-  useEffect(() => {
-    const step1Link = document.getElementById('step1-link');
-    const step2Link = document.getElementById('step2-link');
-    const step3Link = document.getElementById('step3-link');
-    const step4Link = document.getElementById('step4-link');
-
-    const handleStepClick = (step) => {
-      setCurrentStep(step);
-    };
-
-    step1Link.addEventListener('click', () => handleStepClick(1));
-    step2Link.addEventListener('click', () => handleStepClick(2));
-    step3Link.addEventListener('click', () => handleStepClick(3));
-    step4Link.addEventListener('click', () => handleStepClick(4));
-
-    return () => {
-      step1Link.removeEventListener('click', () => handleStepClick(1));
-      step2Link.removeEventListener('click', () => handleStepClick(2));
-      step3Link.removeEventListener('click', () => handleStepClick(3));
-      step4Link.removeEventListener('click', () => handleStepClick(4));
-    };
-  }, []);
-
-  useEffect(() => {
-    const formStep1 = document.querySelector('.formbold-form-step-1');
-    const formStep2 = document.querySelector('.formbold-form-step-2');
-    const formStep3 = document.querySelector('.formbold-form-step-3');
-    const formStep4 = document.querySelector('.formbold-form-step-4');
-    const step1Menu = document.querySelector('.formbold-step-menu1');
-    const step2Menu = document.querySelector('.formbold-step-menu2');
-    const step3Menu = document.querySelector('.formbold-step-menu3');
-    const step4Menu = document.querySelector('.formbold-step-menu4');
-
-    formStep1.classList.remove('active');
-    formStep2.classList.remove('active');
-    formStep3.classList.remove('active');
-    formStep4.classList.remove('active');
-
-    step1Menu.classList.remove('active');
-    step2Menu.classList.remove('active');
-    step3Menu.classList.remove('active');
-    step4Menu.classList.remove('active');
-
-    if (currentStep === 1) {
-      formStep1.classList.add('active');
-      step1Menu.classList.add('active');
-    } else if (currentStep === 2) {
-      formStep2.classList.add('active');
-      step2Menu.classList.add('active');
-    } else if (currentStep === 3) {
-      formStep3.classList.add('active');
-      step3Menu.classList.add('active');
-    } else if (currentStep === 4) {
-      formStep4.classList.add('active');
-      step4Menu.classList.add('active');
+  const validateEmail = (email) => {
+    const validDomains = ['gmail.com', 'yahoo.co.in', 'outlook.com'];
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      return false;
     }
-  }, [currentStep]);
+    const domain = email.split('@')[1];
+    return validDomains.includes(domain);
+  };
+
+  const validateCurrentStep = () => {
+    if (currentStep === 1) {
+      const { username, firstName, email } = formData;
+      if (!username.trim() || !firstName.trim() || !email.trim()) {
+        alert('Please fill out all compulsory fields marked with *.');
+        return false;
+      }
+      if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+    }
+    if (currentStep === 2) {
+      const { monthlyGrossIncome, netIncome, housingCost, utilities, insurance } = formData;
+      if (!monthlyGrossIncome || !netIncome || !housingCost || !utilities || !insurance) {
+        alert('Please fill out all compulsory fields marked with *');
+        return false;
+      }
+    }
+    if (currentStep === 3) {
+      const { totalDebt, repaymentPlans, investment, pfFunds, property, emergencyFunds } = formData;
+      if (!totalDebt || !repaymentPlans || !investment || !pfFunds || !property || !emergencyFunds) {
+        alert('Please fill out all compulsory fields marked with *');
+        return false;
+      }
+    }
+    if (currentStep === 4) {
+      const { entertainment, healthcare, education, savings } = formData;
+      if (!entertainment || !healthcare || !education || !savings) {
+        alert('Please fill out all compulsory fields marked with *');
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleStepClick = (step) => {
+    if (step < currentStep || validateCurrentStep()) {
+      setCurrentStep(step);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -97,6 +91,9 @@ export default function Form() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateCurrentStep()) {
+      return;
+    }
     try {
       const response = await fetch('http://localhost:12000/api/form', {
         method: 'POST',
@@ -114,7 +111,7 @@ export default function Form() {
 
   const handleNextStepClick = (event) => {
     event.preventDefault();
-    if (currentStep < 4) {
+    if (validateCurrentStep() && currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -132,32 +129,46 @@ export default function Form() {
         <form onSubmit={handleSubmit}>
           <div className="formbold-steps">
             <ul>
-              <li className="formbold-step-menu1 active">
+              <li
+                className={`formbold-step-menu1 ${currentStep === 1 ? 'active' : ''}`}
+                onClick={() => handleStepClick(1)}
+              >
                 <span>1</span>
-                <a href="#" id="step1-link">Step 1</a>
+                <a href="#">Step 1</a>
               </li>
-              <li className="formbold-step-menu2">
+              <li
+                className={`formbold-step-menu2 ${currentStep === 2 ? 'active' : ''}`}
+                onClick={() => handleStepClick(2)}
+              >
                 <span>2</span>
-                <a href="#" id="step2-link">Step 2</a>
+                <a href="#">Step 2</a>
               </li>
-              <li className="formbold-step-menu3">
+              <li
+                className={`formbold-step-menu3 ${currentStep === 3 ? 'active' : ''}`}
+                onClick={() => handleStepClick(3)}
+              >
                 <span>3</span>
-                <a href="#" id="step3-link">Step 3</a>
+                <a href="#">Step 3</a>
               </li>
-              <li className="formbold-step-menu4">
+              <li
+                className={`formbold-step-menu4 ${currentStep === 4 ? 'active' : ''}`}
+                onClick={() => handleStepClick(4)}
+              >
                 <span>4</span>
-                <a href="#" id="step4-link">Step 4</a>
+                <a href="#">Step 4</a>
               </li>
             </ul>
           </div>
 
-          <div className="formbold-form-step-1 active">
+          <div className={`formbold-form-step-1 ${currentStep === 1 ? 'active' : ''}`}>
             <p style={{ paddingBottom: '20px' }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
             </p>
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="username" className="formbold-form-label"> First Name </label>
+                <label htmlFor="username" className="formbold-form-label">
+                  First Name<span className="required">*</span>
+                </label>
                 <input
                   type="text"
                   name="username"
@@ -168,7 +179,9 @@ export default function Form() {
                 />
               </div>
               <div>
-                <label htmlFor="firstName" className="formbold-form-label"> Last Name </label>
+                <label htmlFor="firstName" className="formbold-form-label">
+                  Last Name
+                </label>
                 <input
                   type="text"
                   name="firstName"
@@ -178,11 +191,26 @@ export default function Form() {
                   onChange={handleChange}
                 />
               </div>
-          </div>
+            </div>
 
-          <div className="formbold-input-flex">
+            <div className="formbold-input-flex">
               <div>
-                <label htmlFor="username" className="formbold-form-label"> User Name </label>
+                <label htmlFor="email" className="formbold-form-label">
+                  Email Address<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder=""
+                  id="email"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="username" className="formbold-form-label">
+                  Username<span className="required">*</span>
+                </label>
                 <input
                   type="text"
                   name="username"
@@ -192,171 +220,18 @@ export default function Form() {
                   onChange={handleChange}
                 />
               </div>
-              <div>
-                <label htmlFor="firstName" className="formbold-form-label"> Email Address </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder=""
-                  id="firstName"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-          </div>
+            </div>
           </div>
 
-          <div className="formbold-form-step-2">
+          <div className={`formbold-form-step-2 ${currentStep === 2 ? 'active' : ''}`}>
             <p style={{ paddingBottom: '20px' }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
             </p>
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="entertainment" className="formbold-form-label"> Monthly Gross Income </label>
-                <input
-                  type="text"
-                  name="entertainment"
-                  placeholder=""
-                  id="entertainment"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="healthcare" className="formbold-form-label"> Net Income </label>
-                <input
-                  type="text"
-                  name="healthcare"
-                  placeholder=""
-                  id="healthcare"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="education" className="formbold-form-label"> Housing Cost </label>
-                <input
-                  type="text"
-                  name="education"
-                  id="education"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="savings" className="formbold-form-label"> Utilities </label>
-                <input
-                  type="text"
-                  name="savings"
-                  placeholder=""
-                  id="savings"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="others" className="formbold-form-label"> Insurance </label>
-              <input
-                type="text"
-                name="others"
-                id="others"
-                placeholder=""
-                className="formbold-form-input"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="formbold-form-step-3">
-            <p style={{ paddingBottom: '20px' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-            </p>
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="totalDebt" className="formbold-form-label"> Total Debt </label>
-                <input
-                  type="text"
-                  name="totalDebt"
-                  placeholder=""
-                  id="totalDebt"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="repaymentPlans" className="formbold-form-label"> Repayment Plans </label>
-                <input
-                  type="text"
-                  name="repaymentPlans"
-                  placeholder=""
-                  id="repaymentPlans"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="investment" className="formbold-form-label"> Investment </label>
-                <input
-                  type="text"
-                  name="investment"
-                  id="investment"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="pfFunds" className="formbold-form-label"> PF Funds </label>
-                <input
-                  type="text"
-                  name="pfFunds"
-                  placeholder=""
-                  id="pfFunds"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="investment" className="formbold-form-label"> Property </label>
-                <input
-                  type="text"
-                  name="investment"
-                  id="investment"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="pfFunds" className="formbold-form-label"> Emergency Funds </label>
-                <input
-                  type="text"
-                  name="pfFunds"
-                  placeholder=""
-                  id="pfFunds"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="formbold-form-step-4">
-          <p style={{ paddingBottom: '20px' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-            </p>
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="monthlyGrossIncome" className="formbold-form-label"> Entertainment </label>
+                <label htmlFor="monthlyGrossIncome" className="formbold-form-label">
+                  Monthly Gross Income<span className="required">*</span>
+                </label>
                 <input
                   type="text"
                   name="monthlyGrossIncome"
@@ -367,7 +242,9 @@ export default function Form() {
                 />
               </div>
               <div>
-                <label htmlFor="netIncome" className="formbold-form-label"> Healthcare </label>
+                <label htmlFor="netIncome" className="formbold-form-label">
+                  Net Income<span className="required">*</span>
+                </label>
                 <input
                   type="text"
                   name="netIncome"
@@ -381,17 +258,22 @@ export default function Form() {
 
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="housingCost" className="formbold-form-label"> Education </label>
+                <label htmlFor="housingCost" className="formbold-form-label">
+                  Housing Cost<span className="required">*</span>
+                </label>
                 <input
                   type="text"
                   name="housingCost"
+                  placeholder=""
                   id="housingCost"
                   className="formbold-form-input"
                   onChange={handleChange}
                 />
               </div>
               <div>
-                <label htmlFor="utilities" className="formbold-form-label"> Savings</label>
+                <label htmlFor="utilities" className="formbold-form-label">
+                  Utilities<span className="required">*</span>
+                </label>
                 <input
                   type="text"
                   name="utilities"
@@ -403,33 +285,239 @@ export default function Form() {
               </div>
             </div>
 
-            <div>
-              <label htmlFor="insurance" className="formbold-form-label"> Others </label>
-              <input
-                type="text"
-                name="insurance"
-                id="insurance"
-                placeholder=""
-                className="formbold-form-input"
-                onChange={handleChange}
-              />
-            </div>
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="insurance" className="formbold-form-label">
+                  Insurance<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="insurance"
+                  placeholder=""
+                  id="insurance"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="foodAndGroceries" className="formbold-form-label">
+                  Food and Groceries
+                </label>
+                <input
+                  type="text"
+                  name="foodAndGroceries"
+                  placeholder=""
+                  id="foodAndGroceries"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
             </div>
 
-          <div className="formbold-form-btn-wrapper">
-            {currentStep > 1 && (
-              <button className="formbold-back-btn" onClick={handleBackClick}>
-                Back
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="transport" className="formbold-form-label">
+                  Transport
+                </label>
+                <input
+                  type="text"
+                  name="transport"
+                  placeholder=""
+                  id="transport"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="others" className="formbold-form-label">
+                  Others
+                </label>
+                <input
+                  type="text"
+                  name="others"
+                  placeholder=""
+                  id="others"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={`formbold-form-step-3 ${currentStep === 3 ? 'active' : ''}`}>
+            <p style={{ paddingBottom: '20px' }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+            </p>
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="totalDebt" className="formbold-form-label">
+                  Total Debt<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="totalDebt"
+                  placeholder=""
+                  id="totalDebt"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="repaymentPlans" className="formbold-form-label">
+                  Repayment Plans<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="repaymentPlans"
+                  placeholder=""
+                  id="repaymentPlans"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="investment" className="formbold-form-label">
+                  Investment<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="investment"
+                  placeholder=""
+                  id="investment"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="pfFunds" className="formbold-form-label">
+                  PF Funds<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="pfFunds"
+                  placeholder=""
+                  id="pfFunds"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="property" className="formbold-form-label">
+                  Property<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="property"
+                  placeholder=""
+                  id="property"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="emergencyFunds" className="formbold-form-label">
+                  Emergency Funds<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="emergencyFunds"
+                  placeholder=""
+                  id="emergencyFunds"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={`formbold-form-step-4 ${currentStep === 4 ? 'active' : ''}`}>
+            <p style={{ paddingBottom: '20px' }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+            </p>
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="entertainment" className="formbold-form-label">
+                  Entertainment<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="entertainment"
+                  placeholder=""
+                  id="entertainment"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="healthcare" className="formbold-form-label">
+                  Healthcare<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="healthcare"
+                  placeholder=""
+                  id="healthcare"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="formbold-input-flex">
+              <div>
+                <label htmlFor="education" className="formbold-form-label">
+                  Education<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="education"
+                  placeholder=""
+                  id="education"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="savings" className="formbold-form-label">
+                  Savings<span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="savings"
+                  placeholder=""
+                  id="savings"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="formbold-buttons flex">
+            <button
+              className="formbold-btn"
+              onClick={handleBackClick}
+              disabled={currentStep === 1}
+            >
+              Back
+            </button>
+            {currentStep < 4 && (
+              <button className="formbold-btn" onClick={handleNextStepClick}>
+                Next
               </button>
             )}
-            {currentStep < 4 ? (
-              <button className="formbold-btn" onClick={handleNextStepClick}>
-                Next Step
-              </button>
-            ) : (
-              <button className="formbold-btn" type="submit">
+            {currentStep === 4 && (
+              <Link to='/dashboard'>
+              <button className="formbold-btn" type="submit" >
                 Submit
               </button>
+              </Link>
             )}
           </div>
         </form>
