@@ -97,12 +97,14 @@ body {
 }
 .formbold-form-step-1,
 .formbold-form-step-2,
-.formbold-form-step-3 {
+.formbold-form-step-3,
+.formbold-form-step-4 {
   display: none;
 }
 .formbold-form-step-1.active,
 .formbold-form-step-2.active,
-.formbold-form-step-3.active {
+.formbold-form-step-3.active,
+.formbold-form-step-4.active {
   display: block;
 }
 .formbold-form-btn-wrapper {
