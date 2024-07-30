@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../form.css';
+import axios from 'axios';
+
+const checkDuplicates = async (userName) => {
+  try {
+    const response = await axios.get(`http://localhost:12000/handleDuplicates?username=${userName}`);
+    return response.data.exists;
+  } catch (error) {
+    console.error('Error checking duplicates:', error);
+    return false;
+  }
+};
 
 export default function Form() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    userName: '',
     monthlyGrossIncome: '',
     netIncome: '',
     housingCost: '',
@@ -22,11 +37,7 @@ export default function Form() {
     investment: '',
     pfFunds: '',
     property: '',
-    emergencyFunds: '',
-    username: '',
-    firstName: '',
-    surname: '',
-    email: ''
+    emergencyFunds: ''
   });
 
   const validateEmail = (email) => {
@@ -109,12 +120,26 @@ export default function Form() {
     }
   };
 
-  const handleNextStepClick = (event) => {
-    event.preventDefault();
-    if (validateCurrentStep() && currentStep < 4) {
-      setCurrentStep(currentStep + 1);
+  const handleNextStepClick = async (event) => {
+    const state = {
+      exist:''
     }
-  };
+      event.preventDefault();
+      // const isDuplicate = await checkDuplicates(formData.username);
+      // console.log(isDuplicate.data.exists);
+      // if (isDuplicate.data.exists) {
+      //   alert('Username already exists!');
+      // } else {
+      try {
+        const response = await axios.post('http://localhost:12000/api/form', formData);
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error storing data:', error);
+      }
+      if (currentStep < 4) {
+        setCurrentStep(currentStep + 1);
+      }
+    };  
 
   const handleBackClick = (event) => {
     event.preventDefault();
@@ -166,27 +191,27 @@ export default function Form() {
             </p>
             <div className="formbold-input-flex">
               <div>
-                <label htmlFor="username" className="formbold-form-label">
-                  First Name<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder=""
-                  id="username"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
                 <label htmlFor="firstName" className="formbold-form-label">
-                  Last Name
+                  First Name<span className="required">*</span>
                 </label>
                 <input
                   type="text"
                   name="firstName"
                   placeholder=""
                   id="firstName"
+                  className="formbold-form-input"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="lastName" className="formbold-form-label">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder=""
+                  id="lastName"
                   className="formbold-form-input"
                   onChange={handleChange}
                 />
@@ -208,14 +233,14 @@ export default function Form() {
                 />
               </div>
               <div>
-                <label htmlFor="username" className="formbold-form-label">
+                <label htmlFor="userName" className="formbold-form-label">
                   Username<span className="required">*</span>
                 </label>
                 <input
                   type="text"
-                  name="username"
+                  name="userName"
                   placeholder=""
-                  id="username"
+                  id="userName"
                   className="formbold-form-input"
                   onChange={handleChange}
                 />

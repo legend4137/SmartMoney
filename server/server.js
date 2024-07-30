@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -24,6 +25,8 @@ const gemini = new GoogleGenerativeAI({
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 app.use(express.json());
+
+// Enable CORS
 app.use(cors());
 
 // Define schema and model for wallet
@@ -38,14 +41,22 @@ const Wallet = mongoose.model('Wallet', walletSchema);
 // Route to handle form submission (Firestore)
 app.post('/api/form', async (req, res) => {
   const {
-    monthlyGrossIncome, netIncome, housingCost, utilities, foodAndGroceries, transport, insurance, entertainment,
+    firstName, lastName, email, userName, monthlyGrossIncome, netIncome, housingCost, utilities, foodAndGroceries, transport, insurance, entertainment,
     healthcare, education, savings, others, totalDebt, repaymentPlans, investment, pfFunds, property, emergencyFunds
   } = req.body;
 
-  const docId = Date.now().toString(); // Use timestamp as a simple unique ID
+  const docId = userName; // Use timestamp as a simple unique ID
 
   try {
+
+        if (!docId) {
+            return console.log("error");
+          }
     await db.collection('formSubmissions').doc(docId).set({
+            firstName,
+            lastName,
+            email,
+            userName,
       monthlyGrossIncome,
       netIncome,
       housingCost,
@@ -63,15 +74,37 @@ app.post('/api/form', async (req, res) => {
       investment,
       pfFunds,
       property,
-      emergencyFunds,
+      emergencyFunds
     });
 
     res.json({ success: true, message: 'Form data received and stored successfully', docId });
   } catch (error) {
+        console.log("Error here");
     console.error('Error storing data:', error.message);
     res.status(500).json({ success: false, message: 'Error storing data', error: error.message });
   }
 });
+
+app.get('/handleDuplicates', async (req, res) => {
+    const username = req.query.userName;
+    
+    if (!username) {
+      return res.status(400).json({ success: false, message: 'Username is required' });
+    }
+    
+    try {
+        const userDoc = await db.collection('formSubmissions').doc(username).get();
+        if(userDoc.exists){
+            res.json({exists:false})
+        }
+        else{
+            res.join({exists:true})
+        }
+    } catch (error) {
+      console.error('Error checking duplicates:', error);
+      return res.status(500).json({ success: false, message: 'Error checking duplicates', error: error.message });
+    }
+  });
 
 // Route to get user information by document ID (Firestore)
 app.get('/api/get/user/:docId', async (req, res) => {
@@ -199,5 +232,5 @@ app.get('/wallet/:id', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });
