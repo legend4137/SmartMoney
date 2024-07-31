@@ -2,7 +2,6 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
-import Realm, { ObjectSchema } from "realm";
 const bodyParser = require("body-parser");
 const { db } = require("./firebase"); // Import Firestore instance
 const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
@@ -14,7 +13,6 @@ const port = 12000;
 // MongoDB connection URI
 const uri =
   "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
 // Connect to MongoDB
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -41,6 +39,65 @@ const walletSchema = new mongoose.Schema({
 });
 
 const Wallet = mongoose.model("Wallet", walletSchema);
+
+
+app.post("wallet/create", async (req, res) => {
+  console.log("check!");
+  const wallet = new Wallet();
+  await wallet.save();
+  res.send("created wallet!");
+  res.status(201).json(wallet);
+});
+
+app.get("/test", (req, res) => {
+  res.send("Server is running!");
+});
+
+
+app.post("/wallet/add", async (req, res) => {
+  const { walletId, amount } = req.body;
+  const wallet = await Wallet.findById(walletId);
+
+  if (!wallet) {
+    return res.status(404).json({ msg: "Wallet Not Found!" });
+  }
+
+  wallet.balance += amount;
+  wallet.logs.push(`Added ${amount} to the wallet!`);
+  await wallet.save();
+
+  res.json(wallet);
+});
+
+app.post("/wallet/deduct", async (req, res) => {
+  const { walletId, amount } = req.body;
+  const wallet = await Wallet.findById(walletId);
+
+  if (!wallet) {
+    return res.status(404).json({ msg: "Wallet Not Found!" });
+  }
+
+  if (wallet.balance < amount) {
+    return res.status(400).json({ msg: "Insufficient balance in wallet!" });
+  }
+
+  wallet.balance -= amount;
+  wallet.logs.push(`Deducted ${amount} from the wallet!`);
+  await wallet.save();
+
+  res.json(wallet);
+});
+
+app.get("/wallet/:id", async (req, res) => {
+  const wallet = await Wallet.findById(req.params.id);
+  if (!wallet) {
+    return res.status(404).json({ msg: "Wallet not found" });
+  }
+
+  res.json(wallet);
+});
+
+
 
 // Route to handle form submission (Firestore)
 app.post("/api/form", async (req, res) => {
