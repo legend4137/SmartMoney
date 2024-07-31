@@ -52,8 +52,8 @@ export default function Form() {
 
   const validateCurrentStep = () => {
     if (currentStep === 1) {
-      const { username, firstName, email } = formData;
-      if (!username.trim() || !firstName.trim() || !email.trim()) {
+      const { userName, firstName, email } = formData;
+      if (!userName.trim() || !firstName.trim() || !email.trim()) {
         alert('Please fill out all compulsory fields marked with *.');
         return false;
       }
@@ -121,25 +121,29 @@ export default function Form() {
   };
 
   const handleNextStepClick = async (event) => {
-    const state = {
-      exist:''
+    event.preventDefault();
+  
+    // Check for duplicate username
+    const isDuplicate = await checkDuplicates(formData.userName);
+    if(currentStep==1)
+    {
+      if (isDuplicate) {
+      alert('Username already exists!');
+      return; // Stop execution if duplicate is found
     }
-      event.preventDefault();
-      // const isDuplicate = await checkDuplicates(formData.username);
-      // console.log(isDuplicate.data.exists);
-      // if (isDuplicate.data.exists) {
-      //   alert('Username already exists!');
-      // } else {
-      try {
-        const response = await axios.post('http://localhost:12000/api/form', formData);
-        console.log('Response:', response.data);
-      } catch (error) {
-        console.error('Error storing data:', error);
-      }
-      if (currentStep < 4) {
-        setCurrentStep(currentStep + 1);
-      }
-    };  
+    }
+    
+    try {
+      const response = await axios.post('http://localhost:12000/api/form', formData);
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error storing data:', error);
+    }
+    if (validateCurrentStep() && currentStep < 4) {
+      setCurrentStep(currentStep + 1);
+    }
+  
+  }; 
 
   const handleBackClick = (event) => {
     event.preventDefault();

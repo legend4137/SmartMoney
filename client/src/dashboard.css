@@ -1,0 +1,13 @@
+body, html {
+    margin: 0;
+    height: 100%;
+  }
+  
+  
+
+  .dashboard {
+    min-height: 100vh;
+    background-color: black;
+    color: white; /* Optional: to make the text readable */
+  }
+  

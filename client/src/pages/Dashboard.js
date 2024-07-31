@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
+import '../dashboard.css';
 
 function Dashboard() {
   return (
-    <div className="p-5">
-      <p>This is the DashBoard page</p>
+    <div className='dashboard'>
+      <NavbarDemo />
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
