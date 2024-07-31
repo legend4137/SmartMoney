@@ -9,6 +9,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Googl
 const app = express();
 const port = 12000;
 
+
 // MongoDB connection URI
 const uri =
   "mongodb+srv://b23bb1020:ntrAY6AlkcRSglSg@smartmoney.h8do5k0.mongodb.net/wallet?retryWrites=true&w=majority&appName=SmartMoney";
@@ -66,79 +67,69 @@ app.post("/api/form", async (req, res) => {
     property,
     emergencyFunds,
   } = req.body;
-
-  const docId = userName; // Use timestamp as a simple unique ID
-
-  try {
-    if (!docId) {
-      return console.log("error");
+  
+    const docId = userName; // Use timestamp as a simple unique ID
+  
+    try {
+      // Check if document already exists
+      const userDoc = await db.collection('formSubmissions').doc(docId).get();
+      if (userDoc.exists) {
+        // If the document exists, send an alert message
+        return res.json({ success: false, message: 'An account with this username already exists' });
+      }
+  
+      // Create a new document if it does not exist
+      await db.collection('formSubmissions').doc(docId).set({
+        firstName,
+        lastName,
+        email,
+        userName,
+        monthlyGrossIncome,
+        netIncome,
+        housingCost,
+        utilities,
+        foodAndGroceries,
+        transport,
+        insurance,
+        entertainment,
+        healthcare,
+        education,
+        savings,
+        others,
+        totalDebt,
+        repaymentPlans,
+        investment,
+        pfFunds,
+        property,
+        emergencyFunds,
+      });
+  
+      res.json({ success: true, message: 'Form data received and stored successfully', docId });
+    } catch (error) {
+      console.error('Error storing data:', error.message);
+      res.status(500).json({ success: false, message: 'Error storing data', error: error.message });
     }
-    await db.collection("formSubmissions").doc(docId).set({
-      firstName,
-      lastName,
-      email,
-      userName,
-      monthlyGrossIncome,
-      netIncome,
-      housingCost,
-      utilities,
-      foodAndGroceries,
-      transport,
-      insurance,
-      entertainment,
-      healthcare,
-      education,
-      savings,
-      others,
-      totalDebt,
-      repaymentPlans,
-      investment,
-      pfFunds,
-      property,
-      emergencyFunds,
-    });
-
-    res.json({
-      success: true,
-      message: "Form data received and stored successfully",
-      docId,
-    });
-  } catch (error) {
-    console.log("Error here");
-    console.error("Error storing data:", error.message);
-    res.status(500).json({
-      success: false,
-      message: "Error storing data",
-      error: error.message,
-    });
-  }
-});
-
-app.get("/handleDuplicates", async (req, res) => {
-  const username = req.query.userName;
-
-  if (!username) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Username is required" });
-  }
-
-  try {
-    const userDoc = await db.collection("formSubmissions").doc(username).get();
-    if (userDoc.exists) {
-      res.json({ exists: false });
-    } else {
-      res.join({ exists: true });
+  });
+  
+  
+  app.get('/handleDuplicates', async (req, res) => {
+    const username = req.query.userName;
+  
+    if (!username) {
+      return res.status(400).json({ success: false, message: 'Username is required' });
     }
-  } catch (error) {
-    console.error("Error checking duplicates:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Error checking duplicates",
-      error: error.message,
-    });
-  }
-});
+  
+    try {
+      const snapshots = await db.collection('formSubmissions').get();
+      const existingUsernames = snapshots.docs.map(doc => doc.id);
+      const exists = existingUsernames.includes(username);
+      res.json({ exists });
+    } catch (error) {
+      console.error('Error checking duplicates:', error);
+      return res.status(500).json({ success: false, message: 'Error checking duplicates', error: error.message });
+    }
+  });
+  
 
 // Route to get user information by document ID (Firestore)
 app.get("/api/get/user/:docId", async (req, res) => {
