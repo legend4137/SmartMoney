@@ -83,7 +83,7 @@ function ProfileImage() {
   return (
     <div className="flex justify-center">
       <img
-      src="https://via.placeholder.com/40"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAd5avdba8EiOZH8lmV3XshrXx7dKRZvhx-A&s"
       alt="Profile"
       className="w-10 h-10 rounded-full border-none border-white shadow-lg"
     />
