@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
+import Realm, { ObjectSchema } from "realm";
 const bodyParser = require("body-parser");
 const { db } = require("./firebase"); // Import Firestore instance
 const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
@@ -12,7 +13,7 @@ const port = 12000;
 
 // MongoDB connection URI
 const uri =
-  "mongodb+srv://b23bb1020:ntrAY6AlkcRSglSg@smartmoney.h8do5k0.mongodb.net/wallet?retryWrites=true&w=majority&appName=SmartMoney";
+  "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Connect to MongoDB
 mongoose
@@ -67,69 +68,241 @@ app.post("/api/form", async (req, res) => {
     property,
     emergencyFunds,
   } = req.body;
-  
-    const docId = userName; // Use timestamp as a simple unique ID
-  
-    try {
-      // Check if document already exists
-      const userDoc = await db.collection('formSubmissions').doc(docId).get();
-      if (userDoc.exists) {
-        // If the document exists, send an alert message
-        return res.json({ success: false, message: 'An account with this username already exists' });
-      }
-  
-      // Create a new document if it does not exist
-      await db.collection('formSubmissions').doc(docId).set({
-        firstName,
-        lastName,
-        email,
-        userName,
-        monthlyGrossIncome,
-        netIncome,
-        housingCost,
-        utilities,
-        foodAndGroceries,
-        transport,
-        insurance,
-        entertainment,
-        healthcare,
-        education,
-        savings,
-        others,
-        totalDebt,
-        repaymentPlans,
-        investment,
-        pfFunds,
-        property,
-        emergencyFunds,
-      });
-  
-      res.json({ success: true, message: 'Form data received and stored successfully', docId });
-    } catch (error) {
-      console.error('Error storing data:', error.message);
-      res.status(500).json({ success: false, message: 'Error storing data', error: error.message });
+
+  const docId = userName; // Use timestamp as a simple unique ID
+
+  class Task extends Realm.Object {
+    static schema = {
+      name: "Task",
+      properties: {
+        _id: "int",
+        name: "string",
+        status: "string?",
+        owner_id: "string?",
+      },
+      primaryKey: "_id",
+    };
+  }
+
+  const realm = await Realm.open({
+    schema: [Task],
+  });
+
+  const allTasks = realm.objects(Task);
+
+// Add a couple of Tasks in a single, atomic transaction.
+realm.write(() => {
+  realm.create(Task, {
+    _id: 1,
+    name: "go grocery shopping",
+    status: "Open",
+  });
+
+  realm.create(Task, {
+    _id: 2,
+    name: "go exercise",
+    status: "Open",
+  });
+});
+
+const task1 = allTasks.find((task) => task._id == 1);
+const task2 = allTasks.find((task) => task._id == 2);
+
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
+const mongoose = require("mongoose");
+const Realm = require("realm"); // Corrected import for Realm in JavaScript
+const bodyParser = require("body-parser");
+const { db } = require("./firebase"); // Import Firestore instance
+const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
+
+const app = express();
+const port = 12000;
+
+// MongoDB connection URI
+const uri =
+  "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+// Connect to MongoDB
+mongoose
+  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch((err) => console.error("Failed to connect to MongoDB Atlas:", err));
+
+// Initialize Google Generative AI client
+const gemini = new GoogleGenerativeAI({
+  apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", // Your actual Gemini API key
+});
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+app.use(express.json());
+
+// Enable CORS
+app.use(cors());
+
+// Define schema and model for wallet
+const walletSchema = new mongoose.Schema({
+  balance: { type: Number, required: true, default: 0 },
+  logs: [{ type: String, required: true }],
+  createdAt: { type: Date, default: Date.now },
+});
+
+const Wallet = mongoose.model("Wallet", walletSchema);
+
+// Route to handle form submission (Firestore)
+app.post("/api/form", async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    userName,
+    monthlyGrossIncome,
+    netIncome,
+    housingCost,
+    utilities,
+    foodAndGroceries,
+    transport,
+    insurance,
+    entertainment,
+    healthcare,
+    education,
+    savings,
+    others,
+    totalDebt,
+    repaymentPlans,
+    investment,
+    pfFunds,
+    property,
+    emergencyFunds,
+  } = req.body;
+
+  const docId = userName; // Use username as a simple unique ID
+
+  class Task extends Realm.Object {
+    static schema = {
+      name: "Task",
+      properties: {
+        _id: "int",
+        name: "string",
+        status: "string?",
+        owner_id: "string?",
+      },
+      primaryKey: "_id",
+    };
+  }
+
+  const realm = await Realm.open({
+    schema: [Task],
+  });
+
+  const allTasks = realm.objects(Task);
+
+  // Add a couple of Tasks in a single, atomic transaction.
+  realm.write(() => {
+    realm.create(Task, {
+      _id: 1,
+      name: "go grocery shopping",
+      status: "Open",
+    });
+
+    realm.create(Task, {
+      _id: 2,
+      name: "go exercise",
+      status: "Open",
+    });
+  });
+
+  const task1 = allTasks.find((task) => task._id == 1);
+  const task2 = allTasks.find((task) => task._id == 2);
+
+  realm.write(() => {
+    // Check if task1 is defined before modifying it
+    if (task1) {
+      task1.status = "InProgress";
+    }
+
+    // Check if task2 is defined before deleting it
+    if (task2) {
+      realm.delete(task2);
     }
   });
-  
-  
-  app.get('/handleDuplicates', async (req, res) => {
-    const username = req.query.userName;
-  
-    if (!username) {
-      return res.status(400).json({ success: false, message: 'Username is required' });
+
+  res.send("Tasks processed successfully");
+});
+
+
+  try {
+    if (!docId) {
+      return console.log("error");
     }
-  
-    try {
-      const snapshots = await db.collection('formSubmissions').get();
-      const existingUsernames = snapshots.docs.map(doc => doc.id);
-      const exists = existingUsernames.includes(username);
-      res.json({ exists });
-    } catch (error) {
-      console.error('Error checking duplicates:', error);
-      return res.status(500).json({ success: false, message: 'Error checking duplicates', error: error.message });
+    await db.collection("formSubmissions").doc(docId).set({
+      firstName,
+      lastName,
+      email,
+      userName,
+      monthlyGrossIncome,
+      netIncome,
+      housingCost,
+      utilities,
+      foodAndGroceries,
+      transport,
+      insurance,
+      entertainment,
+      healthcare,
+      education,
+      savings,
+      others,
+      totalDebt,
+      repaymentPlans,
+      investment,
+      pfFunds,
+      property,
+      emergencyFunds,
+    });
+
+    res.json({
+      success: true,
+      message: "Form data received and stored successfully",
+      docId,
+    });
+  } catch (error) {
+    console.log("Error here");
+    console.error("Error storing data:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error storing data",
+      error: error.message,
+    });
+  }
+});
+
+app.get("/handleDuplicates", async (req, res) => {
+  const username = req.query.userName;
+
+  if (!username) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Username is required" });
+  }
+
+  try {
+    const userDoc = await db.collection("formSubmissions").doc(username).get();
+    if (userDoc.exists) {
+      res.json({ exists: false });
+    } else {
+      res.join({ exists: true });
     }
-  });
-  
+  } catch (error) {
+    console.error("Error checking duplicates:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error checking duplicates",
+      error: error.message,
+    });
+  }
+});
 
 // Route to get user information by document ID (Firestore)
 app.get("/api/get/user/:docId", async (req, res) => {
@@ -369,4 +542,10 @@ consider all the amounts in indian ruppees
   
   
 });
-mongoose.trusted
+app.get("/wallet" , async (req , res) =>{
+  const name = req.query.name;
+  const userdoc = await db.collection('formsubmissions').doc(name).get();
+  const assest = userdoc._fieldsProto.assest.stringValue;
+  
+
+})
