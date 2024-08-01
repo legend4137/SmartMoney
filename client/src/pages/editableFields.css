@@ -45,22 +45,4 @@ html, body {
     border-radius: 5px;
   }
   
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #0056b3;
-  }
   

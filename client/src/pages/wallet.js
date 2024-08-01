@@ -11,7 +11,7 @@ const Wallet = () => {
       <div>
         <EditableFields />
       </div>
-      <div className="scroll-box-container class">
+      <div className="scroll-box-container">
         <NavbarDemo />
         <ScrollBox />
         <BottomNavbar /> {/* Add the BottomNavbar component */}

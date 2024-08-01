@@ -16,10 +16,7 @@
     padding: 20px;
     box-sizing: border-box; 
     overflow: hidden; 
-}
-
-.class{
-    align-items: center;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
