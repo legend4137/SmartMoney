@@ -9,7 +9,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Googl
 
 const app = express();
 const port = 12000;
-x=0
+x = 0;
 
 // MongoDB connection URI
 const uri =
@@ -49,8 +49,8 @@ const walletSchema = new mongoose.Schema({
       amount: { type: Number, required: true },
       reason: { type: String, required: true },
       tag: { type: String, required: true },
-      logDate: { type: Date, default: Date.now } // Changed from String to Date for better date handling
-    }
+      logDate: { type: Date, default: Date.now }, // Changed from String to Date for better date handling
+    },
   ],
   createdAt: { type: Date, default: Date.now },
 });
@@ -68,7 +68,9 @@ app.post("/wallet/create", async (req, res) => {
   try {
     const existingWallet = await Wallet.findOne({ userName });
     if (existingWallet) {
-      return res.status(400).json({ msg: "Wallet already exists for this user!" });
+      return res
+        .status(400)
+        .json({ msg: "Wallet already exists for this user!" });
     }
 
     const wallet = new Wallet({ userName });
@@ -101,7 +103,12 @@ app.post("/wallet/add", async (req, res) => {
     }
 
     wallet.balance += amount;
-    wallet.logs.push({ amount, reason: `Added ${amount} to the wallet!`, tag: "deposit", logDate: new Date() });
+    wallet.logs.push({
+      amount,
+      reason: `Added ${amount} to the wallet!`,
+      tag: "deposit",
+      logDate: new Date(),
+    });
 
     await wallet.save();
 
@@ -195,70 +202,89 @@ app.post("/api/form", async (req, res) => {
     property,
     emergencyFunds,
   } = req.body;
-  
-    const docId = userName; // Use timestamp as a simple unique ID
-  
-    try {
-      // Check if document already exists
-      const userDoc = await db.collection('formSubmissions').doc(docId).get();
-      if (userDoc.exists && x==0) {
-        // If the document exists, send an alert message
-        return res.json({ success: false, message: 'An account with this username already exists' });
-      }
-      x=x+1
-  
-      // Create a new document if it does not exist
-      await db.collection('formSubmissions').doc(docId).set({
-        firstName,
-        lastName,
-        email,
-        userName,
-        monthlyGrossIncome,
-        netIncome,
-        housingCost,
-        utilities,
-        foodAndGroceries,
-        transport,
-        insurance,
-        entertainment,
-        healthcare,
-        education,
-        savings,
-        others,
-        totalDebt,
-        repaymentPlans,
-        investment,
-        pfFunds,
-        property,
-        emergencyFunds,
+
+  const docId = userName; // Use timestamp as a simple unique ID
+
+  try {
+    // Check if document already exists
+    const userDoc = await db.collection("formSubmissions").doc(docId).get();
+    if (userDoc.exists && x == 0) {
+      // If the document exists, send an alert message
+      return res.json({
+        success: false,
+        message: "An account with this username already exists",
       });
-  
-      res.json({ success: true, message: 'Form data received and stored successfully', docId });
-    } catch (error) {
-      console.error('Error storing data:', error.message);
-      res.status(500).json({ success: false, message: 'Error storing data', error: error.message });
     }
-  });
-  
-  
-  app.get('/handleDuplicates', async (req, res) => {
-    const username = req.query.userName;
-  
-    if (!username) {
-      return res.status(400).json({ success: false, message: 'Username is required' });
-    }
-  
-    try {
-      const snapshots = await db.collection('formSubmissions').get();
-      const existingUsernames = snapshots.docs.map(doc => doc.id);
-      const exists = existingUsernames.includes(username);
-      res.json({ exists });
-    } catch (error) {
-      console.error('Error checking duplicates:', error);
-      return res.status(500).json({ success: false, message: 'Error checking duplicates', error: error.message });
-    }
-  });
-  
+    x = x + 1;
+
+    // Create a new document if it does not exist
+    await db.collection("formSubmissions").doc(docId).set({
+      firstName,
+      lastName,
+      email,
+      userName,
+      monthlyGrossIncome,
+      netIncome,
+      housingCost,
+      utilities,
+      foodAndGroceries,
+      transport,
+      insurance,
+      entertainment,
+      healthcare,
+      education,
+      savings,
+      others,
+      totalDebt,
+      repaymentPlans,
+      investment,
+      pfFunds,
+      property,
+      emergencyFunds,
+    });
+
+    res.json({
+      success: true,
+      message: "Form data received and stored successfully",
+      docId,
+    });
+  } catch (error) {
+    console.error("Error storing data:", error.message);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error storing data",
+        error: error.message,
+      });
+  }
+});
+
+app.get("/handleDuplicates", async (req, res) => {
+  const username = req.query.userName;
+
+  if (!username) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Username is required" });
+  }
+
+  try {
+    const snapshots = await db.collection("formSubmissions").get();
+    const existingUsernames = snapshots.docs.map((doc) => doc.id);
+    const exists = existingUsernames.includes(username);
+    res.json({ exists });
+  } catch (error) {
+    console.error("Error checking duplicates:", error);
+    return res
+      .status(500)
+      .json({
+        success: false,
+        message: "Error checking duplicates",
+        error: error.message,
+      });
+  }
+});
 
 // Route to get user information by document ID (Firestore)
 app.get("/api/get/user/:docId", async (req, res) => {
@@ -744,5 +770,78 @@ some of the values might be null just omit them and try to calculate the score o
   } catch (error) {
     console.log("Error getting the document", error);
   }
-  ``;
+});
+
+app.get("/daily-rec", async (req, res) => {
+  const userName = req.body;
+
+  try {
+    const wallet = await Wallet.findOne( userName );
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Wallet not found" });
+    }
+    // console.log(wallet);
+    const log = wallet.logs;
+    // console.log(log);
+    
+    const type =  {
+      Entertainment :  0,
+      Food_n_Drink : 0,     
+      Utils : 0,
+      Home : 0,
+      Uncategorized : 0,    
+      Transportation : 0
+     }
+    //  console.log(type);
+    for ( let i = 0 ; i < log.length  && i < 100 ; i++)
+    {
+      if (log[i].tag == "withdraw")
+      {
+        const event = log[i].reason;
+        type[event] += log[i].amount;
+      }
+    }
+    const genAI = new GoogleGenerativeAI(
+      "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+    );
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const chat = model.startChat({
+      history: [
+        {
+          role: "user",
+          parts: [{ text: "Hello, I have 2 dogs in my house." }],
+        },
+        {
+          role: "model",
+          parts: [
+            { text: "Great to meet you. What would you like to know?" },
+          ],
+        },
+      ],
+      generationConfig: {
+        maxOutputTokens: 100,
+      },
+      
+    });
+
+    prompt = `I am building a finance advisor website. one of its feature is of advices. the user data is given to me. i want to give him some suggestions that will be based on the analysis of his expendeture. I will give you his daily expenses. On the basis of them give me 3 advices. The advices should be crisp and give them in bullet point, I just want the advices and no additional text
+       Entertainment :  ${type.Entertainment},
+      Food_n_Drink : ${type.Food_n_Drink},     
+      Utils : ${type.Utils},
+      Home : ${type.Home},
+      Uncategorized : ${type.Uncategorized},    
+      Transportation : ${type.Transportation}`;
+      const result = await chat.sendMessage(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+      const pass = {
+        advice : text
+      };
+      res.json(pass);
+  } catch (error) {
+    console.error("Error fetching wallet:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
