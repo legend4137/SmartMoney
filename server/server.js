@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
+// import Realm, { ObjectSchema } from "realm";
 const bodyParser = require("body-parser");
 const { db } = require("./firebase"); // Import Firestore instance
 const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
@@ -275,12 +276,12 @@ app.post("/api/form", async (req, res) => {
   const task2 = allTasks.find((task) => task._id == 2);
 
   realm.write(() => {
-    // Check if task1 is defined before modifying it
+    // Check if task1  defined before modifying it
     if (task1) {
       task1.status = "InProgress";
     }
 
-    // Check if task2 is defined before deleting it
+    // Check if task2  defined before deleting it
     if (task2) {
       realm.delete(task2);
     }
@@ -528,7 +529,7 @@ app.get("/dashboard", async (req, res) => {
   try {
     if (userdoc.exists) {
       console.log("exists");
-      const prompt = `I am making a website. there is a component of financial socre. I want to calculate a hypothetical financial score where 0 means the worst and 100 means best. consider any metics as you want for determining it. I will provide you with some of the data.. Do any criteria you want to consider just provide me with a fixed number.Don't chnage the number for same response. I dont want any text as a output just give me a number
+      const prompt = `I am making a website. there  a component of financial socre. I want to calculate a hypothetical financial score where 0 means the worst and 100 means best. consider any metics as you want for determining it. I will provide you with some of the data.. Do any criteria you want to consider just provide me with a fixed number.Don't chnage the number for same response. I dont want any text as a output just give me a number
       I will give you  the criteria from which you can decide how to judge the number.
       these are the citeria under which you can judge the number
       Income and Expenses (50 points)
@@ -599,6 +600,75 @@ consider all the amounts in indian ruppees
   
   
 });
+
+app.get('/get_account', async (req, res) => {
+  try {
+    const accountId = req.query.userName;
+
+    if (!accountId) {
+      return res.status(400).json({ error: 'Account ID is required' });
+    }
+
+    const accountDoc = await db.collection("formSubmissions").doc(accountId).get();
+
+    if (!accountDoc.exists) {
+      return res.status(404).json({ error: 'Account not found' });
+    }
+
+    const accountData = accountDoc.data();
+    res.json({ success: true, data: accountData });
+  } catch (error) {
+    console.error('Error getting account', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/update_account', async (req, res) => {
+  const { accountId, updatedData } = req.body;
+
+  if (!accountId) {
+    return res.status(400).json({ error: 'Account ID is required' });
+  }
+
+  if (!updatedData || typeof updatedData !== 'object') {
+    return res.status(400).json({ error: 'Valid updatedData is required' });
+  }
+
+  try {
+    const allowedFields = [
+      'monthlyGrossIncome', 'netIncome',
+      'housingCost', 'utilities', 'foodAndGroceries', 'transport', 'insurance',
+      'entertainment', 'healthcare', 'education', 'savings', 'others', 'totalDebt',
+      'repaymentPlans', 'investment', 'pfFunds', 'property', 'emergencyFunds'
+    ];
+
+    const updateFields = {};
+
+    for (const field of allowedFields) {
+      if (field in updatedData) {
+        updateFields[field] = updatedData[field];
+      }
+    }
+
+    if (Object.keys(updateFields).length === 0) {
+      return res.status(400).json({ error: 'No valid fields to update' });
+    }
+
+    // Use .set with merge option to update the document without overwriting it completely
+    await db.collection("accounts").doc(accountId).set(updateFields, { merge: true });
+
+    // Fetch the updated document to return
+    const updatedAccountDoc = await db.collection("accounts").doc(accountId).get();
+    const updatedAccountData = updatedAccountDoc.data();
+
+    res.json({ success: true, message: 'Account updated successfully', data: updatedAccountData });
+  } catch (error) {
+    console.error('Error updating account', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.get("/wallet" , async (req , res) =>{
   const name = req.query.name;
   const userdoc = await db.collection('formsubmissions').doc(name).get();
