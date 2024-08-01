@@ -10,7 +10,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Googl
 const app = express();
 const port = 12000;
 
-
 // MongoDB connection URI
 const uri =
   "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -43,7 +42,6 @@ const walletSchema = new mongoose.Schema({
 
 const Wallet = mongoose.model("Wallet", walletSchema);
 
-
 app.post("/wallet/create", async (req, res) => {
   const { userName } = req.body;
 
@@ -73,7 +71,6 @@ app.post("/wallet/create", async (req, res) => {
 app.get("/test", (req, res) => {
   res.send("Server is running!");
 });
-
 
 app.post("/wallet/add", async (req, res) => {
   const { userName, amount } = req.body;
@@ -199,115 +196,6 @@ app.post("/api/form", async (req, res) => {
 
   const allTasks = realm.objects(Task);
 
-// Add a couple of Tasks in a single, atomic transaction.
-realm.write(() => {
-  realm.create(Task, {
-    _id: 1,
-    name: "go grocery shopping",
-    status: "Open",
-  });
-
-  realm.create(Task, {
-    _id: 2,
-    name: "go exercise",
-    status: "Open",
-  });
-});
-
-const task1 = allTasks.find((task) => task._id == 1);
-const task2 = allTasks.find((task) => task._id == 2);
-
-const express = require("express");
-require("dotenv").config();
-const cors = require("cors");
-const mongoose = require("mongoose");
-const Realm = require("realm"); // Corrected import for Realm in JavaScript
-const bodyParser = require("body-parser");
-const { db } = require("./firebase"); // Import Firestore instance
-const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
-
-const app = express();
-const port = 12000;
-
-// MongoDB connection URI
-const uri =
-  "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
-// Connect to MongoDB
-mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("Connected to MongoDB Atlas"))
-  .catch((err) => console.error("Failed to connect to MongoDB Atlas:", err));
-
-// Initialize Google Generative AI client
-const gemini = new GoogleGenerativeAI({
-  apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", // Your actual Gemini API key
-});
-
-// Middleware to parse JSON bodies
-app.use(bodyParser.json());
-app.use(express.json());
-
-// Enable CORS
-app.use(cors());
-
-// Define schema and model for wallet
-const walletSchema = new mongoose.Schema({
-  balance: { type: Number, required: true, default: 0 },
-  logs: [{ type: String, required: true }],
-  createdAt: { type: Date, default: Date.now },
-});
-
-const Wallet = mongoose.model("Wallet", walletSchema);
-
-// Route to handle form submission (Firestore)
-app.post("/api/form", async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    userName,
-    monthlyGrossIncome,
-    netIncome,
-    housingCost,
-    utilities,
-    foodAndGroceries,
-    transport,
-    insurance,
-    entertainment,
-    healthcare,
-    education,
-    savings,
-    others,
-    totalDebt,
-    repaymentPlans,
-    investment,
-    pfFunds,
-    property,
-    emergencyFunds,
-  } = req.body;
-
-  const docId = userName; // Use username as a simple unique ID
-
-  class Task extends Realm.Object {
-    static schema = {
-      name: "Task",
-      properties: {
-        _id: "int",
-        name: "string",
-        status: "string?",
-        owner_id: "string?",
-      },
-      primaryKey: "_id",
-    };
-  }
-
-  const realm = await Realm.open({
-    schema: [Task],
-  });
-
-  const allTasks = realm.objects(Task);
-
   // Add a couple of Tasks in a single, atomic transaction.
   realm.write(() => {
     realm.create(Task, {
@@ -326,21 +214,139 @@ app.post("/api/form", async (req, res) => {
   const task1 = allTasks.find((task) => task._id == 1);
   const task2 = allTasks.find((task) => task._id == 2);
 
+  const express = require("express");
+  require("dotenv").config();
+  const cors = require("cors");
+  const mongoose = require("mongoose");
+  const Realm = require("realm"); // Corrected import for Realm in JavaScript
+  const bodyParser = require("body-parser");
+  const { db } = require("./firebase"); // Import Firestore instance
+  const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
+
+  const app = express();
+  const port = 12000;
+
+  // MongoDB connection URI
+  const uri =
+    "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+  // Connect to MongoDB
+  mongoose
+    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Connected to MongoDB Atlas"))
+    .catch((err) => console.error("Failed to connect to MongoDB Atlas:", err));
+
+  // Initialize Google Generative AI client
+  const gemini = new GoogleGenerativeAI({
+    apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", // Your actual Gemini API key
+  });
+
+  // Middleware to parse JSON bodies
+  app.use(bodyParser.json());
+  app.use(express.json());
+
+  // Enable CORS
+  app.use(cors());
+
+  // Define schema and model for wallet
+  const walletSchema = new mongoose.Schema({
+    balance: { type: Number, required: true, default: 0 },
+    logs: [{ type: String, required: true }],
+    createdAt: { type: Date, default: Date.now },
+  });
+
+  const Wallet = mongoose.model("Wallet", walletSchema);
+
+  // Route to handle form submission (Firestore)
+  app.post("/api/form", async (req, res) => {
+    const {
+      firstName,
+      lastName,
+      email,
+      userName,
+      monthlyGrossIncome,
+      netIncome,
+      housingCost,
+      utilities,
+      foodAndGroceries,
+      transport,
+      insurance,
+      entertainment,
+      healthcare,
+      education,
+      savings,
+      others,
+      totalDebt,
+      repaymentPlans,
+      investment,
+      pfFunds,
+      property,
+      emergencyFunds,
+    } = req.body;
+
+    const docId = userName; // Use username as a simple unique ID
+
+    class Task extends Realm.Object {
+      static schema = {
+        name: "Task",
+        properties: {
+          _id: "int",
+          name: "string",
+          status: "string?",
+          owner_id: "string?",
+        },
+        primaryKey: "_id",
+      };
+    }
+
+    const realm = await Realm.open({
+      schema: [Task],
+    });
+
+    const allTasks = realm.objects(Task);
+
+    // Add a couple of Tasks in a single, atomic transaction.
+    realm.write(() => {
+      realm.create(Task, {
+        _id: 1,
+        name: "go grocery shopping",
+        status: "Open",
+      });
+
+      realm.create(Task, {
+        _id: 2,
+        name: "go exercise",
+        status: "Open",
+      });
+    });
+
+    const task1 = allTasks.find((task) => task._id == 1);
+    const task2 = allTasks.find((task) => task._id == 2);
+
   realm.write(() => {
     // Check if task1  defined before modifying it
     if (task1) {
       task1.status = "InProgress";
     }
+    realm.write(() => {
+      // Check if task1 is defined before modifying it
+      if (task1) {
+        task1.status = "InProgress";
+      }
 
     // Check if task2  defined before deleting it
     if (task2) {
       realm.delete(task2);
     }
   });
+      // Check if task2 is defined before deleting it
+      if (task2) {
+        realm.delete(task2);
+      }
+    });
 
-  res.send("Tasks processed successfully");
-});
-
+    res.send("Tasks processed successfully");
+  });
 
   try {
     if (!docId) {
@@ -550,11 +556,11 @@ app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-app.get("/dashboard", async (req, res) => {
-  console.log(req.query.name);
-  const API_KEY = "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ";
-  const genAI = new GoogleGenerativeAI(API_KEY);
-
+app.get("/health-rec", async (req, res) => {
+  console.log(req.body.userName);
+  const genAI = new GoogleGenerativeAI(
+    "AIzaSyBtuZOsDwsnL25GcAsCGI7VFHpbauWkMxk"
+  );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
     history: [
@@ -573,7 +579,7 @@ app.get("/dashboard", async (req, res) => {
   });
   const userdoc = await db
     .collection("formSubmissions")
-    .doc(req.query.name)
+    .doc(req.body.userName)
     .get();
 
   const doc = userdoc._fieldsProto;
@@ -605,6 +611,9 @@ Total Debt: -10 points (scaled based on income)
 Repayment Plans: 5 points (if present)
 Others: -5 points (general category for other debts)
 consider all the amounts in indian ruppees
+this citeria provided is not regid you might encounter some empty values adjust the criteria accordingly to give me the score.
+some of the values might be null just omit them and try to calculate the score on the basis of the data provided
+
       -monthlyGrossIncome : ${doc.monthlyGrossIncome.stringValue},
   -netIncome : ${doc.netIncome.stringValue},
   -housingCost : ${doc.housingCost.stringValue},
@@ -622,7 +631,7 @@ consider all the amounts in indian ruppees
   -investment:${doc.investment.stringValue},
   -pfFunds:${doc.pfFunds.stringValue},
   -property:${doc.property.stringValue},
-  -emergencyFunds:${doc.emergencyFunds.stringValue} 
+  -emergencyFunds:${doc.emergencyFunds.stringValue}  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number
   `;
 
       const result = await chat.sendMessage(prompt);
@@ -635,12 +644,16 @@ consider all the amounts in indian ruppees
       const response2 = await result2.response;
       const text2 = response2.text();
       console.log(text2);
+      const doc_ref = db.collection("formSubmissions").doc(req.body.userName);
+      doc_ref.update({
+        healthScore: text
+      })
+
       const pass = {
-        "number" : text,
-        "text" : text2
-      }
+        number: text,
+        text: text2,
+      };
       res.json(pass);
-     
     } else {
       console.log("No such Document");
       return;
@@ -648,8 +661,6 @@ consider all the amounts in indian ruppees
   } catch (error) {
     console.log("Error getting the document", error);
   }
-  
-  
 });
 
 app.get('/get_account', async (req, res) => {
@@ -727,3 +738,144 @@ app.get("/wallet" , async (req , res) =>{
   
 
 })
+
+app.get("/health-rec-update", async (req, res) => {
+  const new_data = req.body;
+
+  const userdoc = await db
+    .collection("formSubmissions")
+    .doc(new_data.userName)
+    .get();
+  const doc = userdoc._fieldsProto;
+  
+  const old_data = {
+    monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
+    netIncome: doc.netIncome.stringValue,
+    housingCost: doc.housingCost.stringValue,
+    utilities: doc.utilities.stringValue,
+    foodAndGroceries: doc.foodAndGroceries.stringValue,
+    transport: doc.transport.stringValue,
+    insurance: doc.insurance.stringValue,
+    entertainment: doc.entertainment.stringValue,
+    healthcare: doc.healthcare.stringValue,
+    education: doc.education.stringValue,
+    savings: doc.savings.stringValue,
+    others: doc.others.stringValue,
+    totalDebt: doc.totalDebt.stringValue,
+    repaymentPlans: doc.repaymentPlans.stringValue,
+    investment: doc.investment.stringValue,
+    pfFunds: doc.pfFunds.stringValue,
+    property: doc.property.stringValue,
+    emergencyFunds: doc.emergencyFunds.stringValue,
+  };
+
+  for (let key in old_data) {
+    // Check if the key also exists in new_data and compare values
+    if (old_data[key] !== new_data[key]) {
+      
+      const flag = true;
+    }
+  }
+  const flag = false;
+  try {
+    if (flag == true) {
+      const genAI = new GoogleGenerativeAI(
+        "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+      );
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const chat = model.startChat({
+        history: [
+          {
+            role: "user",
+            parts: [{ text: "Hello, I have 2 dogs in my house." }],
+          },
+          {
+            role: "model",
+            parts: [
+              { text: "Great to meet you. What would you like to know?" },
+            ],
+          },
+        ],
+        generationConfig: {
+          maxOutputTokens: 100,
+        },
+      });
+
+      const prompt = `I am making a website. there is a component of financial socre. I want to calculate a hypothetical financial score where 0 means the worst and 100 means best. consider any metics as you want for determining it. I will provide you with some of the data.. Do any criteria you want to consider just provide me with a fixed number.Don't chnage the number for same response. I dont want any text as a output just give me a number
+      I will give you  the criteria from which you can decide how to judge the number.
+      these are the citeria under which you can judge the number
+      Income and Expenses (50 points)
+Monthly Gross Income: 10 points (scaled based on national average)
+Net Income: 10 points (scaled based on national average)
+Housing Cost: -5 points (capped at -10 points)
+Utilities: -3 points (capped at -5 points)
+Food and Groceries: -5 points (capped at -10 points)
+Transport: -3 points (capped at -5 points)
+Insurance: -2 points (capped at -4 points)
+Entertainment: -1 point (capped at -2 points)
+Healthcare: -2 points (capped at -4 points)
+Education: -2 points (capped at -4 points)
+Savings and Investments (30 points)
+Savings: 5 points (scaled based on monthly income)
+Emergency Funds: 5 points (scaled based on monthly expenses)
+Investment: 5 points (scaled based on total income)
+PF Funds: 5 points (scaled based on salary)
+Property: 10 points (scaled based on property value)
+Debt and Financial Responsibility (20 points)
+Total Debt: -10 points (scaled based on income)
+Repayment Plans: 5 points (if present)
+Others: -5 points (general category for other debts)
+consider all the amounts in indian ruppees
+this citeria provided is not regid you might encounter some empty values adjust the criteria accordingly to give me the score.
+some of the values might be null just omit them and try to calculate the score on the basis of the data provided
+
+      -monthlyGrossIncome : ${doc.monthlyGrossIncome.stringValue},
+  -netIncome : ${doc.netIncome.stringValue},
+  -housingCost : ${doc.housingCost.stringValue},
+  -utilities : ${doc.utilities.stringValue},
+  -foodAndGroceries : ${doc.foodAndGroceries.stringValue},
+  -transport : ${doc.transport.stringValue},
+  -insurance : ${doc.insurance.stringValue},
+  -entertainment : ${doc.entertainment.stringValue},
+  -healthcare : ${doc.healthcare.stringValue},
+  -education : ${doc.education.stringValue},
+  -savings : ${doc.savings.stringValue},
+  -others:${doc.others.stringValue},
+  -totalDebt:${doc.totalDebt.stringValue},
+  -repaymentPlans:${doc.repaymentPlans.stringValue},
+  -investment:${doc.investment.stringValue},
+  -pfFunds:${doc.pfFunds.stringValue},
+  -property:${doc.property.stringValue},
+  -emergencyFunds:${doc.emergencyFunds.stringValue}  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score.
+  `;
+
+      const result = await chat.sendMessage(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+
+      const prompt2 = `give me the 3 short and crisp advices for the health score i got from you to improve my health score only 3 advices nothing else`;
+      const result2 = await chat.sendMessage(prompt2);
+      const response2 = await result2.response;
+      const text2 = response2.text();
+      console.log(text2);
+      await db.collection("formSubmissions").doc(old_data.userName).set(healthScore);
+      const doc_ref = db.collection("formSubmissions").doc(old_data.userName);
+      doc_ref.update({
+        healthScore: text
+      })
+
+      const pass = {
+        number: text,
+        text: text2,
+      };
+      res.json(pass);
+    } else {
+      console.log("No change in document");
+      return;
+    }
+  } catch (error) {
+    console.log("Error getting the document", error);
+  }
+  ``;
+});
