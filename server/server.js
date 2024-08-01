@@ -33,16 +33,31 @@ app.use(express.json());
 app.use(cors());
 
 // Define schema and model for wallet
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+app.use(express.json());
+
+// Enable CORS
+app.use(cors());
+
+// Define schema and model for wallet
 const walletSchema = new mongoose.Schema({
-  userName: { type: String, required: true, unique: true }, 
+  userName: { type: String, required: true, unique: true },
   balance: { type: Number, required: true, default: 0 },
-  logs: [{ type: String, required: true }],
+  logs: [
+    {
+      amount: { type: Number, required: true },
+      reason: { type: String, required: true },
+      tag: { type: String, required: true },
+      logDate: { type: Date, default: Date.now } // Changed from String to Date for better date handling
+    }
+  ],
   createdAt: { type: Date, default: Date.now },
 });
 
-
 const Wallet = mongoose.model("Wallet", walletSchema);
 
+// Create a new wallet
 app.post("/wallet/create", async (req, res) => {
   const { userName } = req.body;
 
@@ -51,13 +66,11 @@ app.post("/wallet/create", async (req, res) => {
   }
 
   try {
-    // Check if a wallet with the same username already exists
     const existingWallet = await Wallet.findOne({ userName });
     if (existingWallet) {
       return res.status(400).json({ msg: "Wallet already exists for this user!" });
     }
 
-    // Create a new wallet with the provided username
     const wallet = new Wallet({ userName });
     await wallet.save();
 
@@ -68,16 +81,16 @@ app.post("/wallet/create", async (req, res) => {
   }
 });
 
-
-app.get("/test", (req, res) => {
-  res.send("Server is running!");
-});
-
+// Add money to wallet
 app.post("/wallet/add", async (req, res) => {
   const { userName, amount } = req.body;
 
   if (!userName) {
     return res.status(400).json({ msg: "UserName is required!" });
+  }
+
+  if (!amount || amount <= 0) {
+    return res.status(400).json({ msg: "A valid amount is required!" });
   }
 
   try {
@@ -88,7 +101,8 @@ app.post("/wallet/add", async (req, res) => {
     }
 
     wallet.balance += amount;
-    wallet.logs.push(`Added ${amount} to the wallet!`);
+    wallet.logs.push({ amount, reason: `Added ${amount} to the wallet!`, tag: "deposit", logDate: new Date() });
+
     await wallet.save();
 
     res.json(wallet);
@@ -98,12 +112,20 @@ app.post("/wallet/add", async (req, res) => {
   }
 });
 
-
+// Deduct money from wallet
 app.post("/wallet/deduct", async (req, res) => {
-  const { userName, amount } = req.body;
+  const { userName, amount, tag, reason } = req.body;
 
   if (!userName) {
     return res.status(400).json({ msg: "UserName is required!" });
+  }
+
+  if (!amount || amount <= 0) {
+    return res.status(400).json({ msg: "A valid amount is required!" });
+  }
+
+  if (!tag || !reason) {
+    return res.status(400).json({ msg: "Tag and reason are required!" });
   }
 
   try {
@@ -118,7 +140,8 @@ app.post("/wallet/deduct", async (req, res) => {
     }
 
     wallet.balance -= amount;
-    wallet.logs.push(`Deducted ${amount} from the wallet!`);
+    wallet.logs.push({ amount, reason, tag, logDate: new Date() });
+
     await wallet.save();
 
     res.json(wallet);
@@ -128,7 +151,7 @@ app.post("/wallet/deduct", async (req, res) => {
   }
 });
 
-
+// Get wallet by username
 app.get("/wallet/:userName", async (req, res) => {
   const { userName } = req.params;
 
@@ -145,9 +168,6 @@ app.get("/wallet/:userName", async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 });
-
-
-
 
 // Route to handle form submission (Firestore)
 app.post("/api/form", async (req, res) => {
@@ -467,8 +487,8 @@ some of the values might be null just omit them and try to calculate the score o
       console.log(text2);
       const doc_ref = db.collection("formSubmissions").doc(req.body.userName);
       doc_ref.update({
-        healthScore: text
-      })
+        healthScore: text,
+      });
 
       const pass = {
         number: text,
@@ -484,45 +504,62 @@ some of the values might be null just omit them and try to calculate the score o
   }
 });
 
-app.get('/get_account', async (req, res) => {
+app.get("/get_account", async (req, res) => {
   try {
     const accountId = req.query.userName;
 
     if (!accountId) {
-      return res.status(400).json({ error: 'Account ID is required' });
+      return res.status(400).json({ error: "Account ID is required" });
     }
 
-    const accountDoc = await db.collection("formSubmissions").doc(accountId).get();
+    const accountDoc = await db
+      .collection("formSubmissions")
+      .doc(accountId)
+      .get();
 
     if (!accountDoc.exists) {
-      return res.status(404).json({ error: 'Account not found' });
+      return res.status(404).json({ error: "Account not found" });
     }
 
     const accountData = accountDoc.data();
     res.json({ success: true, data: accountData });
   } catch (error) {
-    console.error('Error getting account', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error getting account", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-app.post('/update_account', async (req, res) => {
+app.post("/update_account", async (req, res) => {
   const { accountId, updatedData } = req.body;
 
   if (!accountId) {
-    return res.status(400).json({ error: 'Account ID is required' });
+    return res.status(400).json({ error: "Account ID is required" });
   }
 
-  if (!updatedData || typeof updatedData !== 'object') {
-    return res.status(400).json({ error: 'Valid updatedData is required' });
+  if (!updatedData || typeof updatedData !== "object") {
+    return res.status(400).json({ error: "Valid updatedData is required" });
   }
 
   try {
     const allowedFields = [
-      'monthlyGrossIncome', 'netIncome',
-      'housingCost', 'utilities', 'foodAndGroceries', 'transport', 'insurance',
-      'entertainment', 'healthcare', 'education', 'savings', 'others', 'totalDebt',
-      'repaymentPlans', 'investment', 'pfFunds', 'property', 'emergencyFunds'
+      "monthlyGrossIncome",
+      "netIncome",
+      "housingCost",
+      "utilities",
+      "foodAndGroceries",
+      "transport",
+      "insurance",
+      "entertainment",
+      "healthcare",
+      "education",
+      "savings",
+      "others",
+      "totalDebt",
+      "repaymentPlans",
+      "investment",
+      "pfFunds",
+      "property",
+      "emergencyFunds",
     ];
 
     const updateFields = {};
@@ -534,31 +571,38 @@ app.post('/update_account', async (req, res) => {
     }
 
     if (Object.keys(updateFields).length === 0) {
-      return res.status(400).json({ error: 'No valid fields to update' });
+      return res.status(400).json({ error: "No valid fields to update" });
     }
 
     // Use .set with merge option to update the document without overwriting it completely
-    await db.collection("accounts").doc(accountId).set(updateFields, { merge: true });
+    await db
+      .collection("accounts")
+      .doc(accountId)
+      .set(updateFields, { merge: true });
 
     // Fetch the updated document to return
-    const updatedAccountDoc = await db.collection("accounts").doc(accountId).get();
+    const updatedAccountDoc = await db
+      .collection("accounts")
+      .doc(accountId)
+      .get();
     const updatedAccountData = updatedAccountDoc.data();
 
-    res.json({ success: true, message: 'Account updated successfully', data: updatedAccountData });
+    res.json({
+      success: true,
+      message: "Account updated successfully",
+      data: updatedAccountData,
+    });
   } catch (error) {
-    console.error('Error updating account', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error updating account", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-
-app.get("/wallet" , async (req , res) =>{
+app.get("/wallet", async (req, res) => {
   const name = req.query.name;
-  const userdoc = await db.collection('formsubmissions').doc(name).get();
+  const userdoc = await db.collection("formsubmissions").doc(name).get();
   const assest = userdoc._fieldsProto.assest.stringValue;
-  
-
-})
+});
 
 app.get("/health-rec-update", async (req, res) => {
   const new_data = req.body;
@@ -568,7 +612,7 @@ app.get("/health-rec-update", async (req, res) => {
     .doc(new_data.userName)
     .get();
   const doc = userdoc._fieldsProto;
-  
+
   const old_data = {
     monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
     netIncome: doc.netIncome.stringValue,
@@ -593,7 +637,6 @@ app.get("/health-rec-update", async (req, res) => {
   for (let key in old_data) {
     // Check if the key also exists in new_data and compare values
     if (old_data[key] !== new_data[key]) {
-      
       const flag = true;
     }
   }
@@ -680,11 +723,14 @@ some of the values might be null just omit them and try to calculate the score o
       const response2 = await result2.response;
       const text2 = response2.text();
       console.log(text2);
-      await db.collection("formSubmissions").doc(old_data.userName).set(healthScore);
+      await db
+        .collection("formSubmissions")
+        .doc(old_data.userName)
+        .set(healthScore);
       const doc_ref = db.collection("formSubmissions").doc(old_data.userName);
       doc_ref.update({
-        healthScore: text
-      })
+        healthScore: text,
+      });
 
       const pass = {
         number: text,
