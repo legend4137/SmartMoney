@@ -34,10 +34,10 @@ const BottomNavbar = () => {
             <button
               id="dropdownDefaultButton"
               onClick={toggleDropdown}
-              className="dropdown-button"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               type="button"
             >
-              Dropdown button
+              TYPES
               <svg
                 className="w-2.5 h-2.5 ms-3"
                 aria-hidden="true"
@@ -58,27 +58,56 @@ const BottomNavbar = () => {
             {isOpen && (
               <div
                 id="dropdown"
-                className="dropdown-content"
+                className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+                style={{ bottom: '100%', marginBottom: '8px' }} // Adjusts position to be above the button
               >
-                <ul className="dropdown-list">
+                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   <li>
-                    <a href="#" className="dropdown-item">
-                      Dashboard
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Entertainment
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="dropdown-item">
-                      Settings
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Food n Drink
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="dropdown-item">
-                      Earnings
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Utils
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="dropdown-item">
-                      Sign out
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Home
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Transportation
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Uncategorized 
                     </a>
                   </li>
                 </ul>
