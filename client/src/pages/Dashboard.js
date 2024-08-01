@@ -14,7 +14,7 @@ function Dashboard() {
           <PlanCard />
         </div>
         <div className="speedometer-container">
-          <Speedometer percentage={75} />
+          <Speedometer percentage={100} />
         </div>
       </div>
       <CtaSection /> {/* Add the CtaSection component */}
