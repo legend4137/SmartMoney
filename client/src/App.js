@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Form from './pages/form';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/entry';
-import EditableFields from './pages/editableFields';
+import Wallet from './pages/wallet';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route exact path='/dashboard' element={<DashBoard/>}/>
         <Route exact path="/form" element={<Form/>} />
         <Route exact path="/entry" element={<SignIn/>} />
-        <Route exact path="/wallet" element={<EditableFields/>} />
+        <Route exact path="/wallet" element={<Wallet/>} />
         <Route exact path='*' element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

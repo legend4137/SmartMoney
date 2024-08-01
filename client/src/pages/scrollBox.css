@@ -1,0 +1,9 @@
+.scroll-box {
+    height: 650px; 
+    width: 650px; 
+    overflow-y: scroll; 
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    box-sizing: border-box; 
+  }
+  

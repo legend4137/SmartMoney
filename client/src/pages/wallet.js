@@ -1,8 +1,19 @@
 import React from 'react'
-import editableFields from './editableFields';
+import EditableFields from './editableFields';
+import ScrollBox from './scrollBox';
+import './wallet.css';
 
-export default function Wallet() {
+const Wallet = () => {
   return (
-    <editableFields />
-  )
-}
+    <div className="wallet-container">
+      <div className="editable-fields">
+        <EditableFields />
+      </div>
+      <div className="scroll-box-container">
+        <ScrollBox />
+      </div>
+    </div>
+  );
+};
+
+export default Wallet;
