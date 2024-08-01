@@ -6,9 +6,9 @@ const Speedometer = ({ percentage }) => {
 
   useEffect(() => {
     let start = 0;
-    const duration = 1000; // total animation duration
+    const duration = 1000; // total animation duration in ms
     const end = percentage; // final value
-    const stepTime = Math.abs(Math.floor(duration / (end - start)));
+    const stepTime = duration / Math.abs(end - start);
 
     const timer = setInterval(() => {
       start += 1;
@@ -30,9 +30,9 @@ const Speedometer = ({ percentage }) => {
   };
 
   // Calculate the length and offset for the current percentage
-  const arcLength = 1005; // Total length of the arc
-  const strokeDasharray = `${(arcLength * displayedPercentage) / 100} ${arcLength}`;
-  const strokeDashoffset = arcLength - (arcLength * displayedPercentage) / 100;
+  const arcLength = 502; // Length of the semi-circle arc
+  const adjustedPercentage = displayedPercentage * 1.11; // Increase the factor by 1.2
+  const strokeDasharray = `${(arcLength * adjustedPercentage) / 100} ${arcLength}`;
 
   return (
     <div className="speedometer-container">
@@ -55,7 +55,6 @@ const Speedometer = ({ percentage }) => {
           style={{
             stroke: getColor(displayedPercentage),
             strokeDasharray,
-            strokeDashoffset,
           }}
         />
       </svg>

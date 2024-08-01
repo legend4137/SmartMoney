@@ -7,6 +7,7 @@ import Form from './pages/form';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/entry';
 import './App.css';  // Ensure to import the CSS file
+import Wallet from './pages/wallet';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path='/dashboard' element={<DashBoard/>}/>
         <Route exact path="/form" element={<Form/>} />
         <Route exact path="/entry" element={<SignIn/>} />
+        <Route exact path="/wallet" element={<Wallet/>} />
         <Route exact path='*' element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>
