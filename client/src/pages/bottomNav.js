@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './bottomNav.css';
+
+const userName = "tharak";
+const amount = 100;
 
 const BottomNavbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -19,14 +23,52 @@ const BottomNavbar = () => {
     }
   };
 
+  // const BottomNav = () => {
+    const [wallet, setWallet] = useState(null);
+    const [error, setError] = useState('');
+  
+    const createWallet = async (userName) => {
+      try {
+        const response = await axios.post('http://localhost:12000/wallet/create', { userName });
+        setWallet(response.data);
+      } catch (err) {
+        setError(err.response.data.msg);
+      }
+    };
+  
+    const addMoneyToWallet = async (userName, amount) => {
+      try {
+        const response = await axios.post('http://localhost:12000/wallet/add', { userName, amount });
+        setWallet(response.data);
+      } catch (err) {
+        setError(err.response.data.msg);
+      }
+    };
+  
+    const deductMoneyFromWallet = async (userName, amount, tag, reason) => {
+      try {
+        const response = await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag, reason });
+        setWallet(response.data);
+      } catch (err) {
+        setError(err.response.data.msg);
+      }
+    };
+  
+    const getWalletByUsername = async (userName) => {
+      try {
+        const response = await axios.get(`http://localhost:12000/wallet/${userName}`);
+        setWallet(response.data);
+      } catch (err) {
+        setError(err.response.data.msg);
+      }
+    };
+
   return (
     <div className="bottom-navbar">
       <input type="text" placeholder="Type something..." className="text-input" />
       <div className="button-container">
-        <button className="btn" onClick={() => handleOptionSelect('ADD')}>
-          ADD
-        </button>
-        <button className="btn" onClick={() => handleOptionSelect('DEDUCT')}>
+      <button className="btn" onClick={() => addMoneyToWallet('tharak', 100)}>Add Money</button>
+        <button className="btn" onClick={() => deductMoneyFromWallet('tharak',69,'entertainment','withdraw')}>
           DEDUCT
         </button>
         {showDropdown && (
