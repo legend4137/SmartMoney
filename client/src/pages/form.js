@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import '../form.css';
 import axios from 'axios';
 
@@ -14,6 +14,7 @@ const checkDuplicates = async (userName) => {
 };
 
 export default function Form() {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -134,7 +135,8 @@ export default function Form() {
           return; // Stop execution if duplicate is found
         }
       }
-
+      if(currentStep == 4)
+        navigate('/dashboard');
       try {
         const response = await axios.post('http://localhost:12000/api/form', formData);
         console.log('Response:', response.data);
@@ -144,6 +146,7 @@ export default function Form() {
       if (validateCurrentStep() && currentStep < 4) {
         setCurrentStep(currentStep + 1);
       }
+
 
     };
 
@@ -546,8 +549,8 @@ export default function Form() {
                 </button>
               )}
               {currentStep === 4 && (
-                <Link to='/dashboard'>
-                  <button className="formbold-btn" type="submit" >
+                <Link to="/Dashboard">
+                  <button className="formbold-btn" type="submit" onClick={handleNextStepClick} >
                     Submit
                   </button>
                 </Link>
