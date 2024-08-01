@@ -34,7 +34,7 @@ const BottomNavbar = () => {
             <button
               id="dropdownDefaultButton"
               onClick={toggleDropdown}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="dropdown-button"
               type="button"
             >
               Dropdown button
@@ -58,39 +58,26 @@ const BottomNavbar = () => {
             {isOpen && (
               <div
                 id="dropdown"
-                className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                style={{ bottom: '100%', marginBottom: '8px' }} // Adjusts position to be above the button
+                className="dropdown-content"
               >
-                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                <ul className="dropdown-list">
                   <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
+                    <a href="#" className="dropdown-item">
                       Dashboard
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
+                    <a href="#" className="dropdown-item">
                       Settings
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
+                    <a href="#" className="dropdown-item">
                       Earnings
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
+                    <a href="#" className="dropdown-item">
                       Sign out
                     </a>
                   </li>
