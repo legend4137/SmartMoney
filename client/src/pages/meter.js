@@ -61,6 +61,7 @@ const Speedometer = ({ percentage }) => {
       <div className="percentage-display">
         {displayedPercentage}%
       </div>
+     
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashBoard from './pages/Dashboard';
@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Form from './pages/form';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/entry';
+import './App.css';  // Ensure to import the CSS file
 import Wallet from './pages/wallet';
 
 function App() {
