@@ -140,8 +140,9 @@ export default function Form() {
         console.log('Response:', response.data);
       } catch (error) {
         console.error('Error storing data:', error);
+        return;
       }
-      if (validateCurrentStep() && currentStep < 4) {
+      if (currentStep < 4) {
         setCurrentStep(currentStep + 1);
       }
 
