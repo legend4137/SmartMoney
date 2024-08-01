@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'; // Import useState and useEffect
 import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
 import Speedometer from './meter';
 import PlanCard from './WalletCard';
 
 const value = sessionStorage.getItem('username');
-const apiUrl = 'https://api.gemini.com/v1/your-endpoint'; 
 
 function Dashboard() {
+  const [userName, setUserName] = useState('TestData');
+  useEffect(() => {
+    const storedUserName = sessionStorage.getItem('username');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
   return (
     <div className="dashboard">
       <div className="navbar-container">
@@ -19,7 +25,7 @@ function Dashboard() {
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg"
             alt="dashboard image"
           />
-          <PlanCard />
+          <PlanCard userName={userName} />
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Wallet
