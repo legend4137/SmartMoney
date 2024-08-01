@@ -8,6 +8,7 @@ const SignIn = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     sessionStorage.setItem('username', username);
+    console.log(sessionStorage);
     // You can add your sign-in logic here
 
     // Navigate to the dashboard

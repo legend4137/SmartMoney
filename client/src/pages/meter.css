@@ -1,5 +1,6 @@
 .speedometer-container {
-  width: 380px;
+  width: 300px;
+  display: flex;
   height: 250px;
   position: relative;
   background: #333;
