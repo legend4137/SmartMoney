@@ -34,21 +34,41 @@ app.use(cors());
 
 // Define schema and model for wallet
 const walletSchema = new mongoose.Schema({
+  userName: { type: String, required: true, unique: true }, 
   balance: { type: Number, required: true, default: 0 },
   logs: [{ type: String, required: true }],
   createdAt: { type: Date, default: Date.now },
 });
 
+
 const Wallet = mongoose.model("Wallet", walletSchema);
 
 
-app.post("wallet/create", async (req, res) => {
-  console.log("check!");
-  const wallet = new Wallet();
-  await wallet.save();
-  res.send("created wallet!");
-  res.status(201).json(wallet);
+app.post("/wallet/create", async (req, res) => {
+  const { userName } = req.body;
+
+  if (!userName) {
+    return res.status(400).json({ msg: "UserName is required!" });
+  }
+
+  try {
+    // Check if a wallet with the same username already exists
+    const existingWallet = await Wallet.findOne({ userName });
+    if (existingWallet) {
+      return res.status(400).json({ msg: "Wallet already exists for this user!" });
+    }
+
+    // Create a new wallet with the provided username
+    const wallet = new Wallet({ userName });
+    await wallet.save();
+
+    res.status(201).json(wallet);
+  } catch (error) {
+    console.error("Error creating wallet:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
+
 
 app.get("/test", (req, res) => {
   res.send("Server is running!");
@@ -56,47 +76,78 @@ app.get("/test", (req, res) => {
 
 
 app.post("/wallet/add", async (req, res) => {
-  const { walletId, amount } = req.body;
-  const wallet = await Wallet.findById(walletId);
+  const { userName, amount } = req.body;
 
-  if (!wallet) {
-    return res.status(404).json({ msg: "Wallet Not Found!" });
+  if (!userName) {
+    return res.status(400).json({ msg: "UserName is required!" });
   }
 
-  wallet.balance += amount;
-  wallet.logs.push(`Added ${amount} to the wallet!`);
-  await wallet.save();
+  try {
+    const wallet = await Wallet.findOne({ userName });
 
-  res.json(wallet);
+    if (!wallet) {
+      return res.status(404).json({ msg: "Wallet Not Found!" });
+    }
+
+    wallet.balance += amount;
+    wallet.logs.push(`Added ${amount} to the wallet!`);
+    await wallet.save();
+
+    res.json(wallet);
+  } catch (error) {
+    console.error("Error adding money:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
+
 
 app.post("/wallet/deduct", async (req, res) => {
-  const { walletId, amount } = req.body;
-  const wallet = await Wallet.findById(walletId);
+  const { userName, amount } = req.body;
 
-  if (!wallet) {
-    return res.status(404).json({ msg: "Wallet Not Found!" });
+  if (!userName) {
+    return res.status(400).json({ msg: "UserName is required!" });
   }
 
-  if (wallet.balance < amount) {
-    return res.status(400).json({ msg: "Insufficient balance in wallet!" });
+  try {
+    const wallet = await Wallet.findOne({ userName });
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Wallet Not Found!" });
+    }
+
+    if (wallet.balance < amount) {
+      return res.status(400).json({ msg: "Insufficient balance in wallet!" });
+    }
+
+    wallet.balance -= amount;
+    wallet.logs.push(`Deducted ${amount} from the wallet!`);
+    await wallet.save();
+
+    res.json(wallet);
+  } catch (error) {
+    console.error("Error deducting money:", error);
+    res.status(500).json({ msg: "Server error" });
   }
-
-  wallet.balance -= amount;
-  wallet.logs.push(`Deducted ${amount} from the wallet!`);
-  await wallet.save();
-
-  res.json(wallet);
 });
 
-app.get("/wallet/:id", async (req, res) => {
-  const wallet = await Wallet.findById(req.params.id);
-  if (!wallet) {
-    return res.status(404).json({ msg: "Wallet not found" });
-  }
 
-  res.json(wallet);
+app.get("/wallet/:userName", async (req, res) => {
+  const { userName } = req.params;
+
+  try {
+    const wallet = await Wallet.findOne({ userName });
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Wallet not found" });
+    }
+
+    res.json(wallet);
+  } catch (error) {
+    console.error("Error fetching wallet:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
 });
+
 
 
 
