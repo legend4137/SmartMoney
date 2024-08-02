@@ -9,7 +9,7 @@ const Wallet = () => {
   return (
     <div className="wallet-container">
       <div>
-        <EditableFields />
+        <EditableFields userName= 'tharak' />
       </div>
       <div className="scroll-box-container">
         <NavbarDemo />

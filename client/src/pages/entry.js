@@ -9,7 +9,7 @@ const SignIn = () => {
     event.preventDefault();
     sessionStorage.setItem('username', username);
     console.log(sessionStorage);
-    // You can add your sign-in logic here
+    // You can add your sign-in logic herex
 
     // Navigate to the dashboard
     navigate('/dashboard');
