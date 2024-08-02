@@ -929,7 +929,7 @@ app.get('/wallet-card', async (req, res) => {
         if (!latestPositiveLog || new Date(log.logDate) > new Date(latestPositiveLog.logDate)) {
           latestPositiveLog = log;
         }
-      } else if (log.reason === 'withdraw') {
+      } else if (log.tag === 'withdraw') {
         if (!latestNegativeLog || new Date(log.logDate) > new Date(latestNegativeLog.logDate)) {
           latestNegativeLog = log;
         }
