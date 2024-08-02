@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './bottomNav.css';
 
-const userName = "tharak";
-const amount = 100;
+const userName = sessionStorage.getItem('userName');
 
 const BottomNavbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState('DEDUCT');
   const [isOpen, setIsOpen] = useState(false);
+  const [inputValue, setInputValue] = useState(); // Define the state for capturing user input
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -21,6 +21,9 @@ const BottomNavbar = () => {
     } else {
       setShowDropdown(false);
     }
+  };
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value); // Update input value state
   };
 
   // const BottomNav = () => {
@@ -65,10 +68,16 @@ const BottomNavbar = () => {
 
   return (
     <div className="bottom-navbar">
-      <input type="text" placeholder="Type something..." className="text-input" />
+      <input 
+        type="number" // Changed to number input
+        placeholder="Enter a number..." 
+        className="text-input" 
+        value={Number(inputValue)} // Bind input value to state
+        onChange={handleInputChange} // Handle input changes
+      />
       <div className="button-container">
-      <button className="btn" onClick={() => addMoneyToWallet('tharak', 100)}>Add Money</button>
-        <button className="btn" onClick={() => deductMoneyFromWallet('tharak',69,'entertainment','withdraw')}>
+      <button className="btn" onClick={() => addMoneyToWallet(userName, Number(inputValue))}>Add Money</button>
+        <button className="btn" onClick={() => deductMoneyFromWallet(userName,Number(inputValue),'entertainment','withdraw')}>
           DEDUCT
         </button>
         {showDropdown && (
