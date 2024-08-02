@@ -44,7 +44,7 @@ const PlanCard = ({ userName }) => {
       <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">Wallet Balance</h5>
       <div className="flex items-baseline text-gray-900 dark:text-white">
         <span className="text-3xl font-semibold">₹</span>
-        <span className="text-5xl font-extrabold tracking-tight">
+        <span className="text-4xl font-extrabold tracking-tight">
           {data.balance}
         </span>
         <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400"></span>
