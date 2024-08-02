@@ -848,6 +848,7 @@ app.get("/daily-rec", async (req, res) => {
 
 app.get('/wallet-card', async (req, res) => {
   const userName = req.query.userName;
+  console.log(`Received request for userName: ${userName}`); // Log request
   try {
     // Fetch data from Firestore
     const userDoc = await db.collection('formSubmissions').doc(userName).get();
@@ -888,12 +889,14 @@ app.get('/wallet-card', async (req, res) => {
       balance: mongoData.balance || 0, // Add balance to the combined data
     };
 
+    // console.log(`Sending response: ${JSON.stringify(combinedData)}`); // Log response
     return res.status(200).json(combinedData);
   } catch (error) {
     console.error('Error fetching user data:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 
