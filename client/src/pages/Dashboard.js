@@ -26,7 +26,7 @@ function Dashboard() {
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg"
             alt="dashboard image"
           />
-          <PlanCard userName={userName} />
+          <PlanCard userName='tharak' />
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Wallet

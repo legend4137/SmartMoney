@@ -874,7 +874,7 @@ app.get('/wallet-card', async (req, res) => {
         if (!latestPositiveLog || new Date(log.logDate) > new Date(latestPositiveLog.logDate)) {
           latestPositiveLog = log;
         }
-      } else if (log.tag === 'withdraw') {
+      } else if (log.reason === 'withdraw') {
         if (!latestNegativeLog || new Date(log.logDate) > new Date(latestNegativeLog.logDate)) {
           latestNegativeLog = log;
         }
@@ -889,13 +889,14 @@ app.get('/wallet-card', async (req, res) => {
       balance: mongoData.balance || 0, // Add balance to the combined data
     };
 
-    // console.log(`Sending response: ${JSON.stringify(combinedData)}`); // Log response
+    res.setHeader('Content-Type', 'application/json');
     return res.status(200).json(combinedData);
   } catch (error) {
     console.error('Error fetching user data:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 

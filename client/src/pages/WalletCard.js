@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WalletCard.css'; // Import the CSS file for animations
+import axios from 'axios';
 
 const PlanCard = ({ userName }) => {
   const navigate = useNavigate();
@@ -15,18 +16,16 @@ const PlanCard = ({ userName }) => {
     const fetchData = async () => {
       try {
         console.log(`Fetching data for userName: ${userName}`); // Log userName
-        const response = await fetch(`/wallet-card?userName=${userName}`);
-        console.log('Response status:', response.status); // Log status code
-        if (!response.ok) {
-          throw new Error(`Network response was not ok, status: ${response.status}`);
-        }
-        const result = await response.json();
-        console.log('API response:', result); // Check if logging is happening
+        const response = await axios.get(`http://localhost:12000/wallet-card`, {
+          params: { userName } // Use axios params for query strings
+        });
+        console.log('Response data:', response.data); // Log API response data
+
         setData({
-          balance: result.balance || 0,
-          posamount: result.posamount || 0,
-          negamount: result.negamount || 0,
-          debt: result.totalDebt || 0,
+          posamount: response.data.posamount || 0,
+          negamount: response.data.negamount || 0,
+          debt: parseInt(response.data.totalDebt) || 0,
+          balance: response.data.balance || 0, // Add balance to the state
         });
       } catch (error) {
         console.error('Error fetching wallet data:', error);
