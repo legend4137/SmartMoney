@@ -102,21 +102,35 @@ export default function Form() {
   };
 
   const handleSubmit = async (e) => {
-    event.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     if (!validateCurrentStep()) {
       return;
     }
     try {
-      const response = await fetch('http://localhost:12000/api/form', {
+      // Submit form data to Firebase
+      const formResponse = await fetch('http://localhost:12000/api/form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
       });
-      const result = await response.json();
-      console.log(result);
-
+      const formResult = await formResponse.json();
+      console.log(formResult);
+  
+      // Create a new user in MongoDB collection 'wallets'
+      const walletResponse = await fetch('http://localhost:12000/wallet/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userName: formData.userName }) // Send the userName
+      });
+      const walletResult = await walletResponse.json();
+      console.log(walletResult);
+  
       // Store username in sessionStorage
       sessionStorage.setItem("user", formData.userName);
       navigate(`/entry`);
@@ -124,6 +138,8 @@ export default function Form() {
       console.error('Error:', error);
     }
   };
+  
+  
 
   const handleNextStepClick = async (event) => {
     event.preventDefault();
@@ -139,8 +155,6 @@ export default function Form() {
         return; // Stop execution if duplicate is found
       }
     }
-    if (currentStep == 4)
-      navigate('/dashboard');
     try {
       const response = await axios.post('http://localhost:12000/api/form', formData);
       console.log('Response:', response.data);

@@ -480,7 +480,7 @@ app.listen(port, () => {
 });
 
 app.get("/health-rec", async (req, res) => {
-  console.log(req.query.userName);
+  // console.log(req.body.userName);
   const genAI = new GoogleGenerativeAI(
     "AIzaSyBtuZOsDwsnL25GcAsCGI7VFHpbauWkMxk"
   );
@@ -502,7 +502,6 @@ app.get("/health-rec", async (req, res) => {
   });
   const userdoc = await db
     .collection("formSubmissions")
-    .doc(req.query.userName)
     .doc(req.query.userName)
     .get();
 
@@ -568,7 +567,7 @@ some of the values might be null just omit them and try to calculate the score o
       const response2 = await result2.response;
       const text2 = response2.text();
       console.log(text2);
-      const doc_ref = db.collection("formSubmissions").doc(req.query.userName);
+      const doc_ref = db.collection("formSubmissions").doc(req.body.userName);
       doc_ref.update({
         healthScore: text,
       });
@@ -977,7 +976,6 @@ app.get('/scrolling', async (req, res) => {
         amount: log.amount,
         reason: log.reason,
         tag: log.tag,
-        logDate: log.logDate,
       };
     });
 

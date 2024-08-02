@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './editableFields.css';
 
-const EditableFields = ({ userName }) => {
+const EditableFields = () => {
   const [data, setData] = useState({
     field1: '0',
     field2: '0',
     field3: '0',
   });
+  const userName = sessionStorage.getItem("username"); // Get the username from sessionStorage
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +27,9 @@ const EditableFields = ({ userName }) => {
       }
     };
 
-    fetchData();
+    if (userName) {
+      fetchData();
+    }
   }, [userName]);
 
   return (
