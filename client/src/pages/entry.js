@@ -1,25 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUserName = sessionStorage.getItem("user");
+    const storedUserName = sessionStorage.getItem('user');
     if (storedUserName) {
       setUsername(storedUserName);
     }
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Save the username to session storage
-    sessionStorage.setItem("user", username);
+    try {
+      // Check if the username exists using the existing API
+      const response = await axios.get('http://localhost:12000/get_account', {
+        params: { userName: username }
+      });
 
-    // Navigate to the dashboard
-    navigate(`/dashboard?username=${username}`);
+      if (response.data.success) {
+        // Save the username to session storage
+        sessionStorage.setItem('user', username);
+
+        // Navigate to the dashboard
+        navigate(`/dashboard?username=${username}`);
+      } else {
+        // Handle case where account is not found
+        alert('Account not found. Please check your username or sign up if you do not have an account.');
+      }
+    } catch (error) {
+      console.error('Error checking account:', error);
+      alert('Account not found. Please check your username or sign up if you do not have an account.');
+    }
   };
 
   return (
