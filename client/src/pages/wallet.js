@@ -1,20 +1,24 @@
-import React from 'react'
+import React from 'react';
 import EditableFields from './editableFields';
 import ScrollBox from './scrollBox';
 import './wallet.css';
 import BottomNavbar from './bottomNav'; 
-import NavbarDemo from '../navbar-demo';
+import Navbar from '../navbar';
 
 const Wallet = () => {
   return (
     <div className="wallet-container">
-      <div>
-        <EditableFields userName= 'tharak' />
-      </div>
-      <div className="scroll-box-container">
-        <NavbarDemo />
-        <ScrollBox />
-        <BottomNavbar /> {/* Add the BottomNavbar component */}
+      <Navbar className="navbar" /> {/* Navbar at the top */}
+      <div className="main-content">
+        <div className="editable-fields">
+          <EditableFields userName='tharak' />
+        </div>
+        <div className="scroll-box-container-wrapper">
+          <div className="scroll-box-container">
+            <ScrollBox />
+          </div>
+          <BottomNavbar className="bottom-navbar" /> {/* BottomNavbar at the bottom */}
+        </div>
       </div>
     </div>
   );

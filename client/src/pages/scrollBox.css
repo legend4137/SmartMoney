@@ -1,7 +1,7 @@
 .scroll-box {
     border-radius: 20px;
     height: 400px; 
-    width: 5000px; 
+    width: 700px; 
     overflow-y: scroll; 
     border: 1px solid #ddd; 
     padding: 10px; 

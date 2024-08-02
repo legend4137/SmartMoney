@@ -2,7 +2,7 @@
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
+import Navbar from '../navbar'; // Ensure the path is correct
 import Speedometer from './meter';
 import PlanCard from './WalletCard';
 import GaugeComponent from 'react-gauge-component';
@@ -35,7 +35,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="navbar-container">
-        <NavbarDemo />
+        <Navbar />
       </div>
       <section className="bg-white dark:bg-gray-900 pt-32">
     <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
