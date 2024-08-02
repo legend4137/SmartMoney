@@ -6,13 +6,14 @@ import PlanCard from './WalletCard';
 const value = sessionStorage.getItem('username');
 
 function Dashboard() {
-  const [userName, setUserName] = useState('TestData');
+  const [userName, setUserName] = useState('tharak');
   useEffect(() => {
     const storedUserName = sessionStorage.getItem('username');
     if (storedUserName) {
       setUserName(storedUserName);
     }
   }, []);
+
   return (
     <div className="dashboard">
       <div className="navbar-container">

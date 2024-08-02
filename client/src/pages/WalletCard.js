@@ -1,35 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WalletCard.css'; // Import the CSS file for animations
 
-const PlanCard = () => {
+const PlanCard = ({ userName }) => {
   const navigate = useNavigate();
+  const [data, setData] = useState({
+    balance: 0,
+    posamount: 0,
+    negamount: 0,
+    debt: 0,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(`Fetching data for userName: ${userName}`); // Log userName
+        const response = await fetch(`/wallet-card?userName=${userName}`);
+        console.log('Response status:', response.status); // Log status code
+        if (!response.ok) {
+          throw new Error(`Network response was not ok, status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log('API response:', result); // Check if logging is happening
+        setData({
+          balance: result.balance || 0,
+          posamount: result.posamount || 0,
+          negamount: result.negamount || 0,
+          debt: result.totalDebt || 0,
+        });
+      } catch (error) {
+        console.error('Error fetching wallet data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userName]);
 
   const handleOpenWallet = () => {
     navigate('/wallet');
   };
+
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
       <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">Wallet Balance</h5>
       <div className="flex items-baseline text-gray-900 dark:text-white">
         <span className="text-3xl font-semibold">₹</span>
         <span className="text-5xl font-extrabold tracking-tight">
-          0 {/* This assumes you want to show a combined balance */}
+          {data.balance}
         </span>
         <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400"></span>
       </div>
       <ul role="list" className="space-y-5 my-7">
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Last Deposit</span>
-          <div className="ml-auto text-2xl font-bold text-blue-600 dark:text-blue-400 animated-text">₹0</div>
+          <div className="ml-auto text-2xl font-bold text-blue-600 dark:text-blue-400 animated-text">₹{data.posamount}</div>
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Last Withdrawal</span>
-          <div className="ml-auto text-2xl font-bold text-green-600 dark:text-green-400 animated-text">₹0</div>
+          <div className="ml-auto text-2xl font-bold text-green-600 dark:text-green-400 animated-text">₹{data.negamount}</div>
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Debt</span>
-          <div className="ml-auto text-2xl font-bold text-red-600 dark:text-red-400 animated-text">₹0</div>
+          <div className="ml-auto text-2xl font-bold text-red-600 dark:text-red-400 animated-text">₹{data.debt}</div>
         </li>
       </ul>
       <button

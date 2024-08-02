@@ -848,6 +848,7 @@ app.get("/daily-rec", async (req, res) => {
 
 app.get('/wallet-card', async (req, res) => {
   const userName = req.query.userName;
+  console.log(`Received request for userName: ${userName}`); // Log request
   try {
     // Fetch data from Firestore
     const userDoc = await db.collection('formSubmissions').doc(userName).get();
@@ -869,29 +870,34 @@ app.get('/wallet-card', async (req, res) => {
     let latestNegativeLog = null;
 
     mongoData.logs.forEach(log => {
-      if (log.amount > 0) {
+      if (log.tag === 'deposit') {
         if (!latestPositiveLog || new Date(log.logDate) > new Date(latestPositiveLog.logDate)) {
           latestPositiveLog = log;
         }
-      } else if (log.amount < 0) {
+      } else if (log.tag === 'withdraw') {
         if (!latestNegativeLog || new Date(log.logDate) > new Date(latestNegativeLog.logDate)) {
           latestNegativeLog = log;
         }
       }
     });
 
-    // Add the amounts to the Firestore data
+    // Add the amounts and balance to the Firestore data
     const combinedData = {
       ...firestoreData,
       posamount: latestPositiveLog ? latestPositiveLog.amount : 0,
       negamount: latestNegativeLog ? latestNegativeLog.amount : 0,
+      balance: mongoData.balance || 0, // Add balance to the combined data
     };
 
+    // console.log(`Sending response: ${JSON.stringify(combinedData)}`); // Log response
     return res.status(200).json(combinedData);
   } catch (error) {
     console.error('Error fetching user data:', error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+
 
 
