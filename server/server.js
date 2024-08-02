@@ -480,7 +480,7 @@ app.listen(port, () => {
 });
 
 app.get("/health-rec", async (req, res) => {
-  console.log(req.body.userName);
+  // console.log(req.body.userName);
   const genAI = new GoogleGenerativeAI(
     "AIzaSyBtuZOsDwsnL25GcAsCGI7VFHpbauWkMxk"
   );
@@ -502,7 +502,7 @@ app.get("/health-rec", async (req, res) => {
   });
   const userdoc = await db
     .collection("formSubmissions")
-    .doc(req.body.userName)
+    .doc(req.query.userName)
     .get();
 
   const doc = userdoc._fieldsProto;
