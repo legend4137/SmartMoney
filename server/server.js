@@ -177,6 +177,61 @@ app.get("/wallet/:userName", async (req, res) => {
   }
 });
 
+app.get("/wallet/:userName/last-deposit", async (req, res) => {
+  const { userName } = req.params;
+
+  try {
+    const wallet = await Wallet.findOne({ userName });
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Wallet not found" });
+    }
+
+    // Filter the logs to find those with reason "deposit"
+    const depositLogs = wallet.logs.filter(log => log.tag === "deposit");
+
+    if (depositLogs.length === 0) {
+      return res.status(404).json({ msg: "No deposit logs found" });
+    }
+
+    // Get the last deposit log
+    const lastDepositLog = depositLogs[depositLogs.length - 1];
+
+    res.json(lastDepositLog);
+  } catch (error) {
+    console.error("Error fetching last deposit log:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+app.get("/wallet/:userName/last-withdraw", async (req, res) => {
+  const { userName } = req.params;
+
+  try {
+    const wallet = await Wallet.findOne({ userName });
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Wallet not found" });
+    }
+
+    // Filter the logs to find those with reason "deposit"
+    const depositLogs = wallet.logs.filter(log => log.reason === "withdraw");
+
+    if (depositLogs.length === 0) {
+      return res.status(404).json({ msg: "No withdraw logs found" });
+    }
+
+    // Get the last deposit log
+    const lastDepositLog = depositLogs[depositLogs.length - 1];
+
+    res.json(lastDepositLog);
+  } catch (error) {
+    console.error("Error fetching last deposit log:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+
 // Route to handle form submission (Firestore)
 app.post("/api/form", async (req, res) => {
   const {
