@@ -7,7 +7,7 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    // sessionStorage.removeItem('usernName')
+    // sessionStorage.removeItem('userName')
     // event.preventDefault();
     // sessionStorage.setItem("userName", username);
 
@@ -29,7 +29,8 @@ const SignIn = () => {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={()=>{
                 sessionStorage.clear();
-                sessionStorage.setItem("user" , username);
+                sessionStorage.setItem("username" , username);
+
               navigate(`/dashboard?username=${username}`)
               }}>
               <div>
