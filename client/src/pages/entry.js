@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,32 +6,18 @@ const SignIn = () => {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUserName = sessionStorage.getItem("user");
-    if (storedUserName) {
-      setUsername(storedUserName);
-    }
-  }, []);
-
-  useEffect(() => {
-    const storedUserName = sessionStorage.getItem('user');
-    if (storedUserName) {
-      setUsername(storedUserName);
-    }
-  }, []);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      // Check if the username exists using the existing API
+      // Check if the username exists using the API
       const response = await axios.get('http://localhost:12000/get_account', {
         params: { userName: username }
       });
 
       if (response.data.success) {
         // Save the username to session storage
-        sessionStorage.setItem('user', username);
+        sessionStorage.setItem('username', username);
 
         // Navigate to the dashboard
         navigate(`/dashboard?username=${username}`);
