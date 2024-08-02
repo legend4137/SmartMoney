@@ -1,5 +1,3 @@
-
-import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
@@ -94,7 +92,7 @@ function Dashboard() {
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg"
             alt="dashboard image"
           />
-          <PlanCard userName='TestData' />
+          <PlanCard userName={userName} />
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Wallet
