@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 // import Realm, { ObjectSchema } from "realm";
 const bodyParser = require("body-parser");
 const { db } = require("./firebase"); // Import Firestore instance
+//const {mongoDb} = require("./mongodb")
 const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
 
 const app = express();
@@ -493,7 +494,7 @@ some of the values might be null just omit them and try to calculate the score o
   -education : ${doc.education.stringValue},
   -savings : ${doc.savings.stringValue},
   -others:${doc.others.stringValue},
-  -totalDebt:${doc.totalDebt.stringValue},
+  -totalDebt:${parseFloat(doc.totalDebt.stringValue)},
   -repaymentPlans:${doc.repaymentPlans.stringValue},
   -investment:${doc.investment.stringValue},
   -pfFunds:${doc.pfFunds.stringValue},
@@ -776,7 +777,7 @@ app.get("/daily-rec", async (req, res) => {
   const userName = req.body;
 
   try {
-    const wallet = await Wallet.findOne( userName );
+    const wallet = await Wallet.findOne(userName);
 
     if (!wallet) {
       return res.status(404).json({ msg: "Wallet not found" });
@@ -784,20 +785,18 @@ app.get("/daily-rec", async (req, res) => {
     // console.log(wallet);
     const log = wallet.logs;
     // console.log(log);
-    
-    const type =  {
-      Entertainment :  0,
-      Food_n_Drink : 0,     
-      Utils : 0,
-      Home : 0,
-      Uncategorized : 0,    
-      Transportation : 0
-     }
+
+    const type = {
+      Entertainment: 0,
+      Food_n_Drink: 0,
+      Utils: 0,
+      Home: 0,
+      Uncategorized: 0,
+      Transportation: 0
+    }
     //  console.log(type);
-    for ( let i = 0 ; i < log.length  && i < 100 ; i++)
-    {
-      if (log[i].tag == "withdraw")
-      {
+    for (let i = 0; i < log.length && i < 100; i++) {
+      if (log[i].tag == "withdraw") {
         const event = log[i].reason;
         type[event] += log[i].amount;
       }
@@ -822,7 +821,7 @@ app.get("/daily-rec", async (req, res) => {
       generationConfig: {
         maxOutputTokens: 100,
       },
-      
+
     });
 
     prompt = `I am building a finance advisor website. one of its feature is of advices. the user data is given to me. i want to give him some suggestions that will be based on the analysis of his expendeture. I will give you his daily expenses. On the basis of them give me 3 advices. The advices should be crisp and give them in bullet point, I just want the advices and no additional text
@@ -832,16 +831,67 @@ app.get("/daily-rec", async (req, res) => {
       Home : ${type.Home},
       Uncategorized : ${type.Uncategorized},    
       Transportation : ${type.Transportation}`;
-      const result = await chat.sendMessage(prompt);
-      const response = await result.response;
-      const text = response.text();
-      console.log(text);
-      const pass = {
-        advice : text
-      };
-      res.json(pass);
+    const result = await chat.sendMessage(prompt);
+    const response = await result.response;
+    const text = response.text();
+    console.log(text);
+    const pass = {
+      advice: text
+    };
+    res.json(pass);
   } catch (error) {
     console.error("Error fetching wallet:", error);
     res.status(500).json({ msg: "Server error" });
   }
 });
+
+
+app.get('/wallet-card', async (req, res) => {
+  const userName = req.query.userName;
+  try {
+    // Fetch data from Firestore
+    const userDoc = await db.collection('formSubmissions').doc(userName).get();
+    let firestoreData = {};
+    if (userDoc.exists) {
+      firestoreData = userDoc.data();
+    } else {
+      return res.status(404).json({ error: 'User not found in Firestore' });
+    }
+
+    // Fetch data from MongoDB
+    const mongoData = await Wallet.findOne({ userName });
+    if (!mongoData) {
+      return res.status(404).json({ error: 'User not found in MongoDB' });
+    }
+
+    // Find the latest positive and negative log entries
+    let latestPositiveLog = null;
+    let latestNegativeLog = null;
+
+    mongoData.logs.forEach(log => {
+      if (log.amount > 0) {
+        if (!latestPositiveLog || new Date(log.logDate) > new Date(latestPositiveLog.logDate)) {
+          latestPositiveLog = log;
+        }
+      } else if (log.amount < 0) {
+        if (!latestNegativeLog || new Date(log.logDate) > new Date(latestNegativeLog.logDate)) {
+          latestNegativeLog = log;
+        }
+      }
+    });
+
+    // Add the amounts to the Firestore data
+    const combinedData = {
+      ...firestoreData,
+      posamount: latestPositiveLog ? latestPositiveLog.amount : 0,
+      negamount: latestNegativeLog ? latestNegativeLog.amount : 0,
+    };
+
+    return res.status(200).json(combinedData);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+

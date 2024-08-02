@@ -13,24 +13,24 @@ const PlanCard = () => {
       <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">Wallet Balance</h5>
       <div className="flex items-baseline text-gray-900 dark:text-white">
         <span className="text-3xl font-semibold">₹</span>
-        <span className="text-5xl font-extrabold tracking-tight">0</span>
+        <span className="text-5xl font-extrabold tracking-tight">
+          0 {/* This assumes you want to show a combined balance */}
+        </span>
         <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400"></span>
       </div>
       <ul role="list" className="space-y-5 my-7">
         <li className="flex items-center">
-          <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3"></span>
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Last Deposit</span>
-          <div className="ml-auto text-2xl font-bold text-blue-600 dark:text-blue-400 animated-text">₹5000</div>
+          <div className="ml-auto text-2xl font-bold text-blue-600 dark:text-blue-400 animated-text">₹0</div>
         </li>
         <li className="flex items-center">
-          <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Last Withdrawl</span>
-          <div className="ml-auto text-2xl font-bold text-green-600 dark:text-green-400 animated-text">₹3000</div>
+          <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Last Withdrawal</span>
+          <div className="ml-auto text-2xl font-bold text-green-600 dark:text-green-400 animated-text">₹0</div>
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">Debt</span>
-          <div className="ml-auto text-2xl font-bold text-red-600 dark:text-red-400 animated-text">₹2000</div>
+          <div className="ml-auto text-2xl font-bold text-red-600 dark:text-red-400 animated-text">₹0</div>
         </li>
-        
       </ul>
       <button
         type="button"
@@ -44,4 +44,3 @@ const PlanCard = () => {
 };
 
 export default PlanCard;
-
