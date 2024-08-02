@@ -1,0 +1,43 @@
+.load{
+    position: relative;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(45deg, transparent, transparent 40%, #00f8ff);
+    animation: load 6s linear infinite;
+}
+
+.load::before{
+    content: '';
+    position: absolute;
+    width: 93%;
+    height: 93%;
+    background-color: #121212;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.load::after{
+    content: '';
+    position: absolute;
+    width: 93%;
+    height: 93%;
+    background: linear-gradient(45deg, transparent, transparent 40%, #00f8ff);
+    border-radius: 50%;
+    z-index: 2;
+    filter: blur(20px);
+}
+
+@keyframes load {
+    0%{
+        transform: rotate(0);
+        filter: hue-rotate(0);
+    }
+    100%{
+        transform: rotate(360deg);
+        filter: hue-rotate(360deg);
+    }
+}
