@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import '../form.css';
 import axios from 'axios';
@@ -149,6 +149,26 @@ export default function Form() {
 
 
     };
+
+    const [userName, setUserName] = useState(sessionStorage.getItem('username'));
+  const [healthscore, setHealthscore] = useState(0); // State to store healthscore
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(`Fetching data for userName: ${userName}`); // Log userName
+        const response = await axios.get(`http://localhost:12000/health-rec`, {
+          params: { userName } // Use axios params for query strings
+        });
+        setHealthscore(response.data.number); // Set healthscore state
+        console.log('Response data:', response.data.number); // Log API response data
+      } catch (error) {
+        console.error('Error fetching wallet data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userName]);
 
 
 

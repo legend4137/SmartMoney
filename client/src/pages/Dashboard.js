@@ -2,35 +2,66 @@
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from '../navbar'; // Ensure the path is correct
-import Speedometer from './meter';
+// import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
 import PlanCard from './WalletCard';
 import GaugeComponent from 'react-gauge-component';
 import './dashboard.css';
+import Navbar from '../navbar';
 
 const apiUrl = 'http://localhost:12000/health-rec';
 
 
 
 function Dashboard() {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const username = params.get('username');
 
-// const user = sessionStorage.getItem("userName");
-//   const [userName, setUserName] = useState('tharak');
-//   console.log(user);
-//   useEffect(() => {
-//     // const storedUsername = sessionStorage.getItem("userName");
-//     // console.log(storedUsername);
+  const userName = sessionStorage.getItem("username");
+  
+
+  const [data, setData] = useState({
+    healthscore:0,
+  });
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        console.log(`Fetching data for userNameee: ${userName}`); // Log userName
+        const response = await axios.get(`http://localhost:12000/get_account`, {
+          params: {userName} // Use axios params for query strings
+        });
+        console.log(response); // Log API response data
+
+        setData({
+          healthscore : response.data.data.healthScore
+        });
+      } catch (error) {
+        console.error('Error fetching wallet data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userName]);
     
-//     // if (storedUsername) {
-//     //   setUsername(storedUsername);
-//     //   fetchHealthData(storedUsername);
-//     // } else {
-//     //   console.error('No username found in session storage');
-//     // }
-//   }, []);
+  
+  // const [userName, setUserName] = useState(sessionStorage.getItem('username'));
+  // const [healthscore, setHealthscore] = useState(0); // State to store healthscore
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       console.log(`Fetching data for userName: ${userName}`); // Log userName
+  //       const response = await axios.get(`http://localhost:12000/health-rec`, {
+  //         params: { userName } // Use axios params for query strings
+  //       });
+  //       setHealthscore(response.data.number); // Set healthscore state
+  //       console.log('Response data:', response.data.number); // Log API response data
+  //     } catch (error) {
+  //       console.error('Error fetching wallet data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [userName]);
 
   return (
     <div className="dashboard">
@@ -40,7 +71,7 @@ function Dashboard() {
       <section className="bg-white dark:bg-gray-900 pt-32">
     <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            Hi {username}!
+            Hi {userName}!
         </h1>
         <div className="flex justify-center">
             <div className='load'>
@@ -107,7 +138,7 @@ function Dashboard() {
       ]
   }}
   pointer={{type: "blob", animationDelay: 0 }}
-  value={60}
+  value={data.healthscore}
 />
         </div>
       </section>
