@@ -2,10 +2,11 @@
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
+// import NavbarDemo from '../navbar-demo'; // Ensure the path is correct
 import PlanCard from './WalletCard';
 import GaugeComponent from 'react-gauge-component';
 import './dashboard.css';
+import Navbar from '../navbar';
 
 const apiUrl = 'http://localhost:12000/health-rec';
 
