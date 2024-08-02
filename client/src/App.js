@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Form from './pages/form';
 import NotFound from './pages/NotFound';
 import SignIn from './pages/entry';
+import UserInfo from './pages/UserInfo';
 import './App.css';  // Ensure to import the CSS file
 import Wallet from './pages/wallet';
 
@@ -18,10 +19,11 @@ function App() {
         <Route exact path="/form" element={<Form/>} />
         <Route exact path="/entry" element={<SignIn/>} />
         <Route exact path="/wallet" element={<Wallet/>} />
+        <Route exact path="/userinfo" element={<UserInfo/>} />
         <Route exact path='*' element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App;
+export default App; 
