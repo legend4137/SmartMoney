@@ -7,6 +7,13 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const storedUserName = sessionStorage.getItem("user");
+    if (storedUserName) {
+      setUsername(storedUserName);
+    }
+  }, []);
+
+  useEffect(() => {
     const storedUserName = sessionStorage.getItem('user');
     if (storedUserName) {
       setUsername(storedUserName);

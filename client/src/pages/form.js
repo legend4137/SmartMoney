@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+
 import '../form.css';
 import axios from 'axios';
 
@@ -105,10 +107,12 @@ export default function Form() {
     if (e) {
       e.preventDefault();
     }
+
     if (!validateCurrentStep()) {
       return;
     }
     try {
+
       // Submit form data to Firebase
       const formResponse = await fetch('http://localhost:12000/api/form', {
         method: 'POST',
@@ -117,6 +121,7 @@ export default function Form() {
         },
         body: JSON.stringify(formData)
       });
+
       const formResult = await formResponse.json();
       console.log(formResult);
   
@@ -138,8 +143,6 @@ export default function Form() {
       console.error('Error:', error);
     }
   };
-  
-  
 
   const handleNextStepClick = async (event) => {
     event.preventDefault();
