@@ -1,21 +1,25 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedUserName = sessionStorage.getItem("user");
+    if (storedUserName) {
+      setUsername(storedUserName);
+    }
+  }, []);
+
   const handleSubmit = (event) => {
-    // sessionStorage.removeItem('userName')
-    // event.preventDefault();
-    // sessionStorage.setItem("userName", username);
-
-    
-    // You can add your sign-in logic herex
-
+    event.preventDefault();
+  
+    // Save the username to session storage
+    sessionStorage.setItem("user", username);
+  
     // Navigate to the dashboard
-    ;
+    navigate(`/dashboard?username=${username}`);
   };
 
   return (
@@ -57,7 +61,6 @@ const SignIn = () => {
     </section>
 
     </div>
-
   );
 };
 
