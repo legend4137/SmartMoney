@@ -1,46 +1,54 @@
 .wallet-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-}
-
-.navbar {
-    flex-shrink: 0; /* Prevent Navbar from shrinking */
-    width: 100%;
-}
-
-.main-content {
+    height: 100vh; /* Full viewport height */
+  }
+  
+  .navbar {
+    width: 100%; /* Full width */
+  }
+  
+  .main-content {
+    flex: 1; /* Takes up available space between navbar and bottom navbar */
     display: flex;
-    flex: 1; /* Allow this section to take up available space */
-    overflow: hidden; /* Ensure no overflow from the main-content */
-}
-
-.editable-fields {
-    width: 33.33%; /* 1/3 of the container width */
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.scroll-box-container-wrapper {
+    flex-direction: row; /* Default layout for larger screens */
+    overflow: auto; /* Handle overflow if content is too large */
+  }
+  
+  .editable-fields {
+    flex: 1 1 33.33%; /* 1/3 of the width */
+    padding: 16px;
+  }
+  
+  .scroll-box-container {
+    flex: 2 1 66.67%; /* 2/3 of the width */
+    padding: 16px;
     display: flex;
-    flex-direction: column;
-    flex: 1; /* Allow this section to take up available space */
-    overflow: hidden; /* Hide any overflow */
-}
-
-.scroll-box-container {
-    flex: 1; /* Allow this section to take up available space */
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-.bottom-navbar {
-    width: 100%; /* Full width of the scroll-box-container-wrapper */
-    display: flex;
-    justify-content: center; /* Center the bottom-navbar */
-    padding: 10px; /* Optional padding */
-    box-sizing: border-box;
-}
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+  }
+  
+  .bottom-navbar {
+    width: 100%; /* Full width */
+    /* Additional styles for bottom navbar */
+  }
+  
+  /* Media Queries for Responsive Design */
+  
+  @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column; /* Stack items vertically on smaller screens */
+    }
+  
+    .editable-fields, .scroll-box-container {
+      flex: 1 1 100%; /* Full width on smaller screens */
+      padding: 8px; /* Adjust padding for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .editable-fields, .scroll-box-container {
+      padding: 4px; /* Further adjust padding for very small screens */
+    }
+  }
+  
