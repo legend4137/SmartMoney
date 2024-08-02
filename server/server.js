@@ -952,6 +952,41 @@ app.get('/wallet-card', async (req, res) => {
   }
 });
 
+app.get('/scrolling', async (req, res) => {
+  const userName = req.query.userName;
+  console.log(`Received request for userName: ${userName}`); // Log request
+
+  try {
+    // Fetch data from MongoDB
+    const mongoData = await Wallet.findOne({ userName });
+    if (!mongoData) {
+      return res.status(404).json({ error: 'User not found in MongoDB' });
+    }
+
+    // Extract and sort logs by logDate in descending order
+    const sortedLogs = mongoData.logs.sort((a, b) => new Date(b.logDate) - new Date(a.logDate));
+
+    // Take the latest 100 logs
+    const latestLogs = sortedLogs.slice(0, 100);
+
+    // Format logs as individual JSON objects
+    const logs = {};
+    latestLogs.forEach((log, index) => {
+      logs[`log${index + 1}`] = {
+        amount: log.amount,
+        reason: log.reason,
+        tag: log.tag,
+        logDate: log.logDate,
+      };
+    });
+
+    res.json(logs);
+  } catch (err) {
+    console.error('Error fetching logs:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 
 
