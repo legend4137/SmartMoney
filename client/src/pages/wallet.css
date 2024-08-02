@@ -1,22 +1,46 @@
 .wallet-container {
     display: flex;
-    height: 100vh; 
-    width: 100vw; 
-    flex-wrap: wrap;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.navbar {
+    flex-shrink: 0; /* Prevent Navbar from shrinking */
+    width: 100%;
+}
+
+.main-content {
+    display: flex;
+    flex: 1; /* Allow this section to take up available space */
+    overflow: hidden; /* Ensure no overflow from the main-content */
 }
 
 .editable-fields {
     width: 33.33%; /* 1/3 of the container width */
     padding: 20px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
+.scroll-box-container-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allow this section to take up available space */
+    overflow: hidden; /* Hide any overflow */
 }
 
 .scroll-box-container {
-    width: 66.67%; /* 2/3 of the container width */
+    flex: 1; /* Allow this section to take up available space */
     padding: 20px;
-    box-sizing: border-box; 
-    overflow: hidden; 
+    box-sizing: border-box;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.bottom-navbar {
+    width: 100%; /* Full width of the scroll-box-container-wrapper */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Center the bottom-navbar */
+    padding: 10px; /* Optional padding */
+    box-sizing: border-box;
 }
