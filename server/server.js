@@ -869,22 +869,23 @@ app.get('/wallet-card', async (req, res) => {
     let latestNegativeLog = null;
 
     mongoData.logs.forEach(log => {
-      if (log.amount > 0) {
+      if (log.tag === 'deposit') {
         if (!latestPositiveLog || new Date(log.logDate) > new Date(latestPositiveLog.logDate)) {
           latestPositiveLog = log;
         }
-      } else if (log.amount < 0) {
+      } else if (log.tag === 'withdraw') {
         if (!latestNegativeLog || new Date(log.logDate) > new Date(latestNegativeLog.logDate)) {
           latestNegativeLog = log;
         }
       }
     });
 
-    // Add the amounts to the Firestore data
+    // Add the amounts and balance to the Firestore data
     const combinedData = {
       ...firestoreData,
       posamount: latestPositiveLog ? latestPositiveLog.amount : 0,
       negamount: latestNegativeLog ? latestNegativeLog.amount : 0,
+      balance: mongoData.balance || 0, // Add balance to the combined data
     };
 
     return res.status(200).json(combinedData);
@@ -893,5 +894,7 @@ app.get('/wallet-card', async (req, res) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
 
 
