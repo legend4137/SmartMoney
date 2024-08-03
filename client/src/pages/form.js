@@ -119,7 +119,7 @@ export default function Form() {
       });
       const formResult = await formResponse.json();
       console.log(formResult);
-  
+    
       // Create a new user in MongoDB collection 'wallets'
       const walletResponse = await fetch('http://localhost:12000/wallet/create', {
         method: 'POST',
@@ -130,9 +130,9 @@ export default function Form() {
       });
       const walletResult = await walletResponse.json();
       console.log(walletResult);
-  
+    
       // Store username in sessionStorage
-      sessionStorage.setItem("user", formData.userName);
+      sessionStorage.setItem('userName', formData.userName);
       navigate(`/entry`);
     } catch (error) {
       console.error('Error:', error);
@@ -149,7 +149,7 @@ export default function Form() {
 
     // Check for duplicate username
     const isDuplicate = await checkDuplicates(formData.userName);
-    if (currentStep == 1) {
+    if (currentStep == 4) {
       if (isDuplicate) {
         alert('Username already exists!');
         return; // Stop execution if duplicate is found
