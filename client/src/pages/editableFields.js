@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './editableFields.css';
+import styles from './editableFields.module.css';
 
 const EditableFields = () => {
   const [data, setData] = useState({

@@ -1,6 +1,6 @@
 // src/components/ScrollBox.js
 import React from 'react';
-import './scrollBox.css'; // Import your CSS for styling
+import './scrollBox.module.css'; // Import your CSS for styling
 
 const ScrollBox = () => {
   return (

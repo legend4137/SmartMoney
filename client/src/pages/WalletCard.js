@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './WalletCard.css'; // Import the CSS file for animations
+// import './WalletCard.css';
 import axios from 'axios';
 
 const PlanCard = ({ userName }) => {

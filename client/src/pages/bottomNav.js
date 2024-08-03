@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './bottomNav.css';
+import styles from './bottomNav.module.css';
 
 const userName = sessionStorage.getItem('userName');
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import EditableFields from './editableFields';
 import ScrollBox from './scrollBox';
-import './wallet.css';
+// import './wallet.css';
 import BottomNavbar from './bottomNav'; 
-import Navbar from '../navbar';
+import Navbar from './navbar';
 
 const Wallet = () => {
   const [userName, setUserName] = useState('');
@@ -28,7 +28,7 @@ const Wallet = () => {
           <div className="scroll-box-container">
             <ScrollBox />
           </div>
-          <BottomNavbar className="bottom-navbar" /> {/* BottomNavbar at the bottom */}
+          <BottomNavbar className="bottom-navbar" /> BottomNavbar at the bottom
         </div>
 
       </div>
