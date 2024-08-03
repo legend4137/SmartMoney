@@ -1,96 +1,28 @@
-import React, { useState ,useEffect} from 'react';
-import axios from 'axios';
-import EditableFields from './editableFields';
+import React from 'react';
 import styles from './bottomNav.module.css';
 
-const userName = sessionStorage.getItem('username');
-
-const BottomNavbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('DEDUCT');
-  const [isOpen, setIsOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(); // Define the state for capturing user input
-  const [refresh, setRefresh] = useState(false); // State to trigger refresh
-
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    if (option === 'DEDUCT') {
-      setShowDropdown(true);
-    } else {
-      setShowDropdown(false);
-    }
-  };
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value); // Update input value state
-  };
-
-  // const BottomNav = () => {
-  const [wallet, setWallet] = useState(null);
-  const [error, setError] = useState('');
-
-  const addMoneyToWallet = async (userName, amount) => {
-    try {
-      const response = await axios.post('http://localhost:12000/wallet/add', { userName, amount });
-      setRefresh(prev => !prev); // Toggle refresh state to trigger EditableFields update
-    } catch (err) {
-      console.error(err.response.data.msg);
-    }
-  };
-
-  const deductMoneyFromWallet = async (userName, amount, tag, reason) => {
-    try {
-      const response = await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag, reason });
-      setRefresh(prev => !prev); // Toggle refresh state to trigger EditableFields update
-    } catch (err) {
-      console.error(err.response.data.msg);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:12000/wallet-card', {
-        params: { userName }
-      });
-      console.log('API response:', response.data); // Log the API response
-      setData({
-        field1: response.data.posamount || 0,
-        field2: response.data.negamount || 0,
-        field3: response.data.balance || 0,
-        field4: parseInt(response.data.totalDebt) || 0,
-      });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  fetchData()
-
-  /* const getWalletByUsername = async (userName) => {
-    try {
-      const response = await axios.get(`http://localhost:12000/wallet/${userName}`);
-      setWallet(response.data);
-    } catch (err) {
-      setError(err.response.data.msg);
-    }
-  }; */
-  
-
+const BottomNavbar = ({
+  inputValue,
+  handleInputChange,
+  addMoneyToWallet,
+  deductMoneyFromWallet,
+  toggleDropdown,
+  isOpen,
+  showDropdown,
+  handleOptionSelect
+}) => {
   return (
     <div className="bottom-navbar">
       <input
-        type="number" // Changed to number input
+        type="number"
         placeholder="Enter a number..."
         className="text-input"
-        value={inputValue} // Bind input value to state
-        onChange={handleInputChange} // Handle input changes
+        value={inputValue}
+        onChange={handleInputChange}
       />
       <div className="button-container">
-        <button className="btn" onClick={() => addMoneyToWallet(userName, Number(inputValue))}>Add Money</button>
-        <button className="btn" onClick={() => deductMoneyFromWallet(userName, Number(inputValue), 'entertainment', 'withdraw')}>
+        <button className="btn" onClick={() => addMoneyToWallet(Number(inputValue))}>Add Money</button>
+        <button className="btn" onClick={() => deductMoneyFromWallet(Number(inputValue), 'entertainment', 'withdraw')}>
           DEDUCT
         </button>
         {showDropdown && (
@@ -123,7 +55,7 @@ const BottomNavbar = () => {
               <div
                 id="dropdown"
                 className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                style={{ bottom: '100%', marginBottom: '8px' }} // Adjusts position to be above the button
+                style={{ bottom: '100%', marginBottom: '8px' }}
               >
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   <li>
@@ -182,10 +114,6 @@ const BottomNavbar = () => {
       </div>
     </div>
   );
-  
 };
-
-
-
 
 export default BottomNavbar;

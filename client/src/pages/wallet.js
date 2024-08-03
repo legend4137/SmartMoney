@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import EditableFields from './editableFields';
+import EditableFields from './parentComponent';
 import ScrollBox from './scrollBox';
 // import './wallet.css';
 import BottomNavbar from './bottomNav'; 
 import Navbar from './navbar';
+import ParentComponent from './parentComponent';
 
 const Wallet = () => {
   const [userName, setUserName] = useState('');
@@ -22,15 +23,10 @@ const Wallet = () => {
       <Navbar className="navbar" /> {/* Navbar at the top */}
       <div className="main-content">
         <div className="editable-fields">
-          <EditableFields userName={userName} />
+        <ParentComponent />
         </div>
         <div className="scroll-box-container-wrapper">
-          <div className="scroll-box-container">
-            <ScrollBox />
-          </div>
-          <BottomNavbar className="bottom-navbar" /> BottomNavbar at the bottom
         </div>
-
       </div>
     </div>
   );
