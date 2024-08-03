@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
+import EditableFields from './editableFields';
 import styles from './bottomNav.module.css';
 
-const userName = sessionStorage.getItem('userName');
+const userName = sessionStorage.getItem('username');
 
 const BottomNavbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState('DEDUCT');
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState(); // Define the state for capturing user input
+  const [refresh, setRefresh] = useState(false); // State to trigger refresh
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -27,57 +29,68 @@ const BottomNavbar = () => {
   };
 
   // const BottomNav = () => {
-    const [wallet, setWallet] = useState(null);
-    const [error, setError] = useState('');
+  const [wallet, setWallet] = useState(null);
+  const [error, setError] = useState('');
+
+  const addMoneyToWallet = async (userName, amount) => {
+    try {
+      const response = await axios.post('http://localhost:12000/wallet/add', { userName, amount });
+      setRefresh(prev => !prev); // Toggle refresh state to trigger EditableFields update
+    } catch (err) {
+      console.error(err.response.data.msg);
+    }
+  };
+
+  const deductMoneyFromWallet = async (userName, amount, tag, reason) => {
+    try {
+      const response = await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag, reason });
+      setRefresh(prev => !prev); // Toggle refresh state to trigger EditableFields update
+    } catch (err) {
+      console.error(err.response.data.msg);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:12000/wallet-card', {
+        params: { userName }
+      });
+      console.log('API response:', response.data); // Log the API response
+      setData({
+        field1: response.data.posamount || 0,
+        field2: response.data.negamount || 0,
+        field3: response.data.balance || 0,
+        field4: parseInt(response.data.totalDebt) || 0,
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  fetchData()
+
+  /* const getWalletByUsername = async (userName) => {
+    try {
+      const response = await axios.get(`http://localhost:12000/wallet/${userName}`);
+      setWallet(response.data);
+    } catch (err) {
+      setError(err.response.data.msg);
+    }
+  }; */
   
-    const createWallet = async (userName) => {
-      try {
-        const response = await axios.post('http://localhost:12000/wallet/create', { userName });
-        setWallet(response.data);
-      } catch (err) {
-        setError(err.response.data.msg);
-      }
-    };
-  
-    const addMoneyToWallet = async (userName, amount) => {
-      try {
-        const response = await axios.post('http://localhost:12000/wallet/add', { userName, amount });
-        setWallet(response.data);
-      } catch (err) {
-        setError(err.response.data.msg);
-      }
-    };
-  
-    const deductMoneyFromWallet = async (userName, amount, tag, reason) => {
-      try {
-        const response = await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag, reason });
-        setWallet(response.data);
-      } catch (err) {
-        setError(err.response.data.msg);
-      }
-    };
-  
-    const getWalletByUsername = async (userName) => {
-      try {
-        const response = await axios.get(`http://localhost:12000/wallet/${userName}`);
-        setWallet(response.data);
-      } catch (err) {
-        setError(err.response.data.msg);
-      }
-    };
 
   return (
     <div className="bottom-navbar">
-      <input 
+      <input
         type="number" // Changed to number input
-        placeholder="Enter a number..." 
-        className="text-input" 
-        value={Number(inputValue)} // Bind input value to state
+        placeholder="Enter a number..."
+        className="text-input"
+        value={inputValue} // Bind input value to state
         onChange={handleInputChange} // Handle input changes
       />
       <div className="button-container">
-      <button className="btn" onClick={() => addMoneyToWallet(userName, Number(inputValue))}>Add Money</button>
-        <button className="btn" onClick={() => deductMoneyFromWallet(userName,Number(inputValue),'entertainment','withdraw')}>
+        <button className="btn" onClick={() => addMoneyToWallet(userName, Number(inputValue))}>Add Money</button>
+        <button className="btn" onClick={() => deductMoneyFromWallet(userName, Number(inputValue), 'entertainment', 'withdraw')}>
           DEDUCT
         </button>
         {showDropdown && (
@@ -158,7 +171,7 @@ const BottomNavbar = () => {
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Uncategorized 
+                      Uncategorized
                     </a>
                   </li>
                 </ul>
@@ -169,6 +182,10 @@ const BottomNavbar = () => {
       </div>
     </div>
   );
+  
 };
+
+
+
 
 export default BottomNavbar;
