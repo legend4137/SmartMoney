@@ -16,7 +16,7 @@ const SignIn = () => {
     event.preventDefault();
 
     // Save the username to session storage
-    sessionStorage.setItem("user", username);
+    sessionStorage.setItem("username", username);
 
     // Navigate to the dashboard
     navigate(`/dashboard?username=${username}`);

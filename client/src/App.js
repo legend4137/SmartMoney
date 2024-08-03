@@ -9,6 +9,7 @@ import SignIn from './pages/entry';
 import UserInfo from './pages/UserInfo';
 import './App.css';  // Ensure to import the CSS file
 import Wallet from './pages/wallet';
+import chatbot from './pages/chatbot';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/entry" element={<SignIn/>} />
         <Route exact path="/wallet" element={<Wallet/>} />
         <Route exact path="/userinfo" element={<UserInfo/>} />
+        <Route exact path="/chatBot" element={<chatbot/>} />
         <Route exact path='*' element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>
