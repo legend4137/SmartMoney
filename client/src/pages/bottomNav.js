@@ -1,5 +1,6 @@
+// src/components/BottomNavbar.js
 import React from 'react';
-import styles from './bottomNav.module.css';
+import styles from './bottomNav.module.css'; // Adjust import if needed
 
 const BottomNavbar = ({
   inputValue,
@@ -12,21 +13,21 @@ const BottomNavbar = ({
   handleOptionSelect
 }) => {
   return (
-    <div className="bottom-navbar">
-      <input
-        type="number"
-        placeholder="Enter a number..."
-        className="text-input"
-        value={inputValue}
-        onChange={handleInputChange}
+    <div className={styles.bottomNavbar}>
+      <input 
+        type="number" // Changed to number input
+        placeholder="Enter a number..." 
+        className={styles.textInput} 
+        value={Number(inputValue)} // Bind input value to state
+        onChange={handleInputChange} // Handle input changes
       />
-      <div className="button-container">
+      <div className={styles.buttonContainer}>
         <button className="btn" onClick={() => addMoneyToWallet(Number(inputValue))}>Add Money</button>
         <button className="btn" onClick={() => deductMoneyFromWallet(Number(inputValue), 'entertainment', 'withdraw')}>
           DEDUCT
         </button>
         {showDropdown && (
-          <div className="relative">
+          <div className={styles.relative}>
             <button
               id="dropdownDefaultButton"
               onClick={toggleDropdown}
@@ -62,6 +63,7 @@ const BottomNavbar = ({
                     <a
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => handleOptionSelect('Entertainment')}
                     >
                       Entertainment
                     </a>
@@ -70,6 +72,7 @@ const BottomNavbar = ({
                     <a
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => handleOptionSelect('Food n Drink')}
                     >
                       Food n Drink
                     </a>
@@ -78,6 +81,7 @@ const BottomNavbar = ({
                     <a
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => handleOptionSelect('Utils')}
                     >
                       Utils
                     </a>
@@ -86,6 +90,7 @@ const BottomNavbar = ({
                     <a
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => handleOptionSelect('Home')}
                     >
                       Home
                     </a>
@@ -94,6 +99,7 @@ const BottomNavbar = ({
                     <a
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => handleOptionSelect('Transportation')}
                     >
                       Transportation
                     </a>
@@ -102,6 +108,7 @@ const BottomNavbar = ({
                     <a
                       href="#"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={() => handleOptionSelect('Uncategorized')}
                     >
                       Uncategorized
                     </a>

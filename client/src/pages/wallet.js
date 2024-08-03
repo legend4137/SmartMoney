@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import EditableFields from './parentComponent';
 import ScrollBox from './scrollBox';
-// import './wallet.css';
 import BottomNavbar from './bottomNav'; 
 import Navbar from './navbar';
 import ParentComponent from './parentComponent';
+import styles from './wallet.module.css'; // Adjust import if using CSS modules
 
 const Wallet = () => {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    // Retrieve the username from session storage
     const storedUserName = sessionStorage.getItem("user");
     if (storedUserName) {
       setUserName(storedUserName);
@@ -28,6 +27,9 @@ const Wallet = () => {
         <div className="scroll-box-container-wrapper">
         </div>
       </div>
+      {/* <div className={styles.editableFields}>
+          <EditableFields userName={userName} />
+        </div> */}
     </div>
   );
 };
