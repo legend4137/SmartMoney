@@ -1,40 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import styles from './editableFields.module.css';
 
-const ContactDrawer = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
-  const [data, setData] = useState({
-    field1: '0',
-    field2: '0',
-    field3: '0',
-  });
-  const userName = sessionStorage.getItem('username'); // Get the username from sessionStorage
+const EditableFields = ({ data }) => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:12000/wallet-card', {
-          params: { userName }
-        });
-        console.log('API response:', response.data); // Log the API response
-        setData({
-          field1: response.data.posamount || 0,
-          field2: response.data.negamount || 0,
-          field3: parseInt(response.data.totalDebt) || 0,
-        });
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    if (userName) {
-      fetchData();
-    }
-  }, [userName]);
 
   return (
     <div>
@@ -107,6 +79,22 @@ const ContactDrawer = () => {
           </div>
           <div className="mb-6">
             <label
+              htmlFor="balance"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Balance
+            </label>
+            <input
+              type="text"
+              id="balance"
+              value={data.field3} // Update this to the correct field for balance
+              readOnly
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Balance"
+            />
+          </div>
+          <div className="mb-6">
+            <label
               htmlFor="debt"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
@@ -115,7 +103,7 @@ const ContactDrawer = () => {
             <input
               type="text"
               id="debt"
-              value={data.field3}
+              value={data.field4}
               readOnly
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Debt"
@@ -127,4 +115,4 @@ const ContactDrawer = () => {
   );
 };
 
-export default ContactDrawer;
+export default EditableFields;

@@ -1,4 +1,3 @@
-// src/components/BottomNavbar.js
 import React from 'react';
 import styles from './bottomNav.module.css'; // Adjust import if needed
 
@@ -18,7 +17,7 @@ const BottomNavbar = ({
         type="number" // Changed to number input
         placeholder="Enter a number..." 
         className={styles.textInput} 
-        value={Number(inputValue)} // Bind input value to state
+        value={inputValue} // Use inputValue directly
         onChange={handleInputChange} // Handle input changes
       />
       <div className={styles.buttonContainer}>
