@@ -76,7 +76,7 @@ const ParentComponent = () => {
   return (
     <div>
       <EditableFields data={walletData} />
-      <ScrollBox />
+      <ScrollBox refresh={refresh} />
       <BottomNavbar
         inputValue={inputValue}
         handleInputChange={handleInputChange}
