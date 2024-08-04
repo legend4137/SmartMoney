@@ -17,7 +17,7 @@ const Wallet = () => {
   }, []);
 
   return (
-    <div className="wallet-container">
+    <div className="wallet-container bg-gray-700 min-h-screen">
 
       <Navbar className="navbar" /> {/* Navbar at the top */}
       <div className="main-content">
