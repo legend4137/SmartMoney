@@ -17,7 +17,7 @@ const EditableFields = ({ data }) => {
           type="button"
           onClick={toggleDrawer}
         >
-          {isDrawerOpen ? 'Hide Contact Form' : 'Show Contact Form'}
+          {isDrawerOpen ? 'Hide Transactions' : 'Show Transactions'}
         </button>
       </div>
 
