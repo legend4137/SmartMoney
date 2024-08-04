@@ -1,4 +1,6 @@
 const express = require("express");
+// const {chalk} = require(chalk);
+const { promptSync} = require("prompt-sync");
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -8,7 +10,13 @@ const bodyParser = require("body-parser");
 
 const { db } = require("./firebase"); // Import Firestore instance
 //const {mongoDb} = require("./mongodb")
-const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
+// Import Google Generative AI SDK
+
+const {
+  GoogleGenerativeAI,
+  HarmCategory,
+  HarmBlockThreshold,
+} = require("@google/generative-ai");
 
 const app = express();
 const port = 12000;
@@ -190,7 +198,7 @@ app.get("/wallet/:userName/last-deposit", async (req, res) => {
     }
 
     // Filter the logs to find those with reason "deposit"
-    const depositLogs = wallet.logs.filter(log => log.tag === "deposit");
+    const depositLogs = wallet.logs.filter((log) => log.tag === "deposit");
 
     if (depositLogs.length === 0) {
       return res.status(404).json({ msg: "No deposit logs found" });
@@ -217,7 +225,7 @@ app.get("/wallet/:userName/last-withdraw", async (req, res) => {
     }
 
     // Filter the logs to find those with reason "deposit"
-    const depositLogs = wallet.logs.filter(log => log.reason === "withdraw");
+    const depositLogs = wallet.logs.filter((log) => log.reason === "withdraw");
 
     if (depositLogs.length === 0) {
       return res.status(404).json({ msg: "No withdraw logs found" });
@@ -232,7 +240,6 @@ app.get("/wallet/:userName/last-withdraw", async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 });
-
 
 // Route to handle form submission (Firestore)
 app.post("/api/form", async (req, res) => {
@@ -310,13 +317,11 @@ app.post("/api/form", async (req, res) => {
     });
   } catch (error) {
     console.error("Error storing data:", error.message);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error storing data",
-        error: error.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Error storing data",
+      error: error.message,
+    });
   }
 });
 
@@ -336,13 +341,11 @@ app.get("/handleDuplicates", async (req, res) => {
     res.json({ exists });
   } catch (error) {
     console.error("Error checking duplicates:", error);
-    return res
-      .status(500)
-      .json({
-        success: false,
-        message: "Error checking duplicates",
-        error: error.message,
-      });
+    return res.status(500).json({
+      success: false,
+      message: "Error checking duplicates",
+      error: error.message,
+    });
   }
 });
 
@@ -559,7 +562,9 @@ some of the values might be null just omit them and try to calculate the score o
   -investment:${doc.investment.stringValue},
   -pfFunds:${doc.pfFunds.stringValue},
   -property:${doc.property.stringValue},
-  -emergencyFunds:${doc.emergencyFunds.stringValue}  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number
+  -emergencyFunds:${
+    doc.emergencyFunds.stringValue
+  }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number
   `;
 
       const result = await chat.sendMessage(prompt);
@@ -572,10 +577,10 @@ some of the values might be null just omit them and try to calculate the score o
       const response2 = await result2.response;
       const text2 = response2.text();
       console.log(text2);
-      document = db.collection("formSubmissions").doc(user)
+      document = db.collection("formSubmissions").doc(user);
       await document.update({
         healthScore: text,
-      })
+      });
       const pass = {
         number: text,
         text: text2,
@@ -616,7 +621,7 @@ app.get("/get_account", async (req, res) => {
 });
 
 app.post("/update_account", async (req, res) => {
-  const { accountId} = req.query;
+  const { accountId } = req.query;
   const updatedData = req.body.updatedData;
 
   if (!accountId) {
@@ -852,8 +857,8 @@ app.get("/daily-rec", async (req, res) => {
       Utils: 0,
       Home: 0,
       Uncategorized: 0,
-      Transportation: 0
-    }
+      Transportation: 0,
+    };
     //  console.log(type);
     for (let i = 0; i < log.length && i < 100; i++) {
       if (log[i].tag == "withdraw") {
@@ -873,15 +878,12 @@ app.get("/daily-rec", async (req, res) => {
         },
         {
           role: "model",
-          parts: [
-            { text: "Great to meet you. What would you like to know?" },
-          ],
+          parts: [{ text: "Great to meet you. What would you like to know?" }],
         },
       ],
       generationConfig: {
         maxOutputTokens: 100,
       },
-
     });
 
     prompt = `I am building a finance advisor website. one of its feature is of advices. the user data is given to me. i want to give him some suggestions that will be based on the analysis of his expendeture. I will give you his daily expenses. On the basis of them give me 3 advices. The advices should be crisp and give them in bullet point, I just want the advices and no additional text
@@ -896,7 +898,7 @@ app.get("/daily-rec", async (req, res) => {
     const text = response.text();
     console.log(text);
     const pass = {
-      advice: text
+      advice: text,
     };
     res.json(pass);
   } catch (error) {
@@ -905,37 +907,42 @@ app.get("/daily-rec", async (req, res) => {
   }
 });
 
-
-app.get('/wallet-card', async (req, res) => {
+app.get("/wallet-card", async (req, res) => {
   const userName = req.query.userName;
   console.log(`Received request for userName: ${userName}`); // Log request
   try {
     // Fetch data from Firestore
-    const userDoc = await db.collection('formSubmissions').doc(userName).get();
+    const userDoc = await db.collection("formSubmissions").doc(userName).get();
     let firestoreData = {};
     if (userDoc.exists) {
       firestoreData = userDoc.data();
     } else {
-      return res.status(404).json({ error: 'User not found in Firestore' });
+      return res.status(404).json({ error: "User not found in Firestore" });
     }
 
     // Fetch data from MongoDB
     const mongoData = await Wallet.findOne({ userName });
     if (!mongoData) {
-      return res.status(404).json({ error: 'User not found in MongoDB' });
+      return res.status(404).json({ error: "User not found in MongoDB" });
     }
 
     // Find the latest positive and negative log entries
     let latestPositiveLog = null;
     let latestNegativeLog = null;
 
-    mongoData.logs.forEach(log => {
-      if (log.tag === 'deposit') {
-        if (!latestPositiveLog || new Date(log.logDate) > new Date(latestPositiveLog.logDate)) {
+    mongoData.logs.forEach((log) => {
+      if (log.tag === "deposit") {
+        if (
+          !latestPositiveLog ||
+          new Date(log.logDate) > new Date(latestPositiveLog.logDate)
+        ) {
           latestPositiveLog = log;
         }
-      } else if (log.tag === 'withdraw') {
-        if (!latestNegativeLog || new Date(log.logDate) > new Date(latestNegativeLog.logDate)) {
+      } else if (log.tag === "withdraw") {
+        if (
+          !latestNegativeLog ||
+          new Date(log.logDate) > new Date(latestNegativeLog.logDate)
+        ) {
           latestNegativeLog = log;
         }
       }
@@ -949,15 +956,15 @@ app.get('/wallet-card', async (req, res) => {
       balance: mongoData.balance || 0, // Add balance to the combined data
     };
 
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader("Content-Type", "application/json");
     return res.status(200).json(combinedData);
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error fetching user data:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-app.get('/scrolling', async (req, res) => {
+app.get("/scrolling", async (req, res) => {
   const userName = req.query.userName;
   console.log(`Received request for userName: ${userName}`); // Log request
 
@@ -965,11 +972,13 @@ app.get('/scrolling', async (req, res) => {
     // Fetch data from MongoDB
     const mongoData = await Wallet.findOne({ userName });
     if (!mongoData) {
-      return res.status(404).json({ error: 'User not found in MongoDB' });
+      return res.status(404).json({ error: "User not found in MongoDB" });
     }
 
     // Extract and sort logs by logDate in descending order
-    const sortedLogs = mongoData.logs.sort((a, b) => new Date(b.logDate) - new Date(a.logDate));
+    const sortedLogs = mongoData.logs.sort(
+      (a, b) => new Date(b.logDate) - new Date(a.logDate)
+    );
 
     // Take the latest 100 logs
     const latestLogs = sortedLogs.slice(0, 100);
@@ -987,13 +996,39 @@ app.get('/scrolling', async (req, res) => {
 
     res.json(logs);
   } catch (err) {
-    console.error('Error fetching logs:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error fetching logs:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-
-
-
-
+app.get("/chatbot-" , async(req , res) =>{
+  console.log(req.body);
+  const context = req.body.context;
+  try{
+  const genAI = new GoogleGenerativeAI(
+    "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+  );
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const chat = model.startChat({
+    generationConfig: {
+      maxOutputTokens: 100,
+    },
+  })
+  const prompt = req.body.prompt;
+  
+  const acctual_prompt = `this is the context consider this as a consersation and user as me and ai as you  this is the all conversation we did if this is empty then we didnt talked ${context}. the follwing sentence that I give consider this as a next messege from me and respond accordingly ${prompt}. on the basis of the context and the prompt given give me the response on the basis of this`;
+  const result = await chat.sendMessage(acctual_prompt);
+    const response = await result.response;
+    const text = response.text();
+    console.log(text);
+    const pass = {
+      response: text
+    };
+    res.json(pass);
+  }
+  catch (error) {
+    console.error("Error fetching wallet:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
 
