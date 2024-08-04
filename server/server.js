@@ -4,6 +4,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 // import Realm, { ObjectSchema } from "realm";
 const bodyParser = require("body-parser");
+// const { body, validationResult } = require('express-validator');
+
 const { db } = require("./firebase"); // Import Firestore instance
 //const {mongoDb} = require("./mongodb")
 const { GoogleGenerativeAI } = require("@google/generative-ai"); // Import Google Generative AI SDK
@@ -260,6 +262,7 @@ app.post("/api/form", async (req, res) => {
   } = req.body;
 
   const docId = userName; // Use timestamp as a simple unique ID
+  const healthScore = 0;
 
   try {
     // Check if document already exists
@@ -283,6 +286,7 @@ app.post("/api/form", async (req, res) => {
       netIncome,
       housingCost,
       utilities,
+      healthScore,
       foodAndGroceries,
       transport,
       insurance,
@@ -480,7 +484,8 @@ app.listen(port, () => {
 });
 
 app.get("/health-rec", async (req, res) => {
-  // console.log(req.body.userName);
+  console.log(req.query.userName);
+  const user = req.query.userName;
   const genAI = new GoogleGenerativeAI(
     "AIzaSyBtuZOsDwsnL25GcAsCGI7VFHpbauWkMxk"
   );
@@ -567,11 +572,10 @@ some of the values might be null just omit them and try to calculate the score o
       const response2 = await result2.response;
       const text2 = response2.text();
       console.log(text2);
-      const doc_ref = db.collection("formSubmissions").doc(req.body.userName);
-      doc_ref.update({
+      document = db.collection("formSubmissions").doc(user)
+      await document.update({
         healthScore: text,
-      });
-
+      })
       const pass = {
         number: text,
         text: text2,
@@ -612,7 +616,8 @@ app.get("/get_account", async (req, res) => {
 });
 
 app.post("/update_account", async (req, res) => {
-  const { accountId, updatedData } = req.body;
+  const { accountId} = req.query;
+  const updatedData = req.body.updatedData;
 
   if (!accountId) {
     return res.status(400).json({ error: "Account ID is required" });
@@ -975,7 +980,8 @@ app.get('/scrolling', async (req, res) => {
       logs[`log${index + 1}`] = {
         amount: log.amount,
         reason: log.reason,
-        tag: log.tag,
+        transaction: log.tag,
+        Date: log.logDate,
       };
     });
 

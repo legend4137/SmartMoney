@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
-import styles from './form.module.css';
+
 import axios from 'axios';
 
 const checkDuplicates = async (userName) => {
@@ -14,6 +14,8 @@ const checkDuplicates = async (userName) => {
 };
 
 export default function Form() {
+  const [healthscore, setHealthscore] = useState(0);
+
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -105,10 +107,12 @@ export default function Form() {
     if (e) {
       e.preventDefault();
     }
+
     if (!validateCurrentStep()) {
       return;
     }
     try {
+
       // Submit form data to Firebase
       const formResponse = await fetch('http://localhost:12000/api/form', {
         method: 'POST',
@@ -117,6 +121,7 @@ export default function Form() {
         },
         body: JSON.stringify(formData)
       });
+
       const formResult = await formResponse.json();
       console.log(formResult);
     
@@ -132,16 +137,50 @@ export default function Form() {
       console.log(walletResult);
     
       // Store username in sessionStorage
-      sessionStorage.setItem('userName', formData.userName);
+      sessionStorage.clear()
+      sessionStorage.setItem("username", formData.userName);
+      // setUserName(formData.userName);
+      console.log(`This is a check statement to see if session storage is working: ${formData.userName}`);
       navigate(`/entry`);
     } catch (error) {
       console.error('Error:', error);
+    }
+    try {
+      console.log(`This is a check statement: ${formData.userName}`);
+      console.log(`Fetching data for userName: ${formData.userName}`); // Log userName
+      const parameter = formData.userName;
+      console.log(`Parameter value: ${parameter}`);
+      const response = await axios.get('http://localhost:12000/health-rec', {
+        params: { userName:parameter } // Use axios params for query strings
+      });
+      // setHealthscore(response.data.number); // Set healthscore state
+      console.log('Response data:', response.data.number); // Log API response data
+    } catch (error) {
+      console.error('Error fetching wallet data:', error);
+    }
+  };
+
+  const healthScoreSubmit = async (e) => {
+    try {
+      console.log(`This is a check statement: ${userName}`);
+      console.log(`Fetching data for userName: ${userName}`); // Log userName
+      const response = await axios.get('http://localhost:12000/health-rec', {
+        params: { userName } // Use axios params for query strings
+      });
+      setHealthscore(response.data.number); // Set healthscore state
+      console.log('Response data:', response.data.number); // Log API response data
+    } catch (error) {
+      console.error('Error fetching wallet data:', error);
     }
   };
   
   
 
   const handleNextStepClick = async (event) => {
+    if(currentStep ===1){
+      sessionStorage.clear();
+      sessionStorage.setItem("username", formData.userName);
+    }
     event.preventDefault();
     if (!validateCurrentStep()) {
       return;
@@ -168,27 +207,7 @@ export default function Form() {
 
   };
 
-    const [userName, setUserName] = useState(sessionStorage.getItem('username'));
-  const [healthscore, setHealthscore] = useState(0); // State to store healthscore
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log(`Fetching data for userName: ${userName}`); // Log userName
-        const response = await axios.get(`http://localhost:12000/health-rec`, {
-          params: { userName } // Use axios params for query strings
-        });
-        setHealthscore(response.data.number); // Set healthscore state
-        console.log('Response data:', response.data.number); // Log API response data
-      } catch (error) {
-        console.error('Error fetching wallet data:', error);
-      }
-    };
-
-    fetchData();
-  }, [userName]);
-
-
+  const [userName, setUserName] = useState(sessionStorage.getItem('username'));
 
   const handleBackClick = (event) => {
     event.preventDefault();
@@ -591,7 +610,8 @@ export default function Form() {
                 className="formbold-btn"
                 type="button"  // Use type="button" to prevent default form submission
                 onClick={async () => {
-                  await handleSubmit(); // Ensure handleSubmit is awaited
+                  await handleSubmit();
+                  // await healthScoreSubmit(); // Ensure handleSubmit is awaited
                   navigate('/entry');  // Navigate after form submission
                 }}
               >
