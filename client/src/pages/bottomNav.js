@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import styles from './bottomNav.module.css'; // Adjust import if needed
 
 const BottomNavbar = ({
@@ -84,3 +85,4 @@ const BottomNavbar = ({
 };
 
 export default BottomNavbar;
+

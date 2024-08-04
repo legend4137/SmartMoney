@@ -72,7 +72,7 @@ const ParentComponent = () => {
   };
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(prev => !prev);
   };
 
   const handleOptionSelect = (option) => {
@@ -81,6 +81,7 @@ const ParentComponent = () => {
       setShowDropdown(true);
     } else {
       setShowDropdown(false);
+      setIsOpen(false); // Close dropdown if option is not 'DEDUCT'
     }
   };
 

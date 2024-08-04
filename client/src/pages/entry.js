@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import backgroundImage from '../assets/among-us.png'; // Correct import statement
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
@@ -19,7 +20,7 @@ const SignIn = () => {
         // Save the username to session storage
         sessionStorage.setItem('username', username);
 
-        // Navigate to the dashboard
+        // Navigate to the dashboard  
         navigate(`/dashboard?username=${username}`);
       } else {
         // Handle case where account is not found
@@ -32,10 +33,14 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div className="bg-cover bg-center min-h-screen flex items-center justify-center px-8 py-8" style={{ backgroundImage: `url(${backgroundImage})`,  backgroundSize: 'cover',
+    backgroundAttachment: 'fixed',
+    height: '100vh',
+    width: '100vw',
+    overflow: 'hidden' }}>
       <section>
-        <div className="flex flex-col justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex items-center justify-center min-h-screen px-8 py-8 mx-auto">
+          <div className="w-full bg-white bg-opacity-80 rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:bg-opacity-80 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
@@ -60,7 +65,7 @@ const SignIn = () => {
                   Sign in
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Don't have an account yet? <a href="/form" className="font-large text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                  Don't have an account yet? <a href="/form" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                 </p>
               </form>
             </div>
