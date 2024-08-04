@@ -39,6 +39,10 @@ const ParentComponent = () => {
   }, [refresh]);
 
   const addMoneyToWallet = async (amount) => {
+    if(amount<0){
+      alert("Adding a negative value to your account is not allowed.")
+      return;
+    };
     try {
       await axios.post('http://localhost:12000/wallet/add', { userName, amount });
       setRefresh(prev => !prev);
@@ -48,6 +52,13 @@ const ParentComponent = () => {
   };
 
   const deductMoneyFromWallet = async (amount, tag, reason) => {
+    if(amount<0){
+      alert("You cannot deduct a negative value from your account.")
+    }
+    if (amount > walletData.field3) { // Check if amount is greater than the balance
+      alert("You cannot deduct an amount greater than the available balance.");
+      return;
+    }
     try {
       await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag, reason });
       setRefresh(prev => !prev);
