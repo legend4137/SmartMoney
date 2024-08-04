@@ -1,0 +1,51 @@
+.chatPopupContainer {
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    z-index: 1000;
+  }
+  
+  .circularButton {
+    position: relative;
+    width: 80px; /* Increased width */
+    height: 80px; /* Increased height */
+    background-color: #555;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .buttonImage {
+    width: 60px; /* Increased width */
+    height: 60px; /* Increased height */
+  }
+  
+  .circularButton:hover {
+    background-color: #777;
+  }
+  
+  .tooltipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 90px; /* Adjusted to position above the larger button */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .circularButton:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+  }
+  

@@ -4,6 +4,7 @@ import PlanCard from './WalletCard';
 import GaugeComponent from 'react-gauge-component';
 import './dashboard.module.css';
 import Navbar from './navbar';
+import ChatPopup from './ChatPopup';
 
 const apiUrl = 'http://localhost:12000/health-rec';
 
@@ -66,23 +67,23 @@ function Dashboard() {
         <Navbar />
       </div>
       <section className="bg-white dark:bg-gray-900 pt-32">
-    <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-        <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+          <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
             Hi {userName}!
-        </h1>
-        <div className="flex justify-center">
+          </h1>
+          <div className="flex justify-center">
             <div className='load'>
-            <img className='w-64 max-w-xs pt-4 pb-8 z-200' src="/sample_logo.png" alt="Sample Logo" />
+              <img className='w-64 max-w-xs pt-4 pb-8 z-200' src="/sample_logo.png" alt="Sample Logo" />
             </div>
-        </div>
-        <p className="mb-8 mt-8 text-2xl font-bold text-gray-500 lg:text-xl sm:px-16 xl:px-28 dark:text-gray-400">
+          </div>
+          <p className="mb-8 mt-8 text-2xl font-bold text-gray-500 lg:text-xl sm:px-16 xl:px-28 dark:text-gray-400">
             Welcome to SmartMoney
-        </p>
-        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-28 dark:text-gray-400">
+          </p>
+          <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-28 dark:text-gray-400">
             Here we give you financial advice based on your earning and expense so that you may enjoy your life happily. We hope our product helps you in a good way.
-        </p>
-    </div>
-    </section>
+          </p>
+        </div>
+      </section>
 
       <section className="bg-white dark:bg-gray-900">
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
@@ -109,26 +110,26 @@ function Dashboard() {
           </div>
           
           <GaugeComponent
-  type="semicircle"
-  arc={{
-    colorArray: ['#FF2121', '#00FF15'],
-    padding: 0.02,
-    subArcs:
-      [
-        { limit: 30 },
-        { limit: 40 },
-        { limit: 60 },
-        {},
-        {},
-        {},
-        {}
-      ]
-  }}
-  pointer={{type: "blob", animationDelay: 0 }}
-  value={data.healthscore}
-/>
+            type="semicircle"
+            arc={{
+              colorArray: ['#FF2121', '#00FF15'],
+              padding: 0.02,
+              subArcs: [
+                { limit: 30 },
+                { limit: 40 },
+                { limit: 60 },
+                {},
+                {},
+                {},
+                {}
+              ]
+            }}
+            pointer={{ type: "blob", animationDelay: 0 }}
+            value={data.healthscore}
+          />
         </div>
       </section>
+      <ChatPopup />
     </div>
   );
 }
