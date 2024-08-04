@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+import './form.module.css';
 
 import axios from 'axios';
 
@@ -67,6 +68,10 @@ export default function Form() {
     }
     if (currentStep === 2) {
       const { monthlyGrossIncome, netIncome, housingCost, utilities, insurance } = formData;
+      if(monthlyGrossIncome<0 || netIncome<0 || housingCost<0 || utilities<0 || insurance<0){
+        alert('You cannot submit negative values');
+        return;
+      }
       if (!monthlyGrossIncome || !netIncome || !housingCost || !utilities || !insurance) {
         alert('Please fill out all compulsory fields marked with *');
         return false;
@@ -74,6 +79,10 @@ export default function Form() {
     }
     if (currentStep === 3) {
       const { totalDebt, repaymentPlans, investment, pfFunds, property, emergencyFunds } = formData;
+      if(totalDebt<0 || repaymentPlans<0 || investment<0 || pfFunds<0 || property<0 || emergencyFunds<0){
+        alert('You cannot submit negative values');
+        return;
+      }
       if (!totalDebt || !repaymentPlans || !investment || !pfFunds || !property || !emergencyFunds) {
         alert('Please fill out all compulsory fields marked with *');
         return false;
@@ -81,6 +90,10 @@ export default function Form() {
     }
     if (currentStep === 4) {
       const { entertainment, healthcare, education, savings } = formData;
+      if(entertainment<0 || healthcare<0 || education<0 || savings<0){
+        alert('You cannot submit a negative value');
+        return;
+      }
       if (!entertainment || !healthcare || !education || !savings) {
         alert('Please fill out all compulsory fields marked with *');
         return false;
@@ -188,7 +201,7 @@ export default function Form() {
 
     // Check for duplicate username
     const isDuplicate = await checkDuplicates(formData.userName);
-    if (currentStep == 4) {
+    if (currentStep == 1) {
       if (isDuplicate) {
         alert('Username already exists!');
         return; // Stop execution if duplicate is found
@@ -227,28 +240,28 @@ export default function Form() {
                 onClick={() => handleStepClick(1)}
               >
                 <span>1</span>
-                <a href="#">Step 1</a>
+                <a href="#">Step1</a>
               </li>
               <li
                 className={`formbold-step-menu2 ${currentStep === 2 ? 'active' : ''}`}
                 onClick={() => handleStepClick(2)}
               >
                 <span>2</span>
-                <a href="#">Step 2</a>
+                <a href="#">Step2</a>
               </li>
               <li
                 className={`formbold-step-menu3 ${currentStep === 3 ? 'active' : ''}`}
                 onClick={() => handleStepClick(3)}
               >
                 <span>3</span>
-                <a href="#">Step 3</a>
+                <a href="#">Step3</a>
               </li>
               <li
                 className={`formbold-step-menu4 ${currentStep === 4 ? 'active' : ''}`}
                 onClick={() => handleStepClick(4)}
               >
                 <span>4</span>
-                <a href="#">Step 4</a>
+                <a href="#">Step4</a>
               </li>
             </ul>
           </div>
