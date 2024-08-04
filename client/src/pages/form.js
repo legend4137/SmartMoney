@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+import './form.module.css';
 
 import axios from 'axios';
 
@@ -239,28 +240,28 @@ export default function Form() {
                 onClick={() => handleStepClick(1)}
               >
                 <span>1</span>
-                <a href="#">Step 1</a>
+                <a href="#">Step1</a>
               </li>
               <li
                 className={`formbold-step-menu2 ${currentStep === 2 ? 'active' : ''}`}
                 onClick={() => handleStepClick(2)}
               >
                 <span>2</span>
-                <a href="#">Step 2</a>
+                <a href="#">Step2</a>
               </li>
               <li
                 className={`formbold-step-menu3 ${currentStep === 3 ? 'active' : ''}`}
                 onClick={() => handleStepClick(3)}
               >
                 <span>3</span>
-                <a href="#">Step 3</a>
+                <a href="#">Step3</a>
               </li>
               <li
                 className={`formbold-step-menu4 ${currentStep === 4 ? 'active' : ''}`}
                 onClick={() => handleStepClick(4)}
               >
                 <span>4</span>
-                <a href="#">Step 4</a>
+                <a href="#">Step4</a>
               </li>
             </ul>
           </div>
