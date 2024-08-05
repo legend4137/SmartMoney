@@ -1,12 +1,45 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Navbar = () => {
+  const userName = sessionStorage.getItem("username");
+  const navigate = useNavigate();
+  const [data, setData] = useState({
+    mail: "",
+  });
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
   const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
+
+  useEffect(() => {
+    if (!userName) {
+      navigate('/entry');
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        console.log(`Fetching data for userName: ${userName}`); // Log userName
+        const response = await axios.get('http://localhost:12000/wallet-card', {
+          params: { userName } // Use axios params for query strings
+        });
+        console.log('Response data:', response.data); // Log API response data
+
+        setData({
+          mail: response.data.email || "",
+          userName,
+        });
+
+      } catch (error) {
+        console.error('Error fetching wallet data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userName, navigate]);
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900" style={{ zIndex: 50 }}>
@@ -33,18 +66,21 @@ const Navbar = () => {
             id="user-dropdown"
           >
             <div className="px-4 py-3">
-              <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+              <span className="block text-sm text-gray-900 dark:text-white">{data.userName}</span>
+              <span className="block text-sm text-gray-500 truncate dark:text-gray-400">{data.mail}</span>
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
-              <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+                <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
               </li>
               <li>
-              <Link to="/wallet" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wallet</Link>
+                <Link to="/wallet" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wallet</Link>
               </li>
               <li>
-              <Link to="/entry" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
+                <Link to="/userinfo" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit Account</Link>
+              </li>
+              <li>
+                <Link to="/entry" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
               </li>
             </ul>
           </div>
@@ -64,10 +100,10 @@ const Navbar = () => {
         <div className={`items-center justify-between hidden w-full md:flex md:w-auto md:order-1 ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="navbar-menu">
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-            <Link to="/" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</Link>
+              <Link to="/" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</Link>
             </li>
             <li>
-            <Link to="/dashboard" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Dashboard</Link>
+              <Link to="/dashboard" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Dashboard</Link>
             </li>
             <li>
               <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Chat Bot</a>
