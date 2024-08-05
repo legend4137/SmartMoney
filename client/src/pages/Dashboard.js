@@ -5,6 +5,7 @@ import GaugeComponent from 'react-gauge-component';
 import './dashboard.module.css';
 import Navbar from './navbar';
 import ChatPopup from './ChatPopup';
+import Graph from './Graph';
 
 const apiUrl = 'http://localhost:12000/health-rec';
 
@@ -13,10 +14,10 @@ const apiUrl = 'http://localhost:12000/health-rec';
 function Dashboard() {
 
   const userName = sessionStorage.getItem("username");
-  
+
 
   const [data, setData] = useState({
-    healthscore:0,
+    healthscore: 0,
   });
 
   useEffect(() => {
@@ -25,12 +26,12 @@ function Dashboard() {
       try {
         console.log(`Fetching data for userNameee: ${userName}`); // Log userName
         const response = await axios.get(`http://localhost:12000/get_account`, {
-          params: {userName} // Use axios params for query strings
+          params: { userName } // Use axios params for query strings
         });
         console.log(response); // Log API response data
 
         setData({
-          healthscore : response.data.data.healthScore
+          healthscore: response.data.data.healthScore
         });
       } catch (error) {
         console.error('Error fetching wallet data:', error);
@@ -39,8 +40,8 @@ function Dashboard() {
 
     fetchData();
   }, [userName]);
-    
-  
+
+
   // const [userName, setUserName] = useState(sessionStorage.getItem('username'));
   // const [healthscore, setHealthscore] = useState(0); // State to store healthscore
 
@@ -89,12 +90,7 @@ function Dashboard() {
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <PlanCard userName={userName} />
           <div className="mt-4 md:mt-0">
-            <h2 className="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-              Wallet
-            </h2>
-            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
-              This feature looks upon your log book, tracks the expense. If you want to edit this just click the open wallet feature to redirect to the wallet page to get your wallet updated.
-            </p>
+            <Graph />
           </div>
         </div>
       </section>
@@ -108,7 +104,7 @@ function Dashboard() {
               Checkout your health score here based on the responses you gave to us. Also below are some of the comments based on the health score.
             </p>
           </div>
-          
+
           <GaugeComponent
             type="semicircle"
             arc={{

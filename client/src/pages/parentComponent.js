@@ -60,8 +60,8 @@ const ParentComponent = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag, reason });
-      setRefresh(prev => !prev);
+      await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag});
+      setRefresh(prev => !prev); // This will trigger fetchData() due to refresh change
     } catch (err) {
       console.error(err.response.data.msg);
     }

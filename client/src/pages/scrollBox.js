@@ -9,9 +9,7 @@ const ScrollBox = ({ refresh }) => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        console.log('Fetching logs...'); // Log fetch start
         const response = await axios.get(`http://localhost:12000/scrolling?userName=${userName}`);
-        console.log('Fetched logs:', response.data); // Log fetched data
         setLogs(Object.values(response.data));
       } catch (error) {
         console.error('Error fetching logs:', error);
@@ -19,7 +17,7 @@ const ScrollBox = ({ refresh }) => {
     };
 
     fetchLogs();
-  }, [userName, refresh]); // Add refresh as a dependency to useEffect to refetch logs when refresh changes
+  }, [userName, refresh]);
 
   const tableMaxHeight = 420;
 
