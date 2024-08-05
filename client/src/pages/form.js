@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+var y=0
 
 const checkDuplicates = async (userName) => {
   try {
@@ -246,7 +247,8 @@ export default function Form() {
 
     // Check for duplicate username
     const isDuplicate = await checkDuplicates(formData.userName);
-    if (currentStep === 1) {
+    if (currentStep === 1 && y==0) {
+      y=1
       if (isDuplicate) {
         alert("Username already exists!");
         return; // Stop execution if duplicate is found
