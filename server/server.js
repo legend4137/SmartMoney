@@ -1013,20 +1013,22 @@ app.get("/scrolling", async (req, res) => {
 
 app.get("/chatbot-" , async(req , res) =>{
   console.log(req.body);
-  const context = req.body.context;
+  const context = req.body.context.history;
+  console.log(context);
   try{
   const genAI = new GoogleGenerativeAI(
     "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
+    // history : req.body.context.history,
     generationConfig: {
       maxOutputTokens: 100,
     },
   })
   const prompt = req.body.prompt;
   
-  const acctual_prompt = `this is the context consider this as a consersation and user as me and ai as you  this is the all conversation we did if this is empty then we didnt talked ${context}. the follwing sentence that I give consider this as a next messege from me and respond accordingly ${prompt}. on the basis of the context and the prompt given give me the response on the basis of this`;
+  const acctual_prompt = ` ${JSON.stringify(context)}her the ai is yourself and user is me this is the history of our privious conversations on the basis of this give me response on to the next prompt continue the conversation and give the response to the prompt as if you are responding to the converation. ${prompt}.`;
   const result = await chat.sendMessage(acctual_prompt);
     const response = await result.response;
     const text = response.text();
