@@ -49,8 +49,8 @@ const ScrollBox = ({ refresh }) => {
                 <td className="px-4 py-2">{log.amount}</td>
                 <td className="px-4 py-2">{log.reason}</td>
                 <td className="px-4 py-2">{log.transaction}</td>
-                <td className="px-4 py-2">Tags</td>
-                <td className="px-4 py-2">{log.Date}</td>
+                <td className="px-4 py-2">{log.tag}</td>
+                <td className="px-4 py-2">{new Date(log.Date).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>

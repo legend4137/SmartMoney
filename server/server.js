@@ -60,6 +60,7 @@ const walletSchema = new mongoose.Schema({
       amount: { type: Number, required: true },
       reason: { type: String, required: true },
       tag: { type: String, required: true },
+      transaction: {type: String, required: true},
       logDate: { type: Date, default: Date.now }, // Changed from String to Date for better date handling
     },
   ],
@@ -116,8 +117,9 @@ app.post("/wallet/add", async (req, res) => {
     wallet.balance += amount;
     wallet.logs.push({
       amount,
-      reason: `Added ${amount} to the wallet!`,
-      tag: "deposit",
+      reason: `Added ₹${amount} to the wallet!`,
+      tag:"-",
+      transaction: "deposit",
       logDate: new Date(),
     });
 
@@ -158,7 +160,13 @@ app.post("/wallet/deduct", async (req, res) => {
     }
 
     wallet.balance -= amount;
-    wallet.logs.push({ amount, reason, tag, logDate: new Date() });
+    wallet.logs.push({ 
+      amount, 
+      reason:`Deducted ₹${amount} from the wallet!`, 
+      tag:"yolo",
+      transaction:"withdraw",
+      logDate: new Date() 
+    });
 
     await wallet.save();
 
@@ -198,7 +206,7 @@ app.get("/wallet/:userName/last-deposit", async (req, res) => {
     }
 
     // Filter the logs to find those with reason "deposit"
-    const depositLogs = wallet.logs.filter((log) => log.tag === "deposit");
+    const depositLogs = wallet.logs.filter((log) => log.transaction === "deposit");
 
     if (depositLogs.length === 0) {
       return res.status(404).json({ msg: "No deposit logs found" });
@@ -225,7 +233,7 @@ app.get("/wallet/:userName/last-withdraw", async (req, res) => {
     }
 
     // Filter the logs to find those with reason "deposit"
-    const depositLogs = wallet.logs.filter((log) => log.reason === "withdraw");
+    const depositLogs = wallet.logs.filter((log) => log.transaction === "withdraw");
 
     if (depositLogs.length === 0) {
       return res.status(404).json({ msg: "No withdraw logs found" });

@@ -18,7 +18,7 @@ const BottomNavbar = ({
   const handleOptionSelect = (option) => {
     setSelectedTag(option);
     setDropdownOpen(false);
-    deductMoneyFromWallet(Number(inputValue), option, 'withdraw');
+    deductMoneyFromWallet(Number(inputValue), option, 'TO BE CHANGED');
   };
 
   const handleDeductClick = () => {
