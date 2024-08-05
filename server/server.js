@@ -59,8 +59,8 @@ const walletSchema = new mongoose.Schema({
     {
       amount: { type: Number, required: true },
       reason: { type: String, required: true },
-      tag: { type: String, required: true },
       transaction: {type: String, required: true},
+      tag: { type: String, required: true },
       logDate: { type: Date, default: Date.now }, // Changed from String to Date for better date handling
     },
   ],
@@ -117,9 +117,9 @@ app.post("/wallet/add", async (req, res) => {
     wallet.balance += amount;
     wallet.logs.push({
       amount,
-      reason: `Added ₹${amount} to the wallet!`,
-      tag:"-",
+      reason: `Added ${amount} to the wallet!`,
       transaction: "deposit",
+      tag: " ",
       logDate: new Date(),
     });
 
@@ -134,7 +134,7 @@ app.post("/wallet/add", async (req, res) => {
 
 // Deduct money from wallet
 app.post("/wallet/deduct", async (req, res) => {
-  const { userName, amount, tag, reason } = req.body;
+  const { userName, amount, tag} = req.body;
 
   if (!userName) {
     return res.status(400).json({ msg: "UserName is required!" });
@@ -144,7 +144,7 @@ app.post("/wallet/deduct", async (req, res) => {
     return res.status(400).json({ msg: "A valid amount is required!" });
   }
 
-  if (!tag || !reason) {
+  if (!tag) {
     return res.status(400).json({ msg: "Tag and reason are required!" });
   }
 
@@ -160,11 +160,12 @@ app.post("/wallet/deduct", async (req, res) => {
     }
 
     wallet.balance -= amount;
+
     wallet.logs.push({ 
       amount, 
       reason:`Deducted ₹${amount} from the wallet!`, 
-      tag:"yolo",
       transaction:"withdraw",
+      tag,
       logDate: new Date() 
     });
 
@@ -939,14 +940,14 @@ app.get("/wallet-card", async (req, res) => {
     let latestNegativeLog = null;
 
     mongoData.logs.forEach((log) => {
-      if (log.tag === "deposit") {
+      if (log.transaction === "deposit") {
         if (
           !latestPositiveLog ||
           new Date(log.logDate) > new Date(latestPositiveLog.logDate)
         ) {
           latestPositiveLog = log;
         }
-      } else if (log.tag === "withdraw") {
+      } else if (log.transaction === "withdraw") {
         if (
           !latestNegativeLog ||
           new Date(log.logDate) > new Date(latestNegativeLog.logDate)
@@ -997,7 +998,8 @@ app.get("/scrolling", async (req, res) => {
       logs[`log${index + 1}`] = {
         amount: log.amount,
         reason: log.reason,
-        transaction: log.tag,
+        transaction: log.transaction,
+        tag: log.tag,
         Date: log.logDate,
       };
     });

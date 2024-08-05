@@ -18,23 +18,23 @@ const BottomNavbar = ({
   const handleOptionSelect = (option) => {
     setSelectedTag(option);
     setDropdownOpen(false);
-    deductMoneyFromWallet(Number(inputValue), option, 'TO BE CHANGED');
+
+    deductMoneyFromWallet(Number(inputValue), option, '');
+
   };
 
   const handleDeductClick = () => {
-    if (!isDropdownOpen) {
-      setDropdownOpen(true);
-    }
+    setDropdownOpen(!isDropdownOpen);
   };
 
   return (
     <nav className={styles.bottomNavbar}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4">
         <div className="flex items-center space-x-4 relative"> {/* Adjusted gap here */}
-          <input 
+          <input
             type="number" // Changed to number input
-            placeholder="Enter a number..." 
-            className={styles.textInput} 
+            placeholder="Enter a number..."
+            className={styles.textInput}
             value={inputValue} // Use inputValue directly
             onChange={handleInputChange} // Handle input changes
           />
