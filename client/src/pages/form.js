@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
-import './form.module.css';
-
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const checkDuplicates = async (userName) => {
   try {
-    const response = await axios.get(`http://localhost:12000/handleDuplicates?userName=${userName}`);
+    const response = await axios.get(
+      `http://localhost:12000/handleDuplicates?userName=${userName}`
+    );
     return response.data.exists;
   } catch (error) {
-    console.error('Error checking duplicates:', error);
+    console.error("Error checking duplicates:", error);
     return false;
   }
 };
@@ -20,37 +20,42 @@ export default function Form() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    userName: '',
-    monthlyGrossIncome: '',
-    netIncome: '',
-    housingCost: '',
-    utilities: '',
-    foodAndGroceries: '',
-    transport: '',
-    insurance: '',
-    entertainment: '',
-    healthcare: '',
-    education: '',
-    savings: '',
-    others: '',
-    totalDebt: '',
-    repaymentPlans: '',
-    investment: '',
-    pfFunds: '',
-    property: '',
-    emergencyFunds: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    userName: "",
+    monthlyGrossIncome: "",
+    netIncome: "",
+    housingCost: "",
+    utilities: "",
+    foodAndGroceries: "",
+    transport: "",
+    insurance: "",
+    entertainment: "",
+    healthcare: "",
+    education: "",
+    savings: "",
+    others: "",
+    totalDebt: "",
+    repaymentPlans: "",
+    investment: "",
+    pfFunds: "",
+    property: "",
+    emergencyFunds: "",
   });
 
   const validateEmail = (email) => {
-    const validDomains = ['gmail.com', 'yahoo.co.in', 'outlook.com', 'iitj.ac.in'];
+    const validDomains = [
+      "gmail.com",
+      "yahoo.co.in",
+      "outlook.com",
+      "iitj.ac.in",
+    ];
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(email)) {
       return false;
     }
-    const domain = email.split('@')[1];
+    const domain = email.split("@")[1];
     return validDomains.includes(domain);
   };
 
@@ -58,44 +63,83 @@ export default function Form() {
     if (currentStep === 1) {
       const { userName, firstName, email } = formData;
       if (!userName.trim() || !firstName.trim() || !email.trim()) {
-        alert('Please fill out all compulsory fields marked with *.');
+        alert("Please fill out all compulsory fields marked with *.");
         return false;
       }
       if (!validateEmail(email)) {
-        alert('Please enter a valid email address.');
+        alert("Please enter a valid email address.");
         return false;
       }
     }
     if (currentStep === 2) {
-      const { monthlyGrossIncome, netIncome, housingCost, utilities, insurance } = formData;
-      if(monthlyGrossIncome<0 || netIncome<0 || housingCost<0 || utilities<0 || insurance<0){
-        alert('You cannot submit negative values');
+      const {
+        monthlyGrossIncome,
+        netIncome,
+        housingCost,
+        utilities,
+        insurance,
+      } = formData;
+      if (
+        monthlyGrossIncome < 0 ||
+        netIncome < 0 ||
+        housingCost < 0 ||
+        utilities < 0 ||
+        insurance < 0
+      ) {
+        alert("You cannot submit negative values");
         return;
       }
-      if (!monthlyGrossIncome || !netIncome || !housingCost || !utilities || !insurance) {
-        alert('Please fill out all compulsory fields marked with *');
+      if (
+        !monthlyGrossIncome ||
+        !netIncome ||
+        !housingCost ||
+        !utilities ||
+        !insurance
+      ) {
+        alert("Please fill out all compulsory fields marked with *");
         return false;
       }
     }
     if (currentStep === 3) {
-      const { totalDebt, repaymentPlans, investment, pfFunds, property, emergencyFunds } = formData;
-      if(totalDebt<0 || repaymentPlans<0 || investment<0 || pfFunds<0 || property<0 || emergencyFunds<0){
-        alert('You cannot submit negative values');
+      const {
+        totalDebt,
+        repaymentPlans,
+        investment,
+        pfFunds,
+        property,
+        emergencyFunds,
+      } = formData;
+      if (
+        totalDebt < 0 ||
+        repaymentPlans < 0 ||
+        investment < 0 ||
+        pfFunds < 0 ||
+        property < 0 ||
+        emergencyFunds < 0
+      ) {
+        alert("You cannot submit negative values");
         return;
       }
-      if (!totalDebt || !repaymentPlans || !investment || !pfFunds || !property || !emergencyFunds) {
-        alert('Please fill out all compulsory fields marked with *');
+      if (
+        !totalDebt ||
+        !repaymentPlans ||
+        !investment ||
+        !pfFunds ||
+        !property ||
+        !emergencyFunds
+      ) {
+        alert("Please fill out all compulsory fields marked with *");
         return false;
       }
     }
     if (currentStep === 4) {
       const { entertainment, healthcare, education, savings } = formData;
-      if(entertainment<0 || healthcare<0 || education<0 || savings<0){
-        alert('You cannot submit a negative value');
+      if (entertainment < 0 || healthcare < 0 || education < 0 || savings < 0) {
+        alert("You cannot submit a negative value");
         return;
       }
       if (!entertainment || !healthcare || !education || !savings) {
-        alert('Please fill out all compulsory fields marked with *');
+        alert("Please fill out all compulsory fields marked with *");
         return false;
       }
     }
@@ -112,7 +156,7 @@ export default function Form() {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -125,51 +169,54 @@ export default function Form() {
       return;
     }
     try {
-
       // Submit form data to Firebase
-      const formResponse = await fetch('http://localhost:12000/api/form', {
-        method: 'POST',
+      const formResponse = await fetch("http://localhost:12000/api/form", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const formResult = await formResponse.json();
       console.log(formResult);
-    
+
       // Create a new user in MongoDB collection 'wallets'
-      const walletResponse = await fetch('http://localhost:12000/wallet/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userName: formData.userName }) // Send the userName
-      });
+      const walletResponse = await fetch(
+        "http://localhost:12000/wallet/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName: formData.userName }), // Send the userName
+        }
+      );
       const walletResult = await walletResponse.json();
       console.log(walletResult);
-    
+
       // Store username in sessionStorage
-      sessionStorage.clear()
+      sessionStorage.clear();
       sessionStorage.setItem("username", formData.userName);
-      // setUserName(formData.userName);
-      console.log(`This is a check statement to see if session storage is working: ${formData.userName}`);
+      console.log(
+        `This is a check statement to see if session storage is working: ${formData.userName}`
+      );
       navigate(`/entry`);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
     try {
       console.log(`This is a check statement: ${formData.userName}`);
       console.log(`Fetching data for userName: ${formData.userName}`); // Log userName
       const parameter = formData.userName;
       console.log(`Parameter value: ${parameter}`);
-      const response = await axios.get('http://localhost:12000/health-rec', {
-        params: { userName:parameter } // Use axios params for query strings
+      const response = await axios.get("http://localhost:12000/health-rec", {
+        params: { userName: parameter }, // Use axios params for query strings
       });
       // setHealthscore(response.data.number); // Set healthscore state
-      console.log('Response data:', response.data.number); // Log API response data
+      console.log("Response data:", response.data.number); // Log API response data
     } catch (error) {
-      console.error('Error fetching wallet data:', error);
+      console.error("Error fetching wallet data:", error);
     }
   };
 
@@ -177,20 +224,18 @@ export default function Form() {
     try {
       console.log(`This is a check statement: ${userName}`);
       console.log(`Fetching data for userName: ${userName}`); // Log userName
-      const response = await axios.get('http://localhost:12000/health-rec', {
-        params: { userName } // Use axios params for query strings
+      const response = await axios.get("http://localhost:12000/health-rec", {
+        params: { userName }, // Use axios params for query strings
       });
       setHealthscore(response.data.number); // Set healthscore state
-      console.log('Response data:', response.data.number); // Log API response data
+      console.log("Response data:", response.data.number); // Log API response data
     } catch (error) {
-      console.error('Error fetching wallet data:', error);
+      console.error("Error fetching wallet data:", error);
     }
   };
-  
-  
 
   const handleNextStepClick = async (event) => {
-    if(currentStep ===1){
+    if (currentStep === 1) {
       sessionStorage.clear();
       sessionStorage.setItem("username", formData.userName);
     }
@@ -201,26 +246,27 @@ export default function Form() {
 
     // Check for duplicate username
     const isDuplicate = await checkDuplicates(formData.userName);
-    if (currentStep == 1) {
+    if (currentStep === 1) {
       if (isDuplicate) {
-        alert('Username already exists!');
+        alert("Username already exists!");
         return; // Stop execution if duplicate is found
       }
     }
     try {
-      const response = await axios.post('http://localhost:12000/api/form', formData);
-      console.log('Response:', response.data);
+      const response = await axios.post(
+        "http://localhost:12000/api/form",
+        formData
+      );
+      console.log("Response:", response.data);
     } catch (error) {
-      console.error('Error storing data:', error);
+      console.error("Error storing data:", error);
     }
     if (validateCurrentStep() && currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
-
-
   };
 
-  const [userName, setUserName] = useState(sessionStorage.getItem('username'));
+  const [userName, setUserName] = useState(sessionStorage.getItem("username"));
 
   const handleBackClick = (event) => {
     event.preventDefault();
@@ -230,403 +276,469 @@ export default function Form() {
   };
 
   return (
-    <div className="formbold-main-wrapper">
-      <div className="formbold-form-wrapper">
-        <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-          <div className="formbold-steps">
-            <ul>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="w-full max-w-4xl p-6 bg-white shadow-md rounded-lg">
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="mb-6">
+            <ul className="flex space-x-4">
               <li
-                className={`formbold-step-menu1 ${currentStep === 1 ? 'active' : ''}`}
+                className={`cursor-pointer ${
+                  currentStep === 1
+                    ? "text-blue-600 font-semibold"
+                    : "text-gray-600"
+                }`}
                 onClick={() => handleStepClick(1)}
               >
-                <span>1</span>
-                <a href="#">Step1</a>
+                <a href="#" className="text-sm">
+                  Step 1
+                </a>
               </li>
               <li
-                className={`formbold-step-menu2 ${currentStep === 2 ? 'active' : ''}`}
+                className={`cursor-pointer ${
+                  currentStep === 2
+                    ? "text-blue-600 font-semibold"
+                    : "text-gray-600"
+                }`}
                 onClick={() => handleStepClick(2)}
               >
-                <span>2</span>
-                <a href="#">Step2</a>
+                <a href="#" className="text-sm">
+                  Step 2
+                </a>
               </li>
               <li
-                className={`formbold-step-menu3 ${currentStep === 3 ? 'active' : ''}`}
+                className={`cursor-pointer ${
+                  currentStep === 3
+                    ? "text-blue-600 font-semibold"
+                    : "text-gray-600"
+                }`}
                 onClick={() => handleStepClick(3)}
               >
-                <span>3</span>
-                <a href="#">Step3</a>
+                <a href="#" className="text-sm">
+                  Step 3
+                </a>
               </li>
               <li
-                className={`formbold-step-menu4 ${currentStep === 4 ? 'active' : ''}`}
+                className={`cursor-pointer ${
+                  currentStep === 4
+                    ? "text-blue-600 font-semibold"
+                    : "text-gray-600"
+                }`}
                 onClick={() => handleStepClick(4)}
               >
-                <span>4</span>
-                <a href="#">Step4</a>
+                <a href="#" className="text-sm">
+                  Step 4
+                </a>
               </li>
             </ul>
           </div>
-
-          <div className={`formbold-form-step-1 ${currentStep === 1 ? 'active' : ''}`}>
-            <p style={{ paddingBottom: '20px' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-            </p>
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="firstName" className="formbold-form-label">
-                  First Name<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder=""
-                  id="firstName"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+          {currentStep === 1 && (
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    First Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="lastName" className="formbold-form-label">
-                  Last Name
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email *
                 </label>
                 <input
-                  type="text"
-                  name="lastName"
-                  placeholder=""
-                  id="lastName"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="email" className="formbold-form-label">
-                  Email Address<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="email"
-                  placeholder=""
+                  type="email"
                   id="email"
-                  className="formbold-form-input"
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
               <div>
-                <label htmlFor="userName" className="formbold-form-label">
-                  Username<span className="required">*</span>
+                <label
+                  htmlFor="userName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Username *
                 </label>
                 <input
                   type="text"
-                  name="userName"
-                  placeholder=""
                   id="userName"
-                  className="formbold-form-input"
+                  name="userName"
+                  value={formData.userName}
                   onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
-          </div>
-
-          <div className={`formbold-form-step-2 ${currentStep === 2 ? 'active' : ''}`}>
-            <p style={{ paddingBottom: '20px' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-            </p>
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="monthlyGrossIncome" className="formbold-form-label">
-                  Monthly Gross Income<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="monthlyGrossIncome"
-                  placeholder=""
-                  id="monthlyGrossIncome"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+          )}
+          {currentStep === 2 && (
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="monthlyGrossIncome"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Monthly Gross Income *
+                  </label>
+                  <input
+                    type="number"
+                    id="monthlyGrossIncome"
+                    name="monthlyGrossIncome"
+                    value={formData.monthlyGrossIncome}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="netIncome"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Net Income *
+                  </label>
+                  <input
+                    type="number"
+                    id="netIncome"
+                    name="netIncome"
+                    value={formData.netIncome}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+              </div>
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="housingCost"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Housing Cost *
+                  </label>
+                  <input
+                    type="number"
+                    id="housingCost"
+                    name="housingCost"
+                    value={formData.housingCost}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="utilities"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Utilities *
+                  </label>
+                  <input
+                    type="number"
+                    id="utilities"
+                    name="utilities"
+                    value={formData.utilities}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="foodAndGroceries"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Food And Groceries *
+                  </label>
+                  <input
+                    type="number"
+                    id="foodAndGroceries"
+                    name="foodAndGroceries"
+                    value={formData.foodAndGroceries}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="transport"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Transport *
+                  </label>
+                  <input
+                    type="number"
+                    id="transport"
+                    name="transport"
+                    value={formData.transport}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="netIncome" className="formbold-form-label">
-                  Net Income<span className="required">*</span>
+                <label
+                  htmlFor="insurance"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Insurance *
                 </label>
                 <input
-                  type="text"
-                  name="netIncome"
-                  placeholder=""
-                  id="netIncome"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="housingCost" className="formbold-form-label">
-                  Housing Cost<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="housingCost"
-                  placeholder=""
-                  id="housingCost"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="utilities" className="formbold-form-label">
-                  Utilities<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="utilities"
-                  placeholder=""
-                  id="utilities"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="insurance" className="formbold-form-label">
-                  Insurance<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="insurance"
-                  placeholder=""
+                  type="number"
                   id="insurance"
-                  className="formbold-form-input"
+                  name="insurance"
+                  value={formData.insurance}
                   onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="foodAndGroceries" className="formbold-form-label">
-                  Food and Groceries
-                </label>
-                <input
-                  type="text"
-                  name="foodAndGroceries"
-                  placeholder=""
-                  id="foodAndGroceries"
-                  className="formbold-form-input"
-                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="transport" className="formbold-form-label">
-                  Transport
-                </label>
-                <input
-                  type="text"
-                  name="transport"
-                  placeholder=""
-                  id="transport"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+          )}
+          {currentStep === 3 && (
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="totalDebt"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Total Debt *
+                  </label>
+                  <input
+                    type="number"
+                    id="totalDebt"
+                    name="totalDebt"
+                    value={formData.totalDebt}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="repaymentPlans"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Repayment Plans *
+                  </label>
+                  <input
+                    type="number"
+                    id="repaymentPlans"
+                    name="repaymentPlans"
+                    value={formData.repaymentPlans}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-              <div>
-                <label htmlFor="others" className="formbold-form-label">
-                  Others
-                </label>
-                <input
-                  type="text"
-                  name="others"
-                  placeholder=""
-                  id="others"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="investment"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Investment *
+                  </label>
+                  <input
+                    type="number"
+                    id="investment"
+                    name="investment"
+                    value={formData.investment}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="pfFunds"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    PF Funds *
+                  </label>
+                  <input
+                    type="number"
+                    id="pfFunds"
+                    name="pfFunds"
+                    value={formData.pfFunds}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div className={`formbold-form-step-3 ${currentStep === 3 ? 'active' : ''}`}>
-            <p style={{ paddingBottom: '20px' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-            </p>
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="totalDebt" className="formbold-form-label">
-                  Total Debt<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="totalDebt"
-                  placeholder=""
-                  id="totalDebt"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="repaymentPlans" className="formbold-form-label">
-                  Repayment Plans<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="repaymentPlans"
-                  placeholder=""
-                  id="repaymentPlans"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="investment" className="formbold-form-label">
-                  Investment<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="investment"
-                  placeholder=""
-                  id="investment"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="pfFunds" className="formbold-form-label">
-                  PF Funds<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="pfFunds"
-                  placeholder=""
-                  id="pfFunds"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="property" className="formbold-form-label">
-                  Property<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="property"
-                  placeholder=""
-                  id="property"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="emergencyFunds" className="formbold-form-label">
-                  Emergency Funds<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="emergencyFunds"
-                  placeholder=""
-                  id="emergencyFunds"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="property"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Property *
+                  </label>
+                  <input
+                    type="number"
+                    id="property"
+                    name="property"
+                    value={formData.property}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="emergencyFunds"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Emergency Funds *
+                  </label>
+                  <input
+                    type="number"
+                    id="emergencyFunds"
+                    name="emergencyFunds"
+                    value={formData.emergencyFunds}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className={`formbold-form-step-4 ${currentStep === 4 ? 'active' : ''}`}>
-            <p style={{ paddingBottom: '20px' }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-            </p>
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="entertainment" className="formbold-form-label">
-                  Entertainment<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="entertainment"
-                  placeholder=""
-                  id="entertainment"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+          )}
+          {currentStep === 4 && (
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="entertainment"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Entertainment *
+                  </label>
+                  <input
+                    type="number"
+                    id="entertainment"
+                    name="entertainment"
+                    value={formData.entertainment}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="healthcare"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Healthcare *
+                  </label>
+                  <input
+                    type="number"
+                    id="healthcare"
+                    name="healthcare"
+                    value={formData.healthcare}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
-              <div>
-                <label htmlFor="healthcare" className="formbold-form-label">
-                  Healthcare<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="healthcare"
-                  placeholder=""
-                  id="healthcare"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
+              <div className="flex space-x-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="education"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Education *
+                  </label>
+                  <input
+                    type="number"
+                    id="education"
+                    name="education"
+                    value={formData.education}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="savings"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Savings *
+                  </label>
+                  <input
+                    type="number"
+                    id="savings"
+                    name="savings"
+                    value={formData.savings}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="others"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Others *
+                  </label>
+                  <input
+                    type="number"
+                    id="others"
+                    name="others"
+                    value={formData.others}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
             </div>
-
-            <div className="formbold-input-flex">
-              <div>
-                <label htmlFor="education" className="formbold-form-label">
-                  Education<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="education"
-                  placeholder=""
-                  id="education"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label htmlFor="savings" className="formbold-form-label">
-                  Savings<span className="required">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="savings"
-                  placeholder=""
-                  id="savings"
-                  className="formbold-form-input"
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="formbold-buttons flex">
-            <button
-              className="formbold-btn"
-              onClick={handleBackClick}
-              disabled={currentStep === 1}
-            >
-              Back
-            </button>
+          )}
+          <div className="flex justify-between">
+            {currentStep > 1 && (
+              <button
+                type="button"
+                onClick={handleBackClick}
+                className="px-4 py-2 bg-gray-300 text-white rounded-md hover:bg-gray-400"
+              >
+                Back
+              </button>
+            )}
             {currentStep < 4 && (
-              <button className="formbold-btn" onClick={handleNextStepClick}>
+              <button
+                type="button"
+                onClick={handleNextStepClick}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
                 Next
               </button>
             )}
             {currentStep === 4 && (
               <button
-                className="formbold-btn"
-                type="button"  // Use type="button" to prevent default form submission
-                onClick={async () => {
-                  await handleSubmit();
-                  // await healthScoreSubmit(); // Ensure handleSubmit is awaited
-                  navigate('/entry');  // Navigate after form submission
-                }}
+                type="submit"
+                onClick={handleSubmit}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
               >
                 Submit
               </button>
