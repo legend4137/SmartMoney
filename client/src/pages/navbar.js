@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Navbar = () => {
-  const userName = sessionStorage.getItem("username");
+  var userName = sessionStorage.getItem("username");
   const navigate = useNavigate();
   const [data, setData] = useState({
     mail: "",
@@ -13,6 +13,10 @@ const Navbar = () => {
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
   const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
+
+  const SignOut = () => {
+    sessionStorage.removeItem("username");
+  };
 
   useEffect(() => {
     if (!userName) {
@@ -80,7 +84,7 @@ const Navbar = () => {
                 <Link to="/userinfo" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit Account</Link>
               </li>
               <li>
-                <Link to="/entry" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
+                <Link to="/entry" onClick={SignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
               </li>
             </ul>
           </div>
