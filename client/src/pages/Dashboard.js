@@ -6,6 +6,7 @@ import './dashboard.module.css';
 import Navbar from './navbar';
 import ChatPopup from './ChatPopup';
 import Graph from './Graph';
+import Footer from './footer';
 
 const apiUrl = 'http://localhost:12000/health-rec';
 
@@ -126,6 +127,7 @@ function Dashboard() {
         </div>
       </section>
       <ChatPopup />
+      <Footer />
     </div>
   );
 }

@@ -18,6 +18,7 @@ function App() {
         <Route exact path="/entry" element={<SignIn/>} />
         <Route exact path="/wallet" element={<Wallet/>} />
         <Route exact path="/userinfo" element={<RegistrationForm/>} />
+        <Route exact path="/home" element={<Home/>} />
         <Route exact path='*' element={<NotFound/>}/>
       </Routes>
     </BrowserRouter>

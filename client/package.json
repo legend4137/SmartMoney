@@ -9,12 +9,14 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "aos": "^2.3.4",
     "apexcharts": "^3.51.0",
     "axios": "^1.7.3",
     "clsx": "^2.1.1",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
     "framer-motion": "^11.3.19",
+    "nodemailer": "^6.9.14",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
@@ -24,6 +26,8 @@
     "react-scripts": "5.0.1",
     "react-scroll-box": "^0.3.5",
     "tailwind-merge": "^2.4.0",
+    "three": "^0.167.1",
+    "vanta": "^0.5.24",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
