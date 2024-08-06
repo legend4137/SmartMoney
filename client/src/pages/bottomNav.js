@@ -46,7 +46,7 @@ const BottomNavbar = ({
           </div>
           {isDropdownOpen && (
             <div className="relative inline-block ml-4">
-              <div className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" style={{ bottom: '100%', marginBottom: '8px' }}>
+              <div className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 border-black" style={{ bottom: '100%', marginBottom: '8px' }}>
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   {['Entertainment', 'Medical', 'Education', 'Food n Drink', 'Utils', 'Home', 'Transportation', 'Uncategorized'].map(option => (
                     <li key={option}>

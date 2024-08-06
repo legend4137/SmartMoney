@@ -1,6 +1,6 @@
 const express = require("express");
 // const {chalk} = require(chalk);
-const { promptSync} = require("prompt-sync");
+
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -1013,9 +1013,9 @@ app.get("/scrolling", async (req, res) => {
   }
 });
 
-app.get("/chatbot-" , async(req , res) =>{
+app.post("/chatbot-" , async(req , res) =>{
   console.log(req.body);
-  const context = req.body.context.history;
+  const context = req.body.context;
   console.log(context);
   try{
   const genAI = new GoogleGenerativeAI(
@@ -1030,7 +1030,8 @@ app.get("/chatbot-" , async(req , res) =>{
   })
   const prompt = req.body.prompt;
   
-  const acctual_prompt = ` ${JSON.stringify(context)}her the ai is yourself and user is me this is the history of our privious conversations on the basis of this give me response on to the next prompt continue the conversation and give the response to the prompt as if you are responding to the converation. ${prompt}.`;
+  const acctual_prompt = ` ${JSON.stringify(context)} if the previous word was undifiedhere the ai is yourself and user is me this is the history of our privious conversations on the basis of this give me response on to the next prompt continue the conversation and give the response to the prompt as if you are responding to the converation. If there was no prior conversation, consider the next sentence which I am giving as the first message and resopond accrdingly even if you  have no memory of the converation respond me to this as my first message after you respond will add it to the context andd you can access it to resond for this next prompt. ${JSON.stringify(prompt)}.`;
+  console.log(acctual_prompt);
   const result = await chat.sendMessage(acctual_prompt);
     const response = await result.response;
     const text = response.text();
