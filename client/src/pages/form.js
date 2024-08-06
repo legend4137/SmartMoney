@@ -278,8 +278,8 @@ export default function Form() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="w-full max-w-4xl p-6 bg-white shadow-md rounded-lg">
+    <div className="min-h-screen bg-[#90AEAD] flex items-center justify-center">
+      <div className="w-full max-w-4xl p-6 bg-gray-700 shadow-md rounded-lg">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="mb-6">
             <ul className="flex space-x-4">
@@ -287,7 +287,7 @@ export default function Form() {
                 className={`cursor-pointer ${
                   currentStep === 1
                     ? "text-blue-600 font-semibold"
-                    : "text-gray-600"
+                    : "text-white"
                 }`}
                 onClick={() => handleStepClick(1)}
               >
@@ -299,7 +299,7 @@ export default function Form() {
                 className={`cursor-pointer ${
                   currentStep === 2
                     ? "text-blue-600 font-semibold"
-                    : "text-gray-600"
+                    : "text-white"
                 }`}
                 onClick={() => handleStepClick(2)}
               >
@@ -311,7 +311,7 @@ export default function Form() {
                 className={`cursor-pointer ${
                   currentStep === 3
                     ? "text-blue-600 font-semibold"
-                    : "text-gray-600"
+                    : "text-white"
                 }`}
                 onClick={() => handleStepClick(3)}
               >
@@ -323,7 +323,7 @@ export default function Form() {
                 className={`cursor-pointer ${
                   currentStep === 4
                     ? "text-blue-600 font-semibold"
-                    : "text-gray-600"
+                    : "text-white"
                 }`}
                 onClick={() => handleStepClick(4)}
               >
@@ -339,7 +339,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="firstName"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     First Name *
                   </label>
@@ -355,7 +355,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="lastName"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Last Name
                   </label>
@@ -372,7 +372,7 @@ export default function Form() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-white"
                 >
                   Email *
                 </label>
@@ -388,7 +388,7 @@ export default function Form() {
               <div>
                 <label
                   htmlFor="userName"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-white"
                 >
                   Username *
                 </label>
@@ -409,7 +409,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="monthlyGrossIncome"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Monthly Gross Income *
                   </label>
@@ -425,7 +425,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="netIncome"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Net Income *
                   </label>
@@ -443,7 +443,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="housingCost"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Housing Cost *
                   </label>
@@ -459,7 +459,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="utilities"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Utilities *
                   </label>
@@ -475,7 +475,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="foodAndGroceries"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Food And Groceries *
                   </label>
@@ -491,7 +491,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="transport"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Transport *
                   </label>
@@ -508,7 +508,7 @@ export default function Form() {
               <div>
                 <label
                   htmlFor="insurance"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-medium text-white"
                 >
                   Insurance *
                 </label>
@@ -529,7 +529,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="totalDebt"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Total Debt *
                   </label>
@@ -545,7 +545,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="repaymentPlans"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Repayment Plans *
                   </label>
@@ -563,7 +563,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="investment"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Investment *
                   </label>
@@ -579,7 +579,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="pfFunds"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     PF Funds *
                   </label>
@@ -597,7 +597,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="property"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Property *
                   </label>
@@ -613,7 +613,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="emergencyFunds"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Emergency Funds *
                   </label>
@@ -635,7 +635,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="entertainment"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Entertainment *
                   </label>
@@ -651,7 +651,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="healthcare"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Healthcare *
                   </label>
@@ -669,7 +669,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="education"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Education *
                   </label>
@@ -685,7 +685,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="savings"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Savings *
                   </label>
@@ -701,7 +701,7 @@ export default function Form() {
                 <div className="flex-1">
                   <label
                     htmlFor="others"
-                    className="block text-sm font-medium text-gray-700"
+                    className="block text-sm font-medium text-white"
                   >
                     Others *
                   </label>

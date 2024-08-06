@@ -9,7 +9,7 @@ const EditableFields = ({ data }) => {
   };
 
   return (
-    <div>
+    <div className='border-black'>
       {/* Toggle button */}
       <div className="text-center mt-16 mb-4">
         <button
