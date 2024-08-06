@@ -1,16 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from './navbar';
-import styles from './Home.module.css';
 
 function Home() {
+  useEffect(()=>{
+    aos.init();
+  }, [])
   return (
     <div>
       <Navbar /> {/* Include the Navbar component */}
-      <div className={styles.body}>
+      <div className="p-5">
         <p>This is the home page</p>
       </div>
+      <div data-aos="fade-right" data-aos-duration="3000">
+        Health Score: Checkout your health score here based on the responses you gave to us. Also below are some of the comments based on the health score.
+        </div>
+          
+
+
+        <div className={styles.features} data-aos="fade-right" data-aos-duration="3000">
+        : Checkout your health score here based on the responses you gave to us. Also below are some of the comments based on the health score.
+        </div>
+        <div className={styles.features} data-aos="fade-right" data-aos-duration="3000">
+        Health Score: Checkout your health score here based on the responses you gave to us. Also below are some of the comments based on the health score.
+        </div>
+        <div className={styles.features} data-aos="fade-right" data-aos-duration="3000">
+        Health Score: Checkout your health score here based on the responses you gave to us. Also below are some of the comments based on the health score.
+        </div>
+      <Footer />
     </div>
-  )
+  );
 }
 
 // // Add a 3D object
@@ -53,4 +71,4 @@ function Home() {
 // </div>)
 // }
 
-export default Home
+export default Home;
