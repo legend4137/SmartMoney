@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import SignIn from './pages/entry';
 import RegistrationForm from './pages/UserInfo';
 import Wallet from './pages/wallet';
+import Chat_App from './pages/Chat_App';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/form" element={<Form/>} />
         <Route exact path="/entry" element={<SignIn/>} />
         <Route exact path="/wallet" element={<Wallet/>} />
+        <Route exact path="/chatbot" element={<Chat_App/>} />
         <Route exact path="/userinfo" element={<RegistrationForm/>} />
         <Route exact path="/home" element={<Home/>} />
         <Route exact path='*' element={<NotFound/>}/>
