@@ -630,7 +630,7 @@ app.get("/get_account", async (req, res) => {
 });
 
 app.post("/update_account", async (req, res) => {
-  const { accountId } = req.query;
+  const { accountId } = req.body;
   const updatedData = req.body.updatedData;
 
   if (!accountId) {
@@ -643,6 +643,8 @@ app.post("/update_account", async (req, res) => {
 
   try {
     const allowedFields = [
+      "firstName",
+      "lastName",
       "monthlyGrossIncome",
       "netIncome",
       "housingCost",
@@ -677,7 +679,7 @@ app.post("/update_account", async (req, res) => {
 
     // Use .set with merge option to update the document without overwriting it completely
     await db
-      .collection("accounts")
+      .collection("formSubmissions")
       .doc(accountId)
       .set(updateFields, { merge: true });
 
