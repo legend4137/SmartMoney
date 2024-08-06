@@ -1030,7 +1030,7 @@ app.post("/chatbot-" , async(req , res) =>{
   })
   const prompt = req.body.prompt;
   
-  const acctual_prompt = ` ${JSON.stringify(context)} if the previous word was undifiedhere the ai is yourself and user is me this is the history of our privious conversations on the basis of this give me response on to the next prompt continue the conversation and give the response to the prompt as if you are responding to the converation. If there was no prior conversation, consider the next sentence which I am giving as the first message and resopond accrdingly even if you  have no memory of the converation respond me to this as my first message after you respond will add it to the context andd you can access it to resond for this next prompt. ${JSON.stringify(prompt)}.`;
+  const acctual_prompt = ` you are a financial advisor. In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there there was null consider no conversation happened and respond to the next sentance of mine as a financial adivsor, if there is some conversation consider user as me and ai as you study our conversations and then respond to me with the most apporpriate message on the follwing message of mine. ${JSON.stringify(prompt)}.`;
   console.log(acctual_prompt);
   const result = await chat.sendMessage(acctual_prompt);
     const response = await result.response;
