@@ -24,7 +24,7 @@ function App() {
         <Route exact path="/chatbot" element={<Chat_App/>} />
         <Route exact path="/userinfo" element={<RegistrationForm/>} />
         <Route exact path="/home" element={<Home/>} />
-        <Route exact path='*' element={<NotFound/>}/>
+        <Route exact path='*' element={<NotFound/>} />
       </Routes>
       <Footer />
     </BrowserRouter>
