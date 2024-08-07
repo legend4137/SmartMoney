@@ -14,9 +14,9 @@ function Home() {
   return (
     <div>
       <VantaBirds />
-      <div className="flex justify-center" data-aos="zoom-in" data-aos-duration="3000" >
+      <div className="flex justify-center pt-20" data-aos="zoom-in" data-aos-duration="3000" >
         <div>
-        <img className='w-64 max-w-xs pt-50vh pb-8 z-200' src="/sample_logo.png" alt="Sample Logo" />
+        <img className='w-64 max-w-xs pt-50vh pb-8 z-200 ' src="/sample_logo.png" alt="Sample Logo" />
         </div>
       </div>
       <div className =" mt-20vh bg-[#07192f]">
