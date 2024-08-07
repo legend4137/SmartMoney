@@ -66,7 +66,6 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="navbar-container">
-        <Navbar />
       </div>
       <section className="bg-white dark:bg-gray-900 pt-32">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
@@ -127,7 +126,6 @@ function Dashboard() {
         </div>
       </section>
       <ChatPopup />
-      <Footer />
     </div>
   );
 }

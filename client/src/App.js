@@ -8,10 +8,13 @@ import SignIn from './pages/entry';
 import RegistrationForm from './pages/UserInfo';
 import Wallet from './pages/wallet';
 import Chat_App from './pages/Chat_App';
+import Navbar from './pages/navbar';
+import Footer from './pages/footer';
 
 function App() {
   return (
     <BrowserRouter>
+    <Navbar />
       <Routes>
         <Route exact path="/" element={<Home/>} />
         <Route exact path='/dashboard' element={<DashBoard/>}/>
@@ -23,6 +26,7 @@ function App() {
         <Route exact path="/home" element={<Home/>} />
         <Route exact path='*' element={<NotFound/>}/>
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
