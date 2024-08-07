@@ -2,7 +2,7 @@ import React from 'react';  // Make sure to import the CSS file
 
 const AboutUs = () => {
   return (
-    <section className="bg-transparent dark:bg-transparent pt-32">
+    <section className="bg-[#111827] dark:bg-transparent">
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           About Us
