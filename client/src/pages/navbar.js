@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate ,useLocation} from 'react-router-dom';
 import axios from 'axios';
 
 const Navbar = () => {
   var userName = sessionStorage.getItem("username");
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState({
     mail: "",
   });
@@ -20,7 +21,8 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!userName) {
-      navigate('/entry');
+      if(location.pathname!='/' && location.pathname!='/home' )
+        navigate('/entry');
       return;
     }
 

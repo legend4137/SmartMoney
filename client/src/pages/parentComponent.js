@@ -3,6 +3,8 @@ import axios from 'axios';
 import BottomNavbar from './bottomNav';
 import EditableFields from './editableFields';
 import ScrollBox from './scrollBox';
+import Navbar from './navbar';
+import Footer from './footer';
 
 const ParentComponent = () => {
   const userName = sessionStorage.getItem('username');
