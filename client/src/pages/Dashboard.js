@@ -53,7 +53,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="navbar-container">
       </div>
-      <section className="bg-white dark:bg-gray-900 pt-32">
+      <section className="bg-white bg-zinc-950 pt-32">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
           <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
             Hi {userName}!
@@ -72,7 +72,7 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-white bg-zinc-950">
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <PlanCard userName={userName} />
           <div className="mt-4 md:mt-0">
@@ -80,7 +80,7 @@ function Dashboard() {
           </div>
         </div>
       </section>
-      <section className="bg-white dark:bg-gray-900">
+      <section className="bg-white bg-zinc-950">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">

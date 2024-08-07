@@ -37,6 +37,9 @@ const RegistrationForm = () => {
   const handlePreviousStep = () => {
     setCurrentStep(currentStep - 1);
   };
+  const Save = (e) => {
+    navigate("/dashboard");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
