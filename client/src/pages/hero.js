@@ -12,8 +12,8 @@ const VantaBirds = () => {
         mouseControls: true,
         touchControls: true,
         gyroControls: false,
-        minHeight: 2000.0,
-        minWidth: 2000.0,
+        // minHeight: 2000.0,
+        // minWidth: 2000.0,
         scale: 1.0,
         scaleMobile: 0.25,
         birdSize:0.5,
@@ -29,7 +29,7 @@ const VantaBirds = () => {
       ref={vantaRef}
       style={{
         width: '100vw',
-        height: '100vh',
+        height: '80vh',
         position: 'absolute',
         top: 0,
         left: 0,
