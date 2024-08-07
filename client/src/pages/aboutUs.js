@@ -1,8 +1,15 @@
-import React from 'react';  // Make sure to import the CSS file
+import React,{useEffect} from 'react';  // Make sure to import the CSS file
+
+import aos from 'aos';
+
 
 const AboutUs = () => {
+  useEffect(() => {
+    aos.init();
+
+  }, []);
   return (
-    <section className="bg-[#111827] dark:bg-transparent">
+    <section className="bg-[#111827] dark:bg-transparent" data-aos="zoom-in" data-aos-duration="3000">
       <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           About Us

@@ -15,13 +15,9 @@ const Navbar = () => {
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
   const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
 
-  const SignOut = () => {
-    sessionStorage.removeItem("username");
-  };
-
   useEffect(() => {
     if (!userName) {
-      if(location.pathname!='/' && location.pathname!='/home' )
+      if(location.pathname!='/' && location.pathname!='/home' && location.pathname!='/form')
         navigate('/entry');
       return;
     }
@@ -46,6 +42,13 @@ const Navbar = () => {
 
     fetchData();
   }, [userName, navigate]);
+
+  const SignOut = () => {
+    sessionStorage.removeItem("username");
+    toggleDropdown();
+    data.mail="";
+    data.userName="";
+  };
 
   return (
     <nav className=" border-gray-200 bg-[#244855]" style={{ zIndex: 50 }}>
@@ -86,7 +89,11 @@ const Navbar = () => {
                 <Link to="/userinfo" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit Account</Link>
               </li>
               <li>
-                <Link to="/entry" onClick={SignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
+                {userName ? (
+                  <Link to="/entry" onClick={SignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
+                ) : (
+                  <Link to="/entry" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign in</Link>
+                )}
               </li>
             </ul>
           </div>
