@@ -279,6 +279,7 @@ app.post("/api/form", async (req, res) => {
 
   const docId = userName; // Use timestamp as a simple unique ID
   const healthScore = 0;
+  
 
   try {
     // Check if document already exists
@@ -850,6 +851,7 @@ some of the values might be null just omit them and try to calculate the score o
 });
 
 app.get("/daily-rec", async (req, res) => {
+  const advice=[''];
   const userName = req.body;
 
   try {
@@ -911,6 +913,7 @@ app.get("/daily-rec", async (req, res) => {
     const pass = {
       advice: text,
     };
+    console.log(advice);
     res.json(pass);
   } catch (error) {
     console.error("Error fetching wallet:", error);

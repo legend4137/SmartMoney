@@ -8,25 +8,24 @@ import ChatPopup from './ChatPopup';
 import Graph from './Graph';
 import Footer from './footer';
 
-const apiUrl = 'http://localhost:12000/health-rec';
+// const apiUrl = 'http://localhost:12000/health-rec';
 
 
 
 function Dashboard() {
-
   const userName = sessionStorage.getItem("username");
-
 
   const [data, setData] = useState({
     healthscore: 0,
   });
 
-  useEffect(() => {
+  const [alerts, setAlerts] = useState([]);
 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         console.log(`Fetching data for userNameee: ${userName}`); // Log userName
-        const response = await axios.get(`http://localhost:12000/get_account`, {
+        const response = await axios.get('http://localhost:12000/get_account', {
           params: { userName } // Use axios params for query strings
         });
         console.log(response); // Log API response data
@@ -42,26 +41,27 @@ function Dashboard() {
     fetchData();
   }, [userName]);
 
+  useEffect(() => { // Changed useState to useEffect
+    const fetchAlerts = async () => {
+      try {
+        console.log(`got it ${userName}`);
+        
+        const response = await axios.get('http://localhost:12000/daily-rec', {
+          userName: userName // Changed to axios post with correct body
+        });
 
-  // const [userName, setUserName] = useState(sessionStorage.getItem('username'));
-  // const [healthscore, setHealthscore] = useState(0); // State to store healthscore
+        const alertsArray = response.data.data.advice.split('\n').filter(alert => alert.trim() !== '');
+        console.log(alertsArray);
+        setAlerts(alertsArray);
+      } catch (error) {
+        console.error('Error fetching alerts:', error);
+      }
+    };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log(`Fetching data for userName: ${userName}`); // Log userName
-  //       const response = await axios.get(`http://localhost:12000/health-rec`, {
-  //         params: { userName } // Use axios params for query strings
-  //       });
-  //       setHealthscore(response.data.number); // Set healthscore state
-  //       console.log('Response data:', response.data.number); // Log API response data
-  //     } catch (error) {
-  //       console.error('Error fetching wallet data:', error);
-  //     }
-  //   };
+    fetchAlerts();
+  }, [userName]);
 
-  //   fetchData();
-  // }, [userName]);
+
 
   return (
     <div className="dashboard">
@@ -123,6 +123,44 @@ function Dashboard() {
             pointer={{ type: "blob", animationDelay: 0 }}
             value={data.healthscore}
           />
+        </div>
+      </section>
+      <section className="bg-white dark:bg-gray-900">
+        <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+          <div className="mt-4 md:mt-0">
+            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+              Alerts
+            </h2>
+            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+              Checkout your financial health updates as recommendation or alerts based on your health score and your daily expense log and your wallet.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {alerts.length>0?(
+              alerts.map((alert,index)=>(
+                <div key={index} className="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+                  <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                  </svg>
+                  <span className="sr-only">Info</span>
+                  <div className="ms-3 text-sm font-medium">
+                    {alert}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex items-center p-4 mb-4 text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+                <svg className="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span className="sr-only">Info</span>
+                <div className="ms-3 text-sm font-medium">
+                  No alerts available
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
       <ChatPopup />
