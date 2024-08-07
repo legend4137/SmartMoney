@@ -279,7 +279,9 @@ app.post("/api/form", async (req, res) => {
 
   const docId = userName; // Use timestamp as a simple unique ID
   const healthScore = 0;
-  
+  const alert1 = "";
+  const alert2 = "";
+  const alert3 = "";
 
   try {
     // Check if document already exists
@@ -318,6 +320,9 @@ app.post("/api/form", async (req, res) => {
       pfFunds,
       property,
       emergencyFunds,
+      alert1,
+      alert2,
+      alert3
     });
 
     res.json({
@@ -574,7 +579,7 @@ some of the values might be null just omit them and try to calculate the score o
   -property:${doc.property.stringValue},
   -emergencyFunds:${
     doc.emergencyFunds.stringValue
-  }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number
+  }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number. Do not include ** in text
   `;
 
       const result = await chat.sendMessage(prompt);
@@ -587,13 +592,23 @@ some of the values might be null just omit them and try to calculate the score o
       const response2 = await result2.response;
       const text2 = response2.text();
       console.log(text2);
+      const points = text2.split('\n');
+      const point1 = points[0];
+      const point2 = points[1];
+      const point3 = points[2];
       document = db.collection("formSubmissions").doc(user);
       await document.update({
         healthScore: text,
+        alert1: point1,
+        alert2: point2,
+        alert3: point3
       });
+      console.log(alerts);
       const pass = {
         number: text,
-        text: text2,
+        alert1: point1,
+        alert2: point2,
+        alert3: point3
       };
       res.json(pass);
     } else {
@@ -627,7 +642,7 @@ app.get("/get_account", async (req, res) => {
   } catch (error) {
     console.error("Error getting account", error);
     res.status(500).json({ error: "Internal Server Error" });
-  }
+  } 
 });
 
 app.post("/update_account", async (req, res) => {
@@ -899,7 +914,7 @@ app.get("/daily-rec", async (req, res) => {
       },
     });
 
-    prompt = `I am building a finance advisor website. one of its feature is of advices. the user data is given to me. i want to give him some suggestions that will be based on the analysis of his expendeture. I will give you his daily expenses. On the basis of them give me 3 advices. The advices should be crisp and give them in bullet point, I just want the advices and no additional text
+    prompt = `I am building a finance advisor website. one of its feature is of advices. the user data is given to me. i want to give him some suggestions that will be based on the analysis of his expendeture. I will give you his daily expenses. On the basis of them give me 3 advices. The advices should be crisp and give them in bullet point, I just want the advices and no additional text dont put any ** in the text
        Entertainment :  ${type.Entertainment},
       Food_n_Drink : ${type.Food_n_Drink},     
       Utils : ${type.Utils},

@@ -21,7 +21,7 @@ const SignIn = () => {
         sessionStorage.setItem('username', username);
 
         // Navigate to the dashboard  
-        navigate(`/home?username=${username}`);
+        navigate(`/dashboard?username=${username}`);
       } else {
         // Handle case where account is not found
         alert('Account not found. Please check your username or sign up if you do not have an account.');
