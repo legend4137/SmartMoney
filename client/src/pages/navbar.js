@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate ,useLocation} from 'react-router-dom';
 import axios from 'axios';
+import { TypewriterEffect } from './typewriter';
 
 const Navbar = () => {
   var userName = sessionStorage.getItem("username");
@@ -51,11 +52,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" border-gray-200 bg-[#244855]" style={{ zIndex: 50 }}>
+    <nav className="border-gray-200 bg-[#244855]" style={{ zIndex: 50 }}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="../" className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SmartMoney</span>
+        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="/sample_logo.png" className="h-8" alt="Sample Logo" />
+          <TypewriterEffect
+            text="Smart Money"
+            className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+            cursorClassName="bg-black dark:bg-white w-1 ml-1"
+            typingSpeed={150}
+          />
         </a>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse relative">
           <button
@@ -119,7 +125,7 @@ const Navbar = () => {
               <Link to="/dashboard" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Dashboard</Link>
             </li>
             <li>
-              <a href="/chatBot" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Chat Bot</a>
+              <Link to="/chatBot" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Chat Bot</Link>
             </li>
             <li>
               <a href="#" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Investments</a>
