@@ -19,6 +19,7 @@ const Navbar = () => {
   useEffect(() => {
     if (!userName) {
       if(location.pathname!='/' && location.pathname!='/home' && location.pathname!='/form')
+      if(location.pathname!='/' && location.pathname!='/home' && location.pathname!='/form')
         navigate('/entry');
       return;
     }
@@ -50,6 +51,9 @@ const Navbar = () => {
     data.mail="";
     data.userName="";
   };
+  const SignIn = () => {
+    toggleDropdown();
+  };
 
   return (
     <nav className="border-gray-200 bg-[#244855]" style={{ zIndex: 50 }}>
@@ -72,7 +76,7 @@ const Navbar = () => {
             onClick={toggleDropdown}
           >
             <span className="sr-only">Open user menu</span>
-            <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
+            <img className="w-8 h-8 rounded-full" src="/skeleton.png" alt="user photo" />
           </button>
           {/* Dropdown menu */}
           <div
@@ -86,19 +90,19 @@ const Navbar = () => {
             </div>
             <ul className="py-2" aria-labelledby="user-menu-button">
               <li>
-                <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
+                <Link to="/dashboard" onClick={SignIn} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</Link>
               </li>
               <li>
-                <Link to="/wallet" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wallet</Link>
+                <Link to="/wallet" onClick={SignIn}  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Wallet</Link>
               </li>
               <li>
-                <Link to="/userinfo" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit Account</Link>
+                <Link to="/userinfo" onClick={SignIn}  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Edit Account</Link>
               </li>
               <li>
                 {userName ? (
                   <Link to="/entry" onClick={SignOut} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
                 ) : (
-                  <Link to="/entry" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign in</Link>
+                  <Link to="/entry" onClick={SignIn}   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign in</Link>
                 )}
               </li>
             </ul>
