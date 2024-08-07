@@ -29,9 +29,6 @@ const RegistrationForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const Updated = (e) => {
-    navigate("/dashboard")
-  };
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -85,6 +82,7 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error("Error fetching wallet data:", error);
     }
+    navigate("/dashboard")
 
   };
   return (
@@ -388,7 +386,6 @@ const RegistrationForm = () => {
                     </button>
                     <button
                       type="submit"
-                      onClick={Updated}
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       Save
