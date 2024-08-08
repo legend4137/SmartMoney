@@ -96,7 +96,9 @@ const SalesChart = () => {
               formatter: function (value) {
                 return '$' + value;
               }
-            }
+            },
+            min: Math.min(...seriesData) * 0.9, // Dynamic min value with margin
+            max: Math.max(...seriesData) * 1.1, // Dynamic max value with margin
           },
           series: [
             {

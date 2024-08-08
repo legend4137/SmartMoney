@@ -6,6 +6,8 @@ import './dashboard.module.css';
 import Navbar from './navbar';
 import ChatPopup from './ChatPopup';
 import Graph from './Graph';
+import TodoList from './GoalComponent';
+import ReadOnlyTodoList from './DashboardGoal';
 import Footer from './footer';
 
 const apiUrl = 'http://localhost:12000/health-rec';
@@ -75,6 +77,7 @@ function Dashboard() {
       <section className="bg-white bg-zinc-950">
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <PlanCard userName={userName} />
+          <ReadOnlyTodoList/>
           <div className="mt-4 md:mt-0">
             <Graph />
           </div>

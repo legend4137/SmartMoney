@@ -5,6 +5,7 @@ import EditableFields from './editableFields';
 import ScrollBox from './scrollBox';
 import Navbar from './navbar';
 import Footer from './footer';
+import DailyAlerts from './DailyAlerts';
 
 const ParentComponent = () => {
   const userName = sessionStorage.getItem('username');
@@ -101,6 +102,7 @@ const ParentComponent = () => {
         showDropdown={showDropdown}
         handleOptionSelect={handleOptionSelect}
       />
+      <DailyAlerts refresh={refresh}/>
     </div>
   );
 };
