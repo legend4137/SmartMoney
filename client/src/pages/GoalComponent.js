@@ -1,29 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([
-    // { text: "Add another component to Tailwind Components", completed: false },
-    // { text: "Submit Todo App Component to Tailwind Components", completed: true },
-  ]);
+  const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const userName = "AayushBade14"; // Replace with dynamic user name if applicable
 
-  const addTodo = () => {
-    if (newTodo.trim() !== "") {
-      setTodos([...todos, { text: newTodo, completed: false }]);
-      setNewTodo("");
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const fetchTodos = async () => {
+    setLoading(true);
+    setError(null); // Reset error before fetching
+
+    try {
+      const response = await axios.get(`http://localhost:12000/financialgoals/${userName}`);
+      if (response.status === 200) {
+        setTodos(response.data);
+      } else {
+        setError("Failed to fetch goals.");
+      }
+    } catch (err) {
+      setError("Error fetching goals");
+      console.error("Error fetching goals:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const toggleTodo = (index) => {
-    const updatedTodos = todos.map((todo, i) =>
-      i === index ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(updatedTodos);
+  const addTodo = async () => {
+    const trimmedTodo = newTodo.trim();
+    if (trimmedTodo !== "" && !todos.includes(trimmedTodo)) {
+      try {
+        const response = await axios.post("http://localhost:12000/financialgoals/add", {
+          userName,
+          goalName: trimmedTodo,
+        });
+
+        if (response.status === 200) {
+          setTodos(response.data.goals);
+          setNewTodo("");
+        } else {
+          setError("Failed to add goal.");
+        }
+      } catch (err) {
+        setError("Error adding goal");
+        console.error("Error adding goal:", err);
+      }
+    }
   };
 
-  const removeTodo = (index) => {
-    const updatedTodos = todos.filter((_, i) => i !== index);
-    setTodos(updatedTodos);
+  const removeTodo = async (index) => {
+    try {
+      const response = await axios.post("http://localhost:12000/financialgoals/remove", {
+        userName,
+        goalNo: index,
+      });
+
+      if (response.status === 200) {
+        setTodos(response.data.goals);
+      } else {
+        setError("Failed to remove goal.");
+      }
+    } catch (err) {
+      setError("Error removing goal");
+      console.error("Error removing goal:", err);
+    }
   };
 
   return (
@@ -46,37 +91,28 @@ const TodoList = () => {
             </button>
           </div>
         </div>
-        <div>
-          {todos.map((todo, index) => (
-            <div className="flex mb-4 items-center" key={index}>
-              <p
-                className={`w-full ${
-                  todo.completed
-                    ? "line-through text-green-400"
-                    : "text-white"
-                }`}
+        {loading ? (
+          <p className="text-white">Loading goals...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : (
+          <div>
+            {todos.map((todo, index) => (
+              <div
+                className="flex mb-4 items-center p-4 border border-gray-600 rounded"
+                key={index}
               >
-                {todo.text}
-              </p>
-              <button
-                className={`flex-no-shrink p-2 ml-4 mr-2 border-2 rounded transition-all duration-300 transform hover:scale-105 ${
-                  todo.completed
-                    ? "text-gray-400 border-gray-400 hover:bg-gray-500 hover:text-white"
-                    : "text-green-400 border-green-400 hover:bg-green-400 hover:text-white"
-                } hover:shadow-lg hover:shadow-${todo.completed ? 'gray' : 'green'}-500/50`}
-                onClick={() => toggleTodo(index)}
-              >
-                {todo.completed ? "Not Done" : "Done"}
-              </button>
-              <button
-                className="flex-no-shrink p-2 ml-2 border-2 rounded text-red-400 border-red-400 hover:text-white hover:bg-red-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/50"
-                onClick={() => removeTodo(index)}
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-        </div>
+                <p className="w-full text-white">{todo}</p>
+                <button
+                  className="flex-no-shrink p-2 ml-2 border-2 rounded text-red-400 border-red-400 hover:text-white hover:bg-red-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/50"
+                  onClick={() => removeTodo(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
