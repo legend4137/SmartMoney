@@ -40,7 +40,6 @@ export default function DailyAlerts() {
                     data.rec3 || 'Loading...',
                     data.rec4 || 'Loading...',
                 ];
-                console.log('Parsed recommendations:', recommendations); // Debugging
 
                 // Map the recommendations to the features
                 const updatedFeatures = features.map((feature, index) => ({
