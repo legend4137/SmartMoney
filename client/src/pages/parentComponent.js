@@ -102,7 +102,7 @@ const ParentComponent = () => {
         showDropdown={showDropdown}
         handleOptionSelect={handleOptionSelect}
       />
-      <DailyAlerts userName={userName}/>
+      <DailyAlerts refresh={refresh}/>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
-export default function DailyAlerts() {
+export default function DailyAlerts( {refresh} ) {
     const userName = sessionStorage.getItem("username");
     const [features, setFeatures] = useState([
         {
@@ -54,7 +54,7 @@ export default function DailyAlerts() {
         };
 
         fetchRecommendations();
-    }, [userName]);
+    }, [userName,refresh]);
 
     return (
         <div className="flex items-center justify-center m-10">
