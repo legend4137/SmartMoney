@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const userName = "AayushBade14"; // Replace with dynamic user name if applicable
+  const userName = sessionStorage.getItem("username"); // Replace with dynamic user name if applicable
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     fetchTodos();
@@ -68,6 +70,10 @@ const TodoList = () => {
     }
   };
 
+  const handleRedirect = () => {
+    navigate('/financialgoals'); // Replace with your target route
+  };
+
   return (
     <div className="h-100 w-full flex items-center justify-center bg-gray-900 font-sans">
       <div className="bg-gray-800 rounded shadow-lg p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
@@ -85,10 +91,19 @@ const TodoList = () => {
             {todos.map((todo, index) => (
               <div className="flex mb-4 items-center p-4 border border-gray-600 rounded" key={index}>
                 <p className="w-full text-white">{todo}</p>
+
               </div>
             ))}
           </div>
         )}
+        <div className="flex justify-center mt-4">
+          <button
+            className="p-3 border-2 border-purple-500 rounded-lg text-purple-500 hover:bg-purple-500 hover:text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50"
+            onClick={handleRedirect}
+          >
+            Go to Other Page
+          </button>
+        </div>
       </div>
     </div>
   );
