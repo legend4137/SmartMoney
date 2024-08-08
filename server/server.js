@@ -22,6 +22,7 @@ const app = express();
 const port = 12000;
 x = 0;
 
+
 // MongoDB connection URI
 const uri =
   "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -1034,6 +1035,33 @@ app.get("/scrolling", async (req, res) => {
 app.post("/chatbot-" , async(req , res) =>{
   console.log(req.body);
   const context = req.body.context;
+  const userdoc = await db
+    .collection("formSubmissions")
+    .doc(req.body.userName)
+    .get();
+  const doc = userdoc._fieldsProto;
+
+  const old_data = {
+    monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
+    netIncome: doc.netIncome.stringValue,
+    housingCost: doc.housingCost.stringValue,
+    utilities: doc.utilities.stringValue,
+    foodAndGroceries: doc.foodAndGroceries.stringValue,
+    transport: doc.transport.stringValue,
+    insurance: doc.insurance.stringValue,
+    entertainment: doc.entertainment.stringValue,
+    healthcare: doc.healthcare.stringValue,
+    education: doc.education.stringValue,
+    savings: doc.savings.stringValue,
+    others: doc.others.stringValue,
+    totalDebt: doc.totalDebt.stringValue,
+    repaymentPlans: doc.repaymentPlans.stringValue,
+    investment: doc.investment.stringValue,
+    pfFunds: doc.pfFunds.stringValue,
+    property: doc.property.stringValue,
+    emergencyFunds: doc.emergencyFunds.stringValue,
+  };
+
   console.log(context);
   try{
   const genAI = new GoogleGenerativeAI(
@@ -1048,7 +1076,25 @@ app.post("/chatbot-" , async(req , res) =>{
   })
   const prompt = req.body.prompt;
   
-  const acctual_prompt = ` you are a financial advisor. In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there there was null consider no conversation happened and respond to the next sentance of mine as a financial adivsor, if there is some conversation consider user as me and ai as you study our conversations and then respond to me with the most apporpriate message on the follwing message of mine. ${JSON.stringify(prompt)}.`;
+  const acctual_prompt = ` you are a financial advisor. this is some of the data of me study it appropriately -monthlyGrossIncome : ${doc.monthlyGrossIncome.stringValue},
+  -netIncome : ${doc.netIncome.stringValue},
+  -housingCost : ${doc.housingCost.stringValue},
+  -utilities : ${doc.utilities.stringValue},
+  -foodAndGroceries : ${doc.foodAndGroceries.stringValue},
+  -transport : ${doc.transport.stringValue},
+  -insurance : ${doc.insurance.stringValue},
+  -entertainment : ${doc.entertainment.stringValue},
+  -healthcare : ${doc.healthcare.stringValue},
+  -education : ${doc.education.stringValue},
+  -savings : ${doc.savings.stringValue},
+  -others:${doc.others.stringValue},
+  -totalDebt:${doc.totalDebt.stringValue},
+  -repaymentPlans:${doc.repaymentPlans.stringValue},
+  -investment:${doc.investment.stringValue},
+  -pfFunds:${doc.pfFunds.stringValue},
+  -property:${doc.property.stringValue},
+  -emergencyFunds:${doc.emergencyFunds.stringValue} In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there was a null in the privious line consider no conversation happerned and advice to my next sentance accordingly , otherwise study the conversations and respond to next sentence accordingly , do not include any bold words in the response
+  . ${JSON.stringify(prompt)}.`;
   console.log(acctual_prompt);
   const result = await chat.sendMessage(acctual_prompt);
     const response = await result.response;
