@@ -8,7 +8,7 @@ import styles from "./Chat_App.module.css";
 import axios from "axios";
 
 var History_new;
-
+const userName = sessionStorage.getItem('username');
 export default function Chat_App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
@@ -31,11 +31,11 @@ export default function Chat_App() {
   const handleSubmit = () => {
     const newMessage = { role: "user", content: input };
     let res = {};
-
+    console.log(userName);
     axios
       .post("http://localhost:12000/chatbot-", {
         context: [window.History_new],
-
+        userName : userName,
         prompt: input,
       })
       .then((response) => {

@@ -63,7 +63,7 @@ const Navbar = () => {
           <TypewriterEffect
             text="Smart Money"
             className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            cursorClassName="bg-black dark:bg-white w-1 ml-1"
+            cursorClassName="bg-zinc-950 dark:bg-white w-1 ml-1"
             typingSpeed={150}
           />
         </a>
