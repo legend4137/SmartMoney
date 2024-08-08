@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "@radix-ui/react-label": "^2.1.0",
     "@studio-freight/react-lenis": "^0.0.47",
     "@tabler/icons-react": "^3.11.0",

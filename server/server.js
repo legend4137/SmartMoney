@@ -59,7 +59,7 @@ const walletSchema = new mongoose.Schema({
     {
       amount: { type: Number, required: true },
       reason: { type: String, required: true },
-      transaction: {type: String, required: true},
+      transaction: { type: String, required: true },
       tag: { type: String, required: true },
       logDate: { type: Date, default: Date.now }, // Changed from String to Date for better date handling
     },
@@ -221,7 +221,7 @@ app.post("/wallet/add", async (req, res) => {
 
 // Deduct money from wallet
 app.post("/wallet/deduct", async (req, res) => {
-  const { userName, amount, tag} = req.body;
+  const { userName, amount, tag } = req.body;
 
   if (!userName) {
     return res.status(400).json({ msg: "UserName is required!" });
@@ -248,12 +248,12 @@ app.post("/wallet/deduct", async (req, res) => {
 
     wallet.balance -= amount;
 
-    wallet.logs.push({ 
-      amount, 
-      reason:`Deducted ₹${amount} from the wallet!`, 
-      transaction:"withdraw",
+    wallet.logs.push({
+      amount,
+      reason: `Deducted ₹${amount} from the wallet!`,
+      transaction: "withdraw",
       tag,
-      logDate: new Date() 
+      logDate: new Date()
     });
 
     await wallet.save();
@@ -599,11 +599,11 @@ app.get("/health-rec", async (req, res) => {
     history: [
       {
         role: "user",
-        parts: [{ text: "Hello, I have 2 dogs in my house." }],
+        parts: [{ text: "Hello, I am making a website which gives financial advices and acts as a budget planner called SmartMoney." }],
       },
       {
         role: "model",
-        parts: [{ text: "Great to meet you. What would you like to know?" }],
+        parts: [{ text: "Great to hear about SmartMoney. What would you like me to do?" }],
       },
     ],
     generationConfig: {
@@ -619,7 +619,7 @@ app.get("/health-rec", async (req, res) => {
   try {
     if (userdoc.exists) {
       console.log("exists");
-      const prompt = `I am making a website. there  a component of financial socre. I want to calculate a hypothetical financial score where 0 means the worst and 100 means best. consider any metics as you want for determining it. I will provide you with some of the data.. Do any criteria you want to consider just provide me with a fixed number.Don't chnage the number for same response. I dont want any text as a output just give me a number
+      const prompt = `I am making a website. there  a component of financial score. I want to calculate a hypothetical financial score where 0 means the worst and 100 means best. consider any metics as you want for determining it. I will provide you with some of the data.. Do any criteria you want to consider just provide me with a fixed number.Don't chnage the number for same response. I dont want any text as a output just give me a number
       I will give you  the criteria from which you can decide how to judge the number.
       these are the citeria under which you can judge the number
       Income and Expenses (50 points)
@@ -664,9 +664,8 @@ some of the values might be null just omit them and try to calculate the score o
   -investment:${doc.investment.stringValue},
   -pfFunds:${doc.pfFunds.stringValue},
   -property:${doc.property.stringValue},
-  -emergencyFunds:${
-    doc.emergencyFunds.stringValue
-  }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number. Do not include ** in text
+  -emergencyFunds:${doc.emergencyFunds.stringValue
+        }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number. Do not include ** in text
   `;
 
       const result = await chat.sendMessage(prompt);
@@ -729,7 +728,7 @@ app.get("/get_account", async (req, res) => {
   } catch (error) {
     console.error("Error getting account", error);
     res.status(500).json({ error: "Internal Server Error" });
-  } 
+  }
 });
 
 app.post("/update_account", async (req, res) => {
@@ -953,11 +952,11 @@ some of the values might be null just omit them and try to calculate the score o
 });
 
 app.get("/daily-rec", async (req, res) => {
-  const advice=[''];
-  const userName = req.body;
+  const advice = [''];
+  const userName = req.query.userName;
 
   try {
-    const wallet = await Wallet.findOne(userName);
+    const wallet = await Wallet.findOne({ userName });
 
     if (!wallet) {
       return res.status(404).json({ msg: "Wallet not found" });
@@ -968,6 +967,8 @@ app.get("/daily-rec", async (req, res) => {
 
     const type = {
       Entertainment: 0,
+      Medical: 0,
+      Education: 0,
       Food_n_Drink: 0,
       Utils: 0,
       Home: 0,
@@ -976,33 +977,25 @@ app.get("/daily-rec", async (req, res) => {
     };
     //  console.log(type);
     for (let i = 0; i < log.length && i < 100; i++) {
-      if (log[i].tag == "withdraw") {
-        const event = log[i].reason;
+      if (log[i].transaction == "withdraw") {
+        const event = log[i].tag;
         type[event] += log[i].amount;
       }
     }
     const genAI = new GoogleGenerativeAI(
-      "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+      "AIzaSyDFB_IUcOxuX4m4zhWwqueQYQ7yIJc8EAo"
     );
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const chat = model.startChat({
-      history: [
-        {
-          role: "user",
-          parts: [{ text: "Hello, I have 2 dogs in my house." }],
-        },
-        {
-          role: "model",
-          parts: [{ text: "Great to meet you. What would you like to know?" }],
-        },
-      ],
       generationConfig: {
         maxOutputTokens: 100,
       },
     });
 
-    prompt = `I am building a finance advisor website. one of its feature is of advices. the user data is given to me. i want to give him some suggestions that will be based on the analysis of his expendeture. I will give you his daily expenses. On the basis of them give me 3 advices. The advices should be crisp and give them in bullet point, I just want the advices and no additional text dont put any ** in the text
+    prompt = `I am building a finance advisor website. One of its feature is of advices. The user data is given to me. I want to give him some suggestions that will be based on the analysis of his expenditure. I will give you his daily expenses. On the basis of them give me 4 advices. The advices should be crisp and give them in bullet point, I just want the advices and dont put any ** in the text. Just give me 4 bullet points of Advices. DO not give any other texts in writing
        Entertainment :  ${type.Entertainment},
+       Medical:${type.Medical},
+       Education: ${type.Education},
       Food_n_Drink : ${type.Food_n_Drink},     
       Utils : ${type.Utils},
       Home : ${type.Home},
@@ -1012,10 +1005,27 @@ app.get("/daily-rec", async (req, res) => {
     const response = await result.response;
     const text = response.text();
     console.log(text);
+    const points = text.split('\n');
+    const point1 = points[0];
+    const point2 = points[1];
+    const point3 = points[2];
+    const point4 = points[3];
+    document = db.collection("formSubmissions").doc(userName);
+
+    await document.update({
+      dailyrec1: point1 || '',
+      dailyrec2: point2 || '',
+      dailyrec3: point3 || '',
+      dailyrec4: point4 || '',
+    });
+
     const pass = {
-      advice: text,
+      rec1: point1 || '',
+      rec2: point2 || '',
+      rec3: point3 || '',
+      rec4: point4 || '',
     };
-    console.log(advice);
+
     res.json(pass);
   } catch (error) {
     console.error("Error fetching wallet:", error);
@@ -1118,26 +1128,26 @@ app.get("/scrolling", async (req, res) => {
   }
 });
 
-app.post("/chatbot-" , async(req , res) =>{
+app.post("/chatbot-", async (req, res) => {
   console.log(req.body);
   const context = req.body.context;
   console.log(context);
-  try{
-  const genAI = new GoogleGenerativeAI(
-    "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
-  );
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-  const chat = model.startChat({
-    // history : req.body.context.history,
-    generationConfig: {
-      maxOutputTokens: 100,
-    },
-  })
-  const prompt = req.body.prompt;
-  
-  const acctual_prompt = ` you are a financial advisor. In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there there was null consider no conversation happened and respond to the next sentance of mine as a financial adivsor, if there is some conversation consider user as me and ai as you study our conversations and then respond to me with the most apporpriate message on the follwing message of mine. ${JSON.stringify(prompt)}.`;
-  console.log(acctual_prompt);
-  const result = await chat.sendMessage(acctual_prompt);
+  try {
+    const genAI = new GoogleGenerativeAI(
+      "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+    );
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const chat = model.startChat({
+      // history : req.body.context.history,
+      generationConfig: {
+        maxOutputTokens: 100,
+      },
+    })
+    const prompt = req.body.prompt;
+
+    const acctual_prompt = ` you are a financial advisor. In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there there was null consider no conversation happened and respond to the next sentance of mine as a financial adivsor, if there is some conversation consider user as me and ai as you study our conversations and then respond to me with the most apporpriate message on the follwing message of mine. ${JSON.stringify(prompt)}.`;
+    console.log(acctual_prompt);
+    const result = await chat.sendMessage(acctual_prompt);
     const response = await result.response;
     const text = response.text();
     console.log(text);
