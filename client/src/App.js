@@ -10,6 +10,7 @@ import Wallet from './pages/wallet';
 import Chat_App from './pages/Chat_App';
 import Navbar from './pages/navbar';
 import Footer from './pages/footer';
+import TodoList from './pages/GoalComponent';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route exact path="/home" element={<Home/>} />
         <Route exact path="/chatbot" element={<Chat_App/>} />
         <Route exact path="/userinfo" element={<RegistrationForm/>} />
+        <Route exact path="/financialgoals" element={<TodoList/>} />
         <Route exact path="/home" element={<Home/>} />
         <Route exact path='*' element={<NotFound/>} />
       </Routes>

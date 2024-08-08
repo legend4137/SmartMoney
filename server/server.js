@@ -65,9 +65,96 @@ const walletSchema = new mongoose.Schema({
     },
   ],
   createdAt: { type: Date, default: Date.now },
+  goals: [
+    {type: String,required:true}
+  ],
 });
 
 const Wallet = mongoose.model("Wallet", walletSchema);
+
+
+// Add Goals
+app.post("/financialgoals/add",async (req,res)=>{
+  const {userName,goalName} = req.body;
+
+  if (!userName || !goalName) {
+    return res.status(400).json({ msg: "UserName and GoalName are required!" });
+  }
+
+  try {
+    const wallet = await Wallet.findOne({ userName });
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Goal List Not Found!" });
+    }
+
+    wallet.goals.push(goalName);
+
+    await wallet.save();
+
+    res.json(wallet);
+  } catch (error) {
+    console.error("Error adding Goal:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+//Fetch Goals
+app.get("/financialgoals/:userName", async(req,res)=>{
+  const { userName } = req.params;
+
+  try {
+    const wallet = await Wallet.findOne({ userName });
+
+    if (!wallet) {
+      return res.status(404).json({ msg: "Goals not found" });
+    }
+
+    res.json(wallet.goals);
+  } catch (error) {
+    console.error("Error fetching GoalList:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
+
+});
+
+//Remove a goal
+app.post("/financialgoals/remove", async(req,res)=>{
+  const { userName, goalNo } = req.body;
+
+  // Check for missing input
+  if (!userName || goalNo === undefined) {
+    console.log("Missing userName or goalNo");
+    return res.status(400).json({ msg: "UserName and goalNo are required!" });
+  }
+
+  try {
+    // Find the user's wallet
+    const wallet = await Wallet.findOne({ userName });
+    console.log("Found wallet:", wallet);
+
+    if (!wallet) {
+      console.log("Wallet not found for user:", userName);
+      return res.status(404).json({ msg: "Goal List Not Found!" });
+    }
+
+    // Check if goalNo is a valid index
+    if (goalNo < 0 || goalNo >= wallet.goals.length) {
+      console.log("Invalid goal number:", goalNo);
+      return res.status(400).json({ msg: "Invalid goal number!" });
+    }
+
+    // Remove the goal
+    wallet.goals.splice(goalNo, 1);
+    await wallet.save();
+    console.log("Goal removed successfully");
+
+    res.json({ msg: "Goal removed successfully", goals: wallet.goals });
+  } catch (error) {
+    console.error("Error removing Goal:", error);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
 
 // Create a new wallet
 app.post("/wallet/create", async (req, res) => {
