@@ -8,7 +8,7 @@ import Footer from './footer';
 import DailyAlerts from './DailyAlerts';
 
 const ParentComponent = () => {
-  const userName = sessionStorage.getItem('username');
+  const userName = localStorage.getItem('username');
   const [walletData, setWalletData] = useState({
     field1: '0',
     field2: '0',

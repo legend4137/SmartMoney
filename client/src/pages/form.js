@@ -208,9 +208,9 @@ export default function Form() {
       const walletResult = await walletResponse.json();
       console.log(walletResult);
 
-      // Store username in sessionStorage
-      sessionStorage.clear();
-      sessionStorage.setItem("username", formData.userName);
+      // Store username in localStorage
+      localStorage.clear();
+      localStorage.setItem("username", formData.userName);
       console.log(
         `This is a check statement to see if session storage is working: ${formData.userName}`
       );
@@ -249,8 +249,8 @@ export default function Form() {
 
   const handleNextStepClick = async (event) => {
     if (currentStep === 1) {
-      sessionStorage.clear();
-      sessionStorage.setItem("username", formData.userName);
+      localStorage.clear();
+      localStorage.setItem("username", formData.userName);
     }
     event.preventDefault();
     if (!validateCurrentStep()) {
@@ -280,7 +280,7 @@ export default function Form() {
     }
   };
 
-  const [userName, setUserName] = useState(sessionStorage.getItem("username"));
+  const [userName, setUserName] = useState(localStorage.getItem("username"));
 
   const handleBackClick = (event) => {
     event.preventDefault();

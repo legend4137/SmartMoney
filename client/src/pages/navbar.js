@@ -7,7 +7,7 @@ import { TypewriterEffect } from './typewriter';
 
 
 const Navbar = () => {
-  var userName = sessionStorage.getItem("username");
+  var userName = localStorage.getItem("username");
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState({
@@ -49,7 +49,7 @@ const Navbar = () => {
   }, [userName, navigate]);
 
   const SignOut = () => {
-    sessionStorage.removeItem("username");
+    localStorage.removeItem("username");
     toggleDropdown();
     data.mail="";
     data.userName="";

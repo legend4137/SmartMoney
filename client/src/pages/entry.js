@@ -20,8 +20,8 @@ const SignIn = () => {
 
       if (response.data.token) {
         // Save the username and token to session storage
-        sessionStorage.setItem('username', username);
-        sessionStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', response.data.token);
 
         // Navigate to the dashboard  
         navigate(`/dashboard?username=${username}`);

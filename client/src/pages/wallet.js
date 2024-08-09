@@ -8,7 +8,7 @@ import styles from './wallet.module.css'; // Adjust import if using CSS modules
 import ChatPopup from './ChatPopup';
 
 const Wallet = () => {
-  const userName = sessionStorage.getItem("username");
+  const userName = localStorage.getItem("username");
   return (
     <div className="wallet-container min-h-screen">
       <div className="main-content">

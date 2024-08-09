@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const userName = sessionStorage.getItem("username");
+const userName = localStorage.getItem("username");
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const RegistrationForm = () => {
     try {
       console.log(`This is a check statement: ${formData.userName}`);
       console.log(`Fetching data for userName: ${formData.userName}`); // Log userName
-      const parameter = sessionStorage.getItem("username");
+      const parameter = localStorage.getItem("username");
       console.log(`Parameter value: ${parameter}`);
       const response = await axios.get("http://localhost:12000/health-rec", {
         params: { userName: parameter }, // Use axios params for query strings

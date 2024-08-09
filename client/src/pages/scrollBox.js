@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const ScrollBox = ({ refresh }) => {
   const [logs, setLogs] = useState([]);
-  const userName = sessionStorage.getItem('username');
+  const userName = localStorage.getItem('username');
 
   useEffect(() => {
     const fetchLogs = async () => {
