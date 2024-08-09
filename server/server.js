@@ -1,7 +1,9 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
-
-// const {chalk} = require(chalk);
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const authRoutes = require('./routes/auth'); // Import auth routes
+const authMiddleware = require('./routes/middleware');
 
 require("dotenv").config();
 const cors = require("cors");
@@ -50,6 +52,9 @@ const gemini = new GoogleGenerativeAI({
   apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", // Your actual Gemini API key
 });
 
+// Import Wallet model
+const Wallet = require('./models/Wallet');
+
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
 app.use(express.json());
@@ -57,35 +62,9 @@ app.use(express.json());
 // Enable CORS
 app.use(cors());
 
-// Define schema and model for wallet
-// Middleware to parse JSON bodies
-app.use(bodyParser.json());
-app.use(express.json());
+app.use('/api/auth', authRoutes);
 
-// Enable CORS
-app.use(cors());
-
-// Define schema and model for wallet
-const walletSchema = new mongoose.Schema({
-  userName: { type: String, required: true, unique: true },
-  balance: { type: Number, required: true, default: 0 },
-  logs: [
-    {
-      amount: { type: Number, required: true },
-      reason: { type: String, required: true },
-      transaction: { type: String, required: true },
-      tag: { type: String, required: true },
-      logDate: { type: Date, default: Date.now }, // Changed from String to Date for better date handling
-    },
-  ],
-  createdAt: { type: Date, default: Date.now },
-  goals: [
-    {type: String,required:true}
-  ],
-});
-
-const Wallet = mongoose.model("Wallet", walletSchema);
-
+module.exports = { Wallet };
 
 // Add Goals
 app.post("/financialgoals/add",async (req,res)=>{

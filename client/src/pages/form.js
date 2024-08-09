@@ -17,7 +17,6 @@ const checkDuplicates = async (userName) => {
 
 export default function Form() {
   const [healthscore, setHealthscore] = useState(0);
-
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -25,6 +24,7 @@ export default function Form() {
     lastName: "",
     email: "",
     userName: "",
+    password: "",  // Ensure this field is included
     monthlyGrossIncome: "",
     netIncome: "",
     housingCost: "",
@@ -169,6 +169,18 @@ export default function Form() {
     if (!validateCurrentStep()) {
       return;
     }
+    try {
+      // Register the user
+      const registerResponse = await axios.post("http://localhost:12000/api/auth/register", {
+        userName: formData.userName,
+        password: formData.password, // Include password here
+      });
+
+      console.log("Registration response:", registerResponse.data);
+    } catch(error){
+      console.log("Error Registering user")
+    }
+
     try {
       // Submit form data to Firebase
       const formResponse = await fetch("http://localhost:12000/api/form", {
@@ -397,6 +409,22 @@ export default function Form() {
                   id="userName"
                   name="userName"
                   value={formData.userName}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-white"
+                >
+                  Password *
+                </label>
+                <input
+                  type="text"
+                  id="password"
+                  name="password"
+                  value={formData.password}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
