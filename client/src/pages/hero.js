@@ -87,18 +87,25 @@ const CenterImage = () => {
 
   return (
     <motion.div
-      className="sticky top-0 h-screen w-full"
+      className="sticky top-0 h-screen w-full relative"
       style={{
         clipPath,
         backgroundSize,
         opacity,
-        backgroundImage:
-          "url(/hero_main.jpg)",
+        backgroundImage: "url(/hero_main2.jpg)",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
-    />
+    >
+      <div
+        className="absolute bottom-10 left-0 right-0 flex justify-center items-center"
+        style={{ zIndex: 2, color: "#fff", fontSize: "4rem", fontWeight: "bold" }}
+      >
+        SMART MONEY
+      </div>
+    </motion.div>
   );
+  
 };
 
 const ParallaxImages = () => {
@@ -119,7 +126,7 @@ const ParallaxImages = () => {
         className="mx-auto w-2/3"
       />
       <ParallaxImg
-        src="/hero_sec4.jpg"
+        src="/hero_sec6.jpg"
         alt="Orbiting satellite"
         start={-200}
         end={200}

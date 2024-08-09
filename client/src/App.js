@@ -12,6 +12,8 @@ import Navbar from './pages/navbar';
 import Footer from './pages/footer';
 import TodoList from './pages/GoalComponent';
 
+ 
+
 function App() {
   return (
     <BrowserRouter>
@@ -34,4 +36,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;

@@ -96,8 +96,10 @@ const RegistrationForm = () => {
             <img
               className="w-full hidden dark:block"
               src="https://design4users.com/wp-content/uploads/2019/11/light-dark-UI-design-tips-tubik-blog.jpg"
+              
               style={{ width: 400, height: 400, borderRadius: 400 / 2 }}
               alt="icon"
+             
             />
           </div>
 
