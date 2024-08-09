@@ -22,7 +22,7 @@ const ScrollBox = ({ refresh }) => {
   const tableMaxHeight = 420;
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-[750px] mx-auto">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-[800px] mx-auto">
       <div className="overflow-y-auto" style={{ maxHeight: tableMaxHeight }}>
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-white uppercase bg-gray-50 dark:bg-[#244855] dark:text-white">
