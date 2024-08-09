@@ -12,7 +12,7 @@ import { RevealBento } from "./aboutUs";
 
 export const SmoothScrollHero = () => {
   return (
-    <div className="bg-zinc-950">
+    <div className="bg-[#212121]">
       <ReactLenis
         root
         options={{
@@ -116,28 +116,28 @@ const ParallaxImages = () => {
         alt="And example of a space launch"
         start={-200}
         end={200}
-        className="w-1/3"
+        className="w-1/3 rounded-3xl"
       />
       <ParallaxImg
         src="/hero_sec3.jpg"
         alt="An example of a space launch"
         start={200}
         end={-250}
-        className="mx-auto w-2/3"
+        className="mx-auto w-2/3 rounded-3xl"
       />
       <ParallaxImg
         src="/hero_sec6.jpg"
         alt="Orbiting satellite"
         start={-200}
         end={200}
-        className="ml-auto w-1/3"
+        className="ml-auto w-1/3 rounded-3xl"
       />
       <ParallaxImg
         src="/hero_sec1.jpg"
         alt="Orbiting satellite"
         start={0}
         end={-500}
-        className="ml-24 w-5/12"
+        className="ml-24 w-5/12 rounded-3xl"
       />
     </div>
   );

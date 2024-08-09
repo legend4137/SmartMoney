@@ -1,31 +1,34 @@
 .Main {
-    display: grid;
-    grid-template-columns: auto 200px;
-    gap: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  
-  .Column {
-    color: white;
-  }
-  
-  .Title {
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    color: black;
-    background-color: rgb(218, 255, 170);
-  }
-  
-  .Content {
-    height: calc(100vh - 200px);
-    overflow-y: scroll;
-    margin-bottom: 20px;
-  }
-  
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  display: flex;
+  gap: 20px;
+  max-width: 2000px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 20px;
+  justify-content: center;
+}
+
+.Column {
+  color: white;
+  width: 60%; /* Increase the width of the columns */
+}
+
+.Title {
+  padding: 20px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  color: black;
+  background-color: #D8D8D8;
+  width: 100%; /* Ensure the title takes full width of the column */
+  text-align: center; /* Optional: center-align text within the title */
+}
+
+.Content {
+  height: calc(100vh - 200px);
+  overflow-y: scroll;
+  width: 100%; /* Ensure the content area takes full width of the column */
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
