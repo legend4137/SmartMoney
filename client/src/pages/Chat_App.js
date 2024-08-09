@@ -16,7 +16,7 @@ export default function Chat_App() {
 const username = localStorage.getItem("username");
   let data;
 
-  console.log(window.History_new);
+  console.log(window.History_new );
   const handleSubmit = () => {
     const newMessage = { role: "user", content: input };
     let res = {};
