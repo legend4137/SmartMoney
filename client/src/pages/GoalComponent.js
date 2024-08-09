@@ -6,7 +6,7 @@ const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const userName = sessionStorage.getItem("username"); // Replace with dynamic user name if applicable
+  const userName = localStorage.getItem("username"); // Replace with dynamic user name if applicable
 
   useEffect(() => {
     fetchTodos();

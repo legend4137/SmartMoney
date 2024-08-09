@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
 export default function DailyAlerts( {refresh} ) {
-    const userName = sessionStorage.getItem("username");
+    const userName = localStorage.getItem("username");
     const [features, setFeatures] = useState([
         {
             name: 'Alert1',
