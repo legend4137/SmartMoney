@@ -27,7 +27,7 @@ export const TypewriterEffect = ({ text, className, cursorClassName, typingSpeed
   }, [text, displayedText, isTyping, typingSpeed]);
 
   return (
-    <div className={cn("inline-flex items-center", className)} style={{ minWidth: '150px' }}>
+    <div className={cn("inline-flex items-center", className)} style={{ minWidth: '164px' }}>
       <span>{displayedText}</span>
       <motion.span
         animate={{ opacity: [0, 1, 0] }}

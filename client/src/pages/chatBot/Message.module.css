@@ -8,7 +8,7 @@
 }
 
 body {
-  background-color: gray;
+  background-color: #27272a;
 }
 
 .wrapper {
@@ -18,7 +18,7 @@ body {
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-    background-color: rgb(54, 54, 54);
+    background-color: #3f3f46;
   }
   
   .avatar {

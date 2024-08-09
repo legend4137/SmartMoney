@@ -92,6 +92,7 @@ const ParentComponent = () => {
     <div>
       <EditableFields data={walletData} />
       <ScrollBox refresh={refresh} />
+      <DailyAlerts refresh={refresh}/>
       <BottomNavbar
         inputValue={inputValue}
         handleInputChange={handleInputChange}
@@ -102,7 +103,6 @@ const ParentComponent = () => {
         showDropdown={showDropdown}
         handleOptionSelect={handleOptionSelect}
       />
-      <DailyAlerts refresh={refresh}/>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import bot from "./assets/ai_chatbot.png";
-import user from "./assets/person_chatbot.png";
+import bot from "./assets/bot_chat.png";
+import user from "./assets/portrait_user.png";
 
 import styles from "./Message.module.css";
 
