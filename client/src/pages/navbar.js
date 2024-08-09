@@ -3,6 +3,9 @@ import { Link, useNavigate ,useLocation} from 'react-router-dom';
 import axios from 'axios';
 import { TypewriterEffect } from './typewriter';
 
+
+
+
 const Navbar = () => {
   var userName = sessionStorage.getItem("username");
   const navigate = useNavigate();

@@ -12,6 +12,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
   background-color: #f9f9f9; /* Adjust as needed */
 }
 
@@ -135,7 +136,7 @@ body {
 .formbold-form-btn-wrapper {
   display: flex;
   gap: 20px;
-  margin-top: 35px;
+  margin-top: 5px;
 }
 
 .formbold-back-btn {
