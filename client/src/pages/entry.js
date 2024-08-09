@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import backgroundImage from '../assets/among-us.png'; // Correct import statement
+import backgroundImage from '../assets/among-us.png';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      // Check if the username exists using the API
-      const response = await axios.get('http://localhost:12000/get_account', {
-        params: { userName: username }
+      // Authenticate the user using the login API
+      const response = await axios.post('http://localhost:12000/api/auth/login', {
+        userName: username,
+        password: password,
       });
 
-      if (response.data.success) {
-        // Save the username to session storage
+      if (response.data.token) {
+        // Save the username and token to session storage
         sessionStorage.setItem('username', username);
+        sessionStorage.setItem('token', response.data.token);
 
         // Navigate to the dashboard  
         navigate(`/dashboard?username=${username}`);
       } else {
-        // Handle case where account is not found
-        alert('Account not found. Please check your username or sign up if you do not have an account.');
+        // Handle case where authentication fails
+        alert('Invalid credentials. Please try again.');
       }
     } catch (error) {
-      console.error('Error checking account:', error);
-      alert('Account not found. Please check your username or sign up if you do not have an account.');
+      console.error('Error logging in:', error);
+      alert('Error logging in. Please check your credentials and try again.');
     }
   };
 
@@ -58,6 +61,21 @@ const SignIn = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="username"
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Your Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="password"
                     required
                   />
                 </div>
