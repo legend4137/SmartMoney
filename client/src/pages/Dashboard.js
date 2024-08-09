@@ -13,7 +13,7 @@ import ReadOnlyTodoList from './DashboardGoal';
 const apiUrl = 'http://localhost:12000/health-rec';
 
 function Dashboard() {
-  const userName = sessionStorage.getItem("username");
+  const userName = localStorage.getItem("username");
 
   const [data, setData] = useState({
     healthscore: 0,

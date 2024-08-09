@@ -8,12 +8,12 @@ import styles from "./Chat_App.module.css";
 import axios from "axios";
 
 var History_new;
-const userName = sessionStorage.getItem('username');
+const userName = localStorage.getItem('username');
 export default function Chat_App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [history, setHistory] = useState([]); // State to manage visibility
-const username = sessionStorage.getItem("username");
+const username = localStorage.getItem("username");
   let data;
 
   console.log(window.History_new);

@@ -7,7 +7,7 @@ const SalesChart = () => {
   const chartInstance = useRef(null); // Ref to hold the chart instance
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [percentageChange, setPercentageChange] = useState(0);
-  const userName = sessionStorage.getItem("username");
+  const userName = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchData = async () => {
