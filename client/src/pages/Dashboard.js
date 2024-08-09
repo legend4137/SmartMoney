@@ -3,12 +3,12 @@ import axios from 'axios';
 import PlanCard from './WalletCard';
 import GaugeComponent from 'react-gauge-component';
 import './dashboard.module.css';
-import Navbar from './navbar';
+// import Navbar from './navbar';
 import ChatPopup from './ChatPopup';
 import Graph from './Graph';
 import TodoList from './GoalComponent';
 import ReadOnlyTodoList from './DashboardGoal';
-import Footer from './footer';
+// import Footer from './footer';
 
 const apiUrl = 'http://localhost:12000/health-rec';
 

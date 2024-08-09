@@ -1,4 +1,6 @@
 const express = require("express");
+const nodemailer = require("nodemailer");
+
 // const {chalk} = require(chalk);
 
 require("dotenv").config();
@@ -12,11 +14,22 @@ const { db } = require("./firebase"); // Import Firestore instance
 //const {mongoDb} = require("./mongodb")
 // Import Google Generative AI SDK
 
+const transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: "rajubaba7900@gmail.com",
+    pass: "jn7jnAPss4f63QBp6D",
+  },
+});
+
 const {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } = require("@google/generative-ai");
+const { Goal } = require("lucide-react");
 
 const app = express();
 const port = 12000;
@@ -666,7 +679,7 @@ some of the values might be null just omit them and try to calculate the score o
   -pfFunds:${doc.pfFunds.stringValue},
   -property:${doc.property.stringValue},
   -emergencyFunds:${doc.emergencyFunds.stringValue
-        }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number. Do not include ** in text
+        }  It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the score. Do any manupulatins you want just give me the score. dont include any # while giving the number.I just want one single number.do not include any bold words in the response.
   `;
 
       const result = await chat.sendMessage(prompt);
@@ -808,6 +821,179 @@ app.get("/wallet", async (req, res) => {
   const name = req.query.name;
   const userdoc = await db.collection("formsubmissions").doc(name).get();
   const assest = userdoc._fieldsProto.assest.stringValue;
+});
+
+app.get("/tax-rec", async (req, res) => {
+  console.log(req.query.userName);
+  const user = req.query.userName;
+  const genAI = new GoogleGenerativeAI(
+    "AIzaSyCT6B82xDit5PhHjeBXzoyZ0jiFwnblUCw"
+  );
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const chat = model.startChat({
+    history: [
+      {
+        role: "user",
+        parts: [{ text: "Hello, I have 2 dogs in my house." }],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Great to meet you. What would you like to know?" }],
+      },
+    ],
+    generationConfig: {
+      maxOutputTokens: 500,
+    },
+  });
+  const userdoc = await db
+    .collection("formSubmissionstaxes")
+    .doc(req.query.userName)
+    .get();
+
+  const doc = userdoc._fieldsProto;
+  try {
+    if (userdoc.exists) {
+      console.log("exists");
+      console.log(doc.Contribution);
+      const prompt = `This is my information:
+      -filingStatus : ${doc.filingStatus.stringValue},
+-dependents : ${doc.dependents},
+-age : ${doc.age},
+-freelanceIncome : ${doc.freelanceIncome},
+-rentalIncome : ${doc.rentalIncome},
+-taxableOtherIncome : ${doc.taxableOtherIncome},
+-401Contribution : ${doc.Contribution},
+-IRAContribution : ${doc.IRAContribution},
+-investmentIncome : ${doc.investmentIncome},
+-mortgageInterest : ${doc.mortgageInterest},
+-stateIncomeTaxes : ${doc.stateIncomeTaxes},
+-salesTaxes : ${doc.salesTaxes},
+-propertyTaxes : ${doc.propertyTaxes},
+-medicalExpenses : ${doc.medicalExpenses},
+-educationExpenses : ${doc.educationExpenses},
+-charitableContributions : ${doc.charitableContributions},
+-businessExpenses : ${doc.businessExpenses}
+Labels for Recommendations:
+
+Income Optimization:
+Income Averaging: Strategies to smooth out income fluctuations.
+Tax-Efficient Income Planning: Maximizing after-tax income.
+Deduction Maximization:
+Itemized Deductions: Analyzing and optimizing deductible expenses.
+Standard Deduction: Comparing benefits against itemized deductions.
+Credit Utilization:
+Non-Refundable Credits: Claiming available credits to reduce tax liability.
+Refundable Credits: Identifying and claiming credits that can result in a tax refund.
+Retirement Planning:
+Retirement Savings Contributions: Maximizing contributions to tax-advantaged retirement accounts.
+Retirement Withdrawal Strategies: Planning for tax-efficient withdrawals.
+Investment Optimization:
+Tax-Loss Harvesting: Realizing losses to offset capital gains.
+Tax-Efficient Investing: Structuring investments to minimize tax impact.
+Expense Management:
+Business Expense Optimization: Maximizing deductible business expenses.
+Education Expense Planning: Utilizing education-related tax benefits.
+Life Event Planning:
+Tax Implications of Life Changes: Understanding tax consequences of major life events.
+Estate Planning: Considering tax implications for wealth transfer.
+Provide detailed recommendations based on the provided data under each label. Don't give any non-useful lines...just give the recommendations under the labels
+    It some of the entires are not there just dont consider them.If you counter some null values change the criteria accordingly so that you are able to determine the recommendation. Do any manupulatins you want just give me the recommendation. dont include any # while giving the recommendation.I just want one single number. Do not include ** in text. GIVE VERY SHORT RECOMMENDATIONSS. DONT INCLUDE LONG LINES
+  `;
+
+      const result = await chat.sendMessage(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+
+      document = db.collection("formSubmissionstaxes").doc(user);
+      await document.update({
+        taxes: text
+      });
+      const pass = {
+        number: text
+      };
+      res.json(pass);
+    } else {
+      console.log("No such Document");
+      return;
+    }
+  } catch (error) {
+    console.log("Error getting the document", error);
+  }
+});
+
+
+// Route to handle form submission (Firestore) taxes
+app.post("/api/formtaxes", async (req, res) => {
+  const {
+    userName,
+    filingStatus,
+    dependents,
+    age,
+    freelanceIncome,
+    rentalIncome,
+    taxableOtherIncome,
+    Contribution,
+    IRAContribution,
+    investmentIncome,
+    mortgageInterest,
+    stateIncomeTaxes,
+    salesTaxes,
+    propertyTaxes,
+    medicalExpenses,
+    educationExpenses,
+    charitableContributions,
+  } = req.body;
+
+  const docId = userName; // Use timestamp as a simple unique ID
+
+  try {
+    // Check if document already exists
+    const userDoc = await db.collection("formSubmissionstaxes").doc(docId).get();
+    if (userDoc.exists && x == 0) {
+      // If the document exists, send an alert message
+      return res.json({
+        success: false,
+        message: "An account with this username already exists",
+      });
+    }
+    x = x + 1;
+
+    // Create a new document if it does not exist
+    await db.collection("formSubmissionstaxes").doc(docId).set({
+      userName,
+
+      filingStatus,
+    dependents,
+    age,
+    freelanceIncome,
+    rentalIncome,
+    taxableOtherIncome,
+    Contribution,
+    IRAContribution,
+    investmentIncome,
+    mortgageInterest,
+    stateIncomeTaxes,
+    salesTaxes,
+    propertyTaxes,
+    medicalExpenses,
+    educationExpenses,
+    charitableContributions,
+    });
+
+    res.json({
+      success: true,
+      message: "Form data received and stored successfully",
+      docId,
+    });
+  } catch (error) {
+    console.error("Error storing data:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Error storing data",
+      error: error.message,
+    });
+  }
 });
 
 app.get("/health-rec-update", async (req, res) => {
