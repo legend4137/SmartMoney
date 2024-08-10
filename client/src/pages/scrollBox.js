@@ -25,7 +25,7 @@ const ScrollBox = ({ refresh }) => {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg max-w-[1000px] mx-auto">
       <div className="overflow-y-auto" style={{ maxHeight: tableMaxHeight }}>
         <table className="w-full text-base text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-sm text-white uppercase bg-gray-50 dark:bg-[#244855] dark:text-white">
+          <thead className="text-sm text-white uppercase bg-gray-50 dark:bg-[#001f3f] dark:text-white">
             <tr>
               <th scope="col" className="px-4 py-2">S No.</th>
               <th scope="col" className="px-4 py-2">Amount</th>

@@ -75,7 +75,7 @@ const SalesChart = () => {
               show: true,
               style: {
                 fontFamily: "Inter, sans-serif",
-                cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                cssClass: 'text-xs font-normal fill-[#1f2937] dark:fill-[#1f2937]'
               }
             },
             axisBorder: {
@@ -91,7 +91,7 @@ const SalesChart = () => {
               show: true,
               style: {
                 fontFamily: "Inter, sans-serif",
-                cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                cssClass: 'text-xs font-normal fill-[#1f2937] dark:fill-[#1f2937]'
               },
               formatter: function (value) {
                 return '$' + value;
@@ -177,11 +177,11 @@ const SalesChart = () => {
   }, []);
 
   return (
-    <div className="max-w-lg w-full bg-white rounded-lg shadow dark:bg-gray-800">
+    <div className="max-w-lg w-full bg-white rounded-lg shadow dark:bg-[#ddd4c0] dark:border-[#522922]">
       <div className="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <div>
-          <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">₹{monthlyExpenses}</h5>
-          <p className="text-base font-normal text-gray-500 dark:text-gray-400">Monthly Expenses</p>
+          <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-[#1f2937] pb-2">₹{monthlyExpenses}</h5>
+          <p className="text-base font-normal text-gray-500 dark:text-[#1f2937]">Monthly Expenses</p>
         </div>
         <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
           {percentageChange}%
@@ -191,9 +191,9 @@ const SalesChart = () => {
         </div>
       </div>
       <div ref={chartRef} id="labels-chart" className="px-2.5"></div>
-      <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5 p-4 md:p-6 pt-0 md:pt-0">
+      <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-[#522922] justify-between mt-5 p-4 md:p-6 pt-0 md:pt-0">
         <div className="flex justify-between items-center pt-5">
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400 text-center inline-flex items-center">
+          <span className="text-sm font-medium text-gray-500 dark:text-[#1f2937] text-center inline-flex items-center">
             Last 7 days
           </span>
         </div>

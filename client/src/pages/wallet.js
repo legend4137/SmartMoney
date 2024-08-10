@@ -10,7 +10,7 @@ import ChatPopup from './ChatPopup';
 const Wallet = () => {
   const userName = localStorage.getItem("username");
   return (
-    <div className="wallet-container min-h-screen">
+    <div className="wallet-container min-h-screen bg-[#111827]">
       <div className="main-content">
         <div className="editable-fields">
           <ParentComponent />
