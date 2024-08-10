@@ -67,7 +67,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="navbar-container">
       </div>
-      <section className="bg-[#111827] pt-32">
+      <section className="bg-[#001f41] pt-32">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
           {/* <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-[#9ca3af] md:text-5xl lg:text-6xl dark:text-white">
             Hi {userName}!
@@ -87,7 +87,7 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="bg-[#1f2937]">
+      <section className="bg-[#002956]">
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <PlanCard userName={userName} />
           <div className="mt-4 md:mt-0">
@@ -95,7 +95,7 @@ function Dashboard() {
           </div>
         </div>
       </section>
-      <section className="bg-[#111827]">
+      <section className="bg-[#001f41]">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-[#9ca3af]">
