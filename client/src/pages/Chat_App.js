@@ -62,12 +62,16 @@ const username = localStorage.getItem("username");
             return <Message key={i} role={el.role} content={el.content} />;
           })}
         </div>
-
         <Input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onClick={input ? handleSubmit : undefined}
-        />
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onClick={input ? handleSubmit : undefined}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && input) {
+            handleSubmit();
+          }
+        }}
+      />
       </div>
     </div>
   );

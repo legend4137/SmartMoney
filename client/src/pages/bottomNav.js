@@ -39,7 +39,7 @@ const BottomNavbar = ({
             onChange={handleInputChange} // Handle input changes
           />
           <div className={styles.buttonContainer}>
-            <button className="btn" onClick={() => addMoneyToWallet(Number(inputValue))}>Add Money</button>
+            <button className="btn" onClick={() => addMoneyToWallet(Number(inputValue))}>ADD MONEY</button>
             <button className="btn ml-2" onClick={handleDeductClick}>
               DEDUCT
             </button>
