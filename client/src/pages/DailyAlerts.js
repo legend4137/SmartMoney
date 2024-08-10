@@ -71,7 +71,7 @@ export default function DailyAlerts( {refresh} ) {
         <div className="flex items-center justify-center m-10">
             <div className="bg-slate-700 w-[800px] h-[500px] p-6 rounded-lg shadow-lg">
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold leading-6 text-cyan-500">Daily Recommendations</h2>
+                    <h2 className="text-xl font-semibold leading-6 text-[#fbf778]">Daily Recommendations</h2>
                     <p className="mt-2 text-xl font-bold tracking-tight text-white">
                         Recommendations Based on your Daily Expenditure
                     </p>
