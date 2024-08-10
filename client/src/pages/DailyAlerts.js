@@ -5,22 +5,22 @@ export default function DailyAlerts( {refresh} ) {
     const userName = localStorage.getItem("username");
     const [features, setFeatures] = useState([
         {
-            name: 'Alert1',
+            name: 'Alert 1',
             description: 'Loading...',
             icon: CloudArrowUpIcon,
         },
         {
-            name: 'Alert2',
+            name: 'Alert 2',
             description: 'Loading...',
             icon: LockClosedIcon,
         },
         {
-            name: 'Alert3',
+            name: 'Alert 3',
             description: 'Loading...',
             icon: ArrowPathIcon,
         },
         {
-            name: 'Alert4',
+            name: 'Alert 4',
             description: 'Loading...',
             icon: FingerPrintIcon,
         },
@@ -58,23 +58,23 @@ export default function DailyAlerts( {refresh} ) {
 
     return (
         <div className="flex items-center justify-center m-10">
-            <div className="bg-slate-700 w-[600px] h-[400px] p-6 rounded-lg shadow-lg">
+            <div className="bg-slate-700 w-[800px] h-[500px] p-6 rounded-lg shadow-lg">
                 <div className="text-center">
-                    <h2 className="text-sm font-semibold leading-6 text-cyan-500">Daily Recommendations</h2>
-                    <p className="mt-2 text-lg font-bold tracking-tight text-white">
+                    <h2 className="text-xl font-semibold leading-6 text-cyan-500">Daily Recommendations</h2>
+                    <p className="mt-2 text-xl font-bold tracking-tight text-white">
                         Recommendations Based on your Daily Expenditure
                     </p>
                 </div>
                 <div className="mt-6 grid grid-cols-2 gap-4">
                     {features.map((feature) => (
                         <div key={feature.name} className="relative pl-10">
-                            <dt className="text-sm font-semibold leading-6 text-white">
+                            <dt className="text-lg font-semibold leading-6 text-white">
                                 <div className="absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-md bg-indigo-600">
                                     <feature.icon aria-hidden="true" className="h-5 w-5 text-white" />
                                 </div>
                                 {feature.name}
                             </dt>
-                            <dd className="mt-1 text-xs leading-5 text-green-500">{feature.description}</dd>
+                            <dd className="mt-1 text-lg leading-5 text-gray-200">{feature.description}</dd>
                         </div>
                     ))}
                 </div>

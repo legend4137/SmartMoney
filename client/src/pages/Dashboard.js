@@ -6,8 +6,8 @@ import './dashboard.module.css';
 // import Navbar from './navbar';
 import ChatPopup from './ChatPopup';
 import Graph from './Graph';
-import TodoList from './GoalComponent';
 import ReadOnlyTodoList from './DashboardGoal';
+import Footer from './footer';
 // import Footer from './footer';
 
 const apiUrl = 'http://localhost:12000/health-rec';
@@ -55,7 +55,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="navbar-container">
       </div>
-      <section className="bg-white bg-zinc-950 pt-32">
+      <section className="bg-[#212121] pt-32">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
           <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
             Hi {userName}!
@@ -74,16 +74,15 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="bg-white bg-zinc-950">
+      <section className="bg-[#212121]">
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <PlanCard userName={userName} />
-          <ReadOnlyTodoList/>
           <div className="mt-4 md:mt-0">
             <Graph />
           </div>
         </div>
       </section>
-      <section className="bg-white bg-zinc-950">
+      <section className="bg-[#212121]">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -134,6 +133,8 @@ function Dashboard() {
       </section>
 
       <ChatPopup />
+
+      <Footer />
     </div>
   );
 }

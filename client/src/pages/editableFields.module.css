@@ -1,12 +1,10 @@
-/* editableFields.module.css */
 .drawer {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 0; /* Lower value ensures it's below the navbar */
-  width: 80%;
-  background-color: white; /* Ensure the background color is set */
+  height: 100%; /* Ensures the drawer extends to the full height of the viewport */
+  width: 100%; /* Preserves the width of the drawer */
+  background-color: white;
+  z-index: 40; /* Keeps the drawer above other content */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for showing/hiding */
 }
-
-
-
