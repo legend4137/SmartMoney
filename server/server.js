@@ -1166,7 +1166,7 @@ app.get("/daily-rec", async (req, res) => {
       },
     });
 
-    prompt = `I am building a finance advisor website. One of its feature is of advices. The user data is given to me. I want to give him some suggestions that will be based on the analysis of his expenditure. I will give you his daily expenses. On the basis of them give me 4 advices. The advices should be crisp and give them in bullet point, I just want the advices and dont put any ** in the text. Just give me 4 bullet points of Advices. DO not give any other texts in writing
+    prompt = `I am building a finance advisor website. One of its feature is of advices. The user data is given to me. I want to give him some suggestions that will be based on the analysis of his expenditure. I will give you his daily expenses. On the basis of them give me 4 advices. The advices should be crisp and give them in bullet point. Just give me 4 bullet points of Advices. DO not give any other texts in writing.
        Entertainment :  ${type.Entertainment},
        Medical:${type.Medical},
        Education: ${type.Education},

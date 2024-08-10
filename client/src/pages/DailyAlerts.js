@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+
+const MarkdownRenderer = ({ content }) => {
+    return (
+      <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+        {content}
+      </ReactMarkdown>
+    );
+  };
 
 export default function DailyAlerts( {refresh} ) {
     const userName = localStorage.getItem("username");
@@ -85,7 +95,7 @@ export default function DailyAlerts( {refresh} ) {
                                 </div>
                                 {feature.name}
                             </dt>
-                            <dd className="mt-1 text-lg leading-5 text-gray-200">{feature.description}</dd>
+                            <dd className="mt-1 text-lg leading-5 text-gray-200"><MarkdownRenderer content={feature.description}/></dd>
                         </div>
                     ))}
                 </div>

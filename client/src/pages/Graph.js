@@ -94,7 +94,7 @@ const SalesChart = () => {
                 cssClass: 'text-xs font-normal fill-[#1f2937] dark:fill-[#1f2937]'
               },
               formatter: function (value) {
-                return '$' + value;
+                return '₹' + value;
               }
             },
             min: Math.min(...seriesData) * 0.9, // Dynamic min value with margin
