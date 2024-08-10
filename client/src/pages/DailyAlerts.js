@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 
 export default function DailyAlerts( {refresh} ) {
     const userName = localStorage.getItem("username");
+    const [data, setData] = useState(" ");
     const [features, setFeatures] = useState([
         {
             name: 'Alert 1',
@@ -29,32 +31,41 @@ export default function DailyAlerts( {refresh} ) {
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
-                console.log('Fetching recommendations for user:', userName); // Debugging
-                const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
-                const data = await response.json();
+                const response = await axios.get(`http://localhost:12000/get_account`, {
+                    params: {
+                      userName: userName
+                    }
+                });
                 
-                // Check if response has the expected fields
-                const recommendations = [
-                    data.rec1 || 'Loading...',
-                    data.rec2 || 'Loading...',
-                    data.rec3 || 'Loading...',
-                    data.rec4 || 'Loading...',
-                ];
-
-                // Map the recommendations to the features
-                const updatedFeatures = features.map((feature, index) => ({
-                    ...feature,
-                    description: recommendations[index],
-                }));
-
-                setFeatures(updatedFeatures);
+                if (response.data && response.data.data) {
+                    const fetchedData = response.data.data;
+                    setData(response.data.data);
+                    
+                    // Create the recommendations array based on fetched data
+                    const recommendations = [
+                        fetchedData.dailyrec1 || 'Loading...',
+                        fetchedData.dailyrec2 || 'Loading...',
+                        fetchedData.dailyrec3 || 'Loading...',
+                        fetchedData.dailyrec4 || 'Loading...',
+                    ];
+                    
+                    // Map the recommendations to the features
+                    const updatedFeatures = features.map((feature, index) => ({
+                        ...feature,
+                        description: recommendations[index],
+                    }));
+                    
+                    setFeatures(updatedFeatures);
+                } else {
+                    console.error("Invalid data structure in response.");
+                }
             } catch (error) {
                 console.error('Error fetching recommendations:', error);
             }
         };
-
+    
         fetchRecommendations();
-    }, [userName,refresh]);
+    }, [userName, refresh, features]);
 
     return (
         <div className="flex items-center justify-center m-10">

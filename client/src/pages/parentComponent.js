@@ -52,6 +52,16 @@ const ParentComponent = () => {
     } catch (err) {
       console.error(err.response.data.msg);
     }
+    try {
+      console.log('Fetching recommendations for user:', userName); // Debugging
+      const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
+      console.log("completed");
+      
+      const data = await response.json();
+    } catch(err){
+      console.error(err.response.data.msg);
+    }
+
   };
 
   const deductMoneyFromWallet = async (amount, tag, reason) => {
@@ -66,6 +76,15 @@ const ParentComponent = () => {
       await axios.post('http://localhost:12000/wallet/deduct', { userName, amount, tag});
       setRefresh(prev => !prev); // This will trigger fetchData() due to refresh change
     } catch (err) {
+      console.error(err.response.data.msg);
+    }
+    try {
+      console.log('Fetching recommendations for user:', userName); // Debugging
+      const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
+      console.log("completed");
+      
+      const data = await response.json();
+    } catch(err){
       console.error(err.response.data.msg);
     }
   };
