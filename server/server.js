@@ -362,6 +362,10 @@ app.post("/api/form", async (req, res) => {
   const alert1 = "";
   const alert2 = "";
   const alert3 = "";
+  const dailyrec1 = "";
+  const dailyrec2 = "";
+  const dailyrec3 = "";
+  const dailyrec4 ="";
 
   try {
     // Check if document already exists
@@ -402,7 +406,11 @@ app.post("/api/form", async (req, res) => {
       emergencyFunds,
       alert1,
       alert2,
-      alert3
+      alert3,
+      dailyrec1,
+      dailyrec2,
+      dailyrec3,
+      dailyrec4
     });
 
     res.json({
@@ -1192,6 +1200,12 @@ app.get("/daily-rec", async (req, res) => {
       rec4: point4 || '',
     };
 
+    await document.update({
+      dailyrec1: point1,
+      dailyrec2: point2,
+      dailyrec3: point3,
+      dailyrec4: point4
+    })
     res.json(pass);
   } catch (error) {
     console.error("Error fetching wallet:", error);
