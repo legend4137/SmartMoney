@@ -19,10 +19,10 @@ export const SmoothScrollHero = () => {
           // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
           lerp: 0.05,
           //   infinite: true,
-            // syncTouch: true,
+          // syncTouch: true,
         }}
       >
-      
+
         <Hero />
         <RevealBento />
         <Schedule />
@@ -105,7 +105,7 @@ const CenterImage = () => {
       </div>
     </motion.div>
   );
-  
+
 };
 
 const ParallaxImages = () => {
@@ -182,17 +182,17 @@ const Schedule = () => {
       >
         Features of Our Website
       </motion.h1>
-      <ScheduleItem title="Wallet" date="checkout your daily expenses through logs and update your expenses in your personalized wallet"  />
-      <ScheduleItem title="Health Score" date="Get to know your financial health score on the basis of your spendings"  />
-      <ScheduleItem title="Daily Recomandation" date="Daily Recomendation on the basis of your Salary abd spending"  />
-      <ScheduleItem title="ChatBot" date="ask your financial doubts here, an intutive way to discuss financial goals and get best recommendations"  />
-      <ScheduleItem title="Graph" date="visualize your daily basis expenses through the graph at your dashboard"  />
-      
+      <ScheduleItem title="Wallet" date="checkout your daily expenses through logs and update your expenses in your personalized wallet" link="/wallet" />
+      <ScheduleItem title="Health Score" date="Get to know your financial health score on the basis of your spendings" link="/dashboard" />
+      <ScheduleItem title="Daily Recommendation" date="Daily Recomendation on the basis of your Salary abd spending" link="/wallet"/>
+      <ScheduleItem title="ChatBot" date="ask your financial doubts here, an intutive way to discuss financial goals and get best recommendations" link="/chatbot"/>
+      <ScheduleItem title="Graph" date="visualize your daily basis expenses through the graph at your dashboard" link="/dashboard" />
+
     </section>
   );
 };
 
-const ScheduleItem = ({ title, date, location }) => {
+const ScheduleItem = ({ title, date, link }) => {
   return (
     <motion.div
       initial={{ y: 48, opacity: 0 }}
@@ -201,12 +201,14 @@ const ScheduleItem = ({ title, date, location }) => {
       className="mb-9 flex items-center justify-between border-b border-zinc-800 px-3 pb-9"
     >
       <div>
-        <p className="mb-1.5 text-xl text-zinc-50">{title}</p>
+        <a href={link} className="mb-1.5 text-xl text-zinc-50 hover:underline">
+          {title}
+        </a>
         <p className="text-sm uppercase text-zinc-500">{date}</p>
       </div>
       <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
-        
+        {/* Add additional icons or buttons here if needed */}
       </div>
-    </motion.div>
+    </motion.div >
   );
 };
