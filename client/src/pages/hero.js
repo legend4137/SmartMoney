@@ -12,7 +12,7 @@ import { RevealBento } from "./aboutUs";
 
 export const SmoothScrollHero = () => {
   return (
-    <div className="bg-[#212121]">
+    <div className="bg-[#1f2937]">
       <ReactLenis
         root
         options={{
@@ -61,7 +61,7 @@ const Hero = () => {
 
       <ParallaxImages />
 
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-zinc-950" />
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-[#1f2937]" />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import {FcMoneyTransfer } from "react-icons/fc";
 
 export const RevealBento = () => {
   return (
-    <div className="min-h-screen bg-zinc-950 px-4 py-12 text-zinc-50">
+    <div className="min-h-screen bg-[#1f2937] px-4 py-12 text-zinc-50">
       
       <motion.div
         initial="initial"

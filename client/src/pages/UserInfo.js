@@ -89,7 +89,7 @@ const RegistrationForm = () => {
 
   };
   return (
-    <section className="py-8 bg-[#212121] md:py-16 min-h-screen flex items-center antialiased text-white">
+    <section className="py-8 bg-[#111827] md:py-16 min-h-screen flex items-center antialiased text-[#e5e0df]">
       <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
@@ -104,7 +104,7 @@ const RegistrationForm = () => {
           </div>
 
           <div className="mt-6 sm:mt-8 lg:mt-0">
-            <h1 className="text-xl font-semibold text-white sm:text-3xl">
+            <h1 className="text-xl font-semibold text-[#e5e0df] sm:text-3xl">
               EDIT ACCOUNT INFO
             </h1>
             <hr className="my-6 md:my-8 border-gray-800" />
@@ -114,7 +114,7 @@ const RegistrationForm = () => {
               {currentStep === 1 && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Monthly Gross Income
                     </label>
                     <input
@@ -123,11 +123,11 @@ const RegistrationForm = () => {
                       name="monthlyGrossIncome"
                       value={formData.monthlyGrossIncome}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Net Income
                     </label>
                     <input
@@ -136,11 +136,11 @@ const RegistrationForm = () => {
                       name="netIncome"
                       value={formData.netIncome}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Housing Cost
                     </label>
                     <input
@@ -149,11 +149,11 @@ const RegistrationForm = () => {
                       name="housingCost"
                       value={formData.housingCost}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Utilities
                     </label>
                     <input
@@ -162,11 +162,11 @@ const RegistrationForm = () => {
                       name="utilities"
                       value={formData.utilities}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Insurance
                     </label>
                     <input
@@ -175,11 +175,11 @@ const RegistrationForm = () => {
                       name="insurance"
                       value={formData.insurance}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Food And Groceries
                     </label>
                     <input
@@ -188,11 +188,11 @@ const RegistrationForm = () => {
                       name="foodAndGroceries"
                       value={formData.foodAndGroceries}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Transport
                     </label>
                     <input
@@ -201,13 +201,13 @@ const RegistrationForm = () => {
                       name="transport"
                       value={formData.transport}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div className="mt-6 flex justify-between">
                     <button
                       type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={handleNextStep}
                     >
                       Next
@@ -219,7 +219,7 @@ const RegistrationForm = () => {
               {currentStep === 2 && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Total Debt
                     </label>
                     <input
@@ -228,11 +228,11 @@ const RegistrationForm = () => {
                       name="totalDebt"
                       value={formData.totalDebt}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Repayment Plans
                     </label>
                     <input
@@ -241,11 +241,11 @@ const RegistrationForm = () => {
                       name="repaymentPlans"
                       value={formData.repaymentPlans}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Investment
                     </label>
                     <input
@@ -254,11 +254,11 @@ const RegistrationForm = () => {
                       name="investment"
                       value={formData.investment}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       PF Funds
                     </label>
                     <input
@@ -267,11 +267,11 @@ const RegistrationForm = () => {
                       name="pfFunds"
                       value={formData.pfFunds}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Property
                     </label>
                     <input
@@ -280,11 +280,11 @@ const RegistrationForm = () => {
                       name="property"
                       value={formData.property}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Emergency Funds
                     </label>
                     <input
@@ -293,20 +293,20 @@ const RegistrationForm = () => {
                       name="emergencyFunds"
                       value={formData.emergencyFunds}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div className="mt-6 flex justify-between">
                     <button
                       type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={handlePreviousStep}
                     >
                       Previous
                     </button>
                     <button
                       type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={handleNextStep}
                     >
                       Next
@@ -317,7 +317,7 @@ const RegistrationForm = () => {
               {currentStep === 3 && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Entertainment
                     </label>
                     <input
@@ -326,11 +326,11 @@ const RegistrationForm = () => {
                       name="entertainment"
                       value={formData.entertainment}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Healthcare
                     </label>
                     <input
@@ -339,11 +339,11 @@ const RegistrationForm = () => {
                       name="healthcare"
                       value={formData.healthcare}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Education
                     </label>
                     <input
@@ -352,11 +352,11 @@ const RegistrationForm = () => {
                       name="education"
                       value={formData.education}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Savings
                     </label>
                     <input
@@ -365,11 +365,11 @@ const RegistrationForm = () => {
                       name="savings"
                       value={formData.savings}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-300">
+                    <label className="block text-sm font-medium text-[#e5e0df]">
                       Others
                     </label>
                     <input
@@ -378,20 +378,20 @@ const RegistrationForm = () => {
                       name="others"
                       value={formData.others}
                       onChange={handleInputChange}
-                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                      className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
                     />
                   </div>
                   <div className="mt-6 flex justify-between">
                     <button
                       type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       onClick={handlePreviousStep}
                     >
                       Previous
                     </button>
                     <button
                       type="submit"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       Save
                     </button>

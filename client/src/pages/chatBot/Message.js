@@ -2,8 +2,7 @@ import bot from "./assets/bot_chat.png";
 import user from "./assets/portrait_user.png";
 
 import styles from "./Message.module.css";
-
-export default function Message({ role, content }) {
+export default function Message({ role, content, loading }) {
   return (
     <div className={styles.wrapper}>
       <div>
@@ -14,7 +13,9 @@ export default function Message({ role, content }) {
         />
       </div>
       <div>
-        <p>{content}</p>
+      <div>
+          <p>{content}</p> 
+      </div>
       </div>
     </div>
   );

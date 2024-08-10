@@ -59,7 +59,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="border-gray-200 bg-[#0a2922]" style={{ zIndex: 50 }}>
+    <nav className=" border-gray-200 bg-[#111827]" style={{ zIndex: 50 }}>
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="/sample_logo.png" className="h-8" alt="Sample Logo" />
@@ -83,7 +83,7 @@ const Navbar = () => {
           </button>
           {/* Dropdown menu */}
           <div
-            className={`absolute right-0 mt-2 w-48 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-black dark:divide-gray-600 ${isDropdownOpen ? 'block' : 'hidden'}`}
+            className={`absolute right-0 mt-2 w-48 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-black ${isDropdownOpen ? 'block' : 'hidden'}`}
             style={{ top: '100%' }}
             id="user-dropdown"
           >
@@ -124,7 +124,7 @@ const Navbar = () => {
           </button>
         </div>
         <div className={`items-center justify-between hidden w-full md:flex md:w-auto md:order-1 ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="navbar-menu">
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-black md:dark:bg-black dark:border-gray-700">
+          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-[#111827] md:dark:bg-[#111827] dark:border-gray-700">
             <li>
               <Link to="/" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Home</Link>
             </li>

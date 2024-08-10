@@ -8,17 +8,17 @@
 }
 
 body {
-  background-color: #27272a;
+  background-color: #1f2937;
 }
 
 .wrapper {
-    display: grid;
+    display: flex;
     grid-template-columns: 60px auto;
     min-height: 60px;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-    background-color: #3f3f46;
+    background-color: #111827;
   }
   
   .avatar {
