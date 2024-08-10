@@ -63,16 +63,16 @@ const HeaderBlock = () => (
       className="mb-4 size-14 rounded-full"
     />
     <h1 className="mb-12 text-4xl font-medium leading-tight">
-      About us
-      <span className="text-zinc-400">
-        I build cool websites like this one.
+      Welcome to SmartMoney !!   
+      <span className="text-zinc-400"><br />
+        Your AI Financial Advisor and Budget Planner
       </span>
     </h1>
     <a
-      href="#"
-      className="flex items-center gap-1 text-red-300 hover:underline"
+      href="/dashboard"
+      className="flex items-center gap-1 text-red-300 hover:underline text-xl"
     >
-      Contact me <FiArrowRight />
+      Get Started <FiArrowRight />
     </a>
   </Block>
 );
@@ -143,11 +143,9 @@ const SocialsBlock = () => (
 const AboutBlock = () => (
   <Block className="col-span-12 text-3xl leading-snug">
     <p>
-      My passion is building cool stuff.{" "}
-      <span className="text-zinc-400">
-        I build primarily with React, Tailwind CSS, and Framer Motion. I love
-        this stack so much that I even built a website about it. I've made over
-        a hundred videos on the subject across YouTube and TikTok.
+      About Me
+      <span className="text-zinc-400"><br />
+      SmartMoney is an AI-powered financial management tool that helps users track their spending, plan budgets, and receive personalized financial advice. By integrating with the Gemini API, it offers real-time alerts and a financial score to improve users' financial health. The project also features an AI chatbot that provides tailored financial guidance.
       </span>
     </p>
   </Block>
