@@ -24,7 +24,7 @@
 }
 
 .Content {
-  height: calc(100vh - 200px);
+  height: calc(100vh);
   overflow-y: scroll;
   width: 100%; /* Ensure the content area takes full width of the column */
 }
