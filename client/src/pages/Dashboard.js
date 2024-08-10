@@ -10,11 +10,22 @@ import ReadOnlyTodoList from './DashboardGoal';
 import Footer from './footer';
 // import Footer from './footer';
 import GlowText from './glowText';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+
+const MarkdownRenderer = ({ content }) => {
+  return (
+    <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+      {content}
+    </ReactMarkdown>
+  );
+};
 
 const apiUrl = 'http://localhost:12000/health-rec';
 
 function Dashboard() {
   const userName = localStorage.getItem("username");
+  const [markdownContent, setMarkdownContent] = useState('');
 
   const [data, setData] = useState({
     healthscore: 0,
@@ -41,9 +52,9 @@ function Dashboard() {
           alert3: response.data.data.alert3
         });
         console.log("hi");
-        
+
         console.log("hi");
-        
+
       } catch (error) {
         console.error('Error fetching wallet data:', error);
       }
@@ -116,16 +127,16 @@ function Dashboard() {
 
           <div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-[#fff7e2] dark:text-[#1f2937]" role="alert">
             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
             <span class="sr-only">Info</span>
             <div>
               <ul></ul>
-              <span class="font-medium text-base">
+              <span className="font-medium text-base">
                 <ul>
-                  <li>{data.alert1}</li>
-                  <li>{data.alert2}</li>
-                  <li>{data.alert3}</li>
+                  <li><MarkdownRenderer content={data.alert1} /></li>
+                  <li><MarkdownRenderer content={data.alert2} /></li>
+                  <li><MarkdownRenderer content={data.alert3} /></li>
                 </ul>
               </span>
             </div>
