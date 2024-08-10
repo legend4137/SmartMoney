@@ -1297,11 +1297,21 @@ app.get("/scrolling", async (req, res) => {
 app.post("/chatbot-", async (req, res) => {
   console.log(req.body);
   const context = req.body.context;
+  console.log(req.body.userName);
+  const userName = req.body.userName;
   const userdoc = await db
     .collection("formSubmissions")
     .doc(req.body.userName)
     .get();
   const doc = userdoc._fieldsProto;
+
+  const mongoData = await Wallet.findOne( {userName} );
+  if (!mongoData) {
+    return res.status(404).json({ error: "User not found in MongoDB" });
+  }
+
+  console.log(mongoData.balance);
+  
 
   const old_data = {
     monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
@@ -1355,7 +1365,10 @@ app.post("/chatbot-", async (req, res) => {
   -investment:${doc.investment.stringValue},
   -pfFunds:${doc.pfFunds.stringValue},
   -property:${doc.property.stringValue},
-  -emergencyFunds:${doc.emergencyFunds.stringValue} In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there was a null in the privious line consider no conversation happerned and advice to my next sentance accordingly , otherwise study the conversations and respond to next sentence accordingly , do not include any bold words in the response
+  -emergencyFunds:${doc.emergencyFunds.stringValue},
+  -my current balance: ${mongoData.balance},
+  -my future goals are: ${mongoData.goals}
+  -my last transactions are this: ${mongoData.logs} In the follwing lines I will give you some conversation${JSON.stringify(context)}.If there was a null in the privious line consider no conversation happerned and advice to my next sentance accordingly , otherwise study the conversations and respond to next sentence accordingly , do not include any bold words in the response
   . ${JSON.stringify(prompt)}.`;
   console.log(acctual_prompt);
   const result = await chat.sendMessage(acctual_prompt);
