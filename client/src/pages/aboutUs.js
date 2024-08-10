@@ -70,7 +70,7 @@ const HeaderBlock = () => (
     </h1>
     <a
       href="/dashboard"
-      className="flex items-center gap-1 text-red-300 hover:underline text-xl"
+      className="flex items-center gap-1 text-red-300 hover:underline text-2xl"
     >
       Get Started <FiArrowRight />
     </a>

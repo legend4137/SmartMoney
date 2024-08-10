@@ -1333,7 +1333,7 @@ app.post("/chatbot-", async (req, res) => {
   const chat = model.startChat({
     // history : req.body.context.history,
     generationConfig: {
-      maxOutputTokens: 100,
+      maxOutputTokens: 500,
     },
   })
   const prompt = req.body.prompt;

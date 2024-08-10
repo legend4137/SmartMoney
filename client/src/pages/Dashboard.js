@@ -119,7 +119,7 @@ function Dashboard() {
             <span class="sr-only">Info</span>
             <div>
               <ul></ul>
-              <span class="font-medium">
+              <span class="font-medium text-base">
                 <ul>
                   <li>{data.alert1}</li>
                   <li>{data.alert2}</li>
