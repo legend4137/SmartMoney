@@ -29,6 +29,9 @@ const RegistrationForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const Submit = (e) => {
+    navigate("/dashboard");
+  };
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -68,7 +71,7 @@ const RegistrationForm = () => {
       });
       const formResult = await formResponse.json();
       console.log(formResult);
-      navigate(`/entry`);
+      navigate("/dashboard")
     } catch (error) {
       console.error("Error:", error);
     }
@@ -85,7 +88,6 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error("Error fetching wallet data:", error);
     }
-    navigate("/dashboard")
 
   };
   return (
