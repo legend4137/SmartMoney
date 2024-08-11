@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway");
 
 :root {
-  --glow-color: #9ca3af;
+  --glow-color: #d8dadf;
 }
 
 .glowing-btn {
@@ -25,7 +25,7 @@
 .glowing-txt {
   float: left;
   margin-right: -0.8em;
-  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3),
+  text-shadow: 0 0 0.125em #b2b5bb,
                0 0 0.45em var(--glow-color);
   animation: text-flicker 3s linear infinite;
 }
