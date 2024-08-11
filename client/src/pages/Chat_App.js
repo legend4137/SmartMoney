@@ -12,6 +12,7 @@ import ChatHero from "./chatBot/Hero";
 var History_new;
 const userName = localStorage.getItem('username');
 
+
 export default function Chat_App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);

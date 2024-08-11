@@ -335,6 +335,8 @@ app.post("/api/form", async (req, res) => {
   const {
     firstName,
     lastName,
+    age,
+    gender,
     email,
     userName,
     monthlyGrossIncome,
@@ -383,6 +385,8 @@ app.post("/api/form", async (req, res) => {
     await db.collection("formSubmissions").doc(docId).set({
       firstName,
       lastName,
+      age,
+      gender,
       email,
       userName,
       monthlyGrossIncome,
@@ -492,6 +496,8 @@ app.post("/api/get/alerts", async (req, res) => {
     const payload = {
       prompt: `
         Given the following financial information, generate an alert:
+        My AGE: ${userData.age}
+        My gender: ${userData.gender}
         Monthly Gross Income: ${userData.monthlyGrossIncome}
         Net Income: ${userData.netIncome}
         Housing Cost: ${userData.housingCost}
@@ -748,6 +754,8 @@ app.post("/update_account", async (req, res) => {
     const allowedFields = [
       "firstName",
       "lastName",
+      "gender",
+      "age",
       "monthlyGrossIncome",
       "netIncome",
       "housingCost",
@@ -993,6 +1001,7 @@ app.get("/health-rec-update", async (req, res) => {
   const doc = userdoc._fieldsProto;
 
   const old_data = {
+    gender: doc.gender.stringValue,
     monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
     netIncome: doc.netIncome.stringValue,
     housingCost: doc.housingCost.stringValue,
@@ -1071,7 +1080,8 @@ Others: -5 points (general category for other debts)
 consider all the amounts in indian ruppees
 this citeria provided is not regid you might encounter some empty values adjust the criteria accordingly to give me the score.
 some of the values might be null just omit them and try to calculate the score on the basis of the data provided
-
+      -my Gender: ${doc.gender.stringValue},
+      -my age: ${doc.age.stringValue},
       -monthlyGrossIncome : ${doc.monthlyGrossIncome.stringValue},
   -netIncome : ${doc.netIncome.stringValue},
   -housingCost : ${doc.housingCost.stringValue},
@@ -1328,6 +1338,8 @@ app.post("/chatbot-", async (req, res) => {
   
 
   const old_data = {
+    gender: doc.gender.stringValue,
+    age: doc.age.stringValue,
     monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
     netIncome: doc.netIncome.stringValue,
     housingCost: doc.housingCost.stringValue,
@@ -1362,7 +1374,10 @@ app.post("/chatbot-", async (req, res) => {
   })
   const prompt = req.body.prompt;
   
-  const acctual_prompt = ` you are a financial advisor. this is some of the data of me study it appropriately -monthlyGrossIncome : ${doc.monthlyGrossIncome.stringValue},
+  const acctual_prompt = ` you are a financial advisor. this is some of the data of me study it appropriately 
+  -my age: ${doc.age.stringValue},
+  -my gender: ${doc.gender.stringValue},
+  -monthlyGrossIncome : ${doc.monthlyGrossIncome.stringValue},
   -netIncome : ${doc.netIncome.stringValue},
   -housingCost : ${doc.housingCost.stringValue},
   -utilities : ${doc.utilities.stringValue},

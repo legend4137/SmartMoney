@@ -50,7 +50,6 @@ export default function DailyAlerts( {refresh} ) {
                 if (response.data && response.data.data) {
                     const fetchedData = response.data.data;
                     setData(response.data.data);
-                    
                     // Create the recommendations array based on fetched data
                     const recommendations = [
                         fetchedData.dailyrec1 || 'Loading...',

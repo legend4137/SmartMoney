@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-var y=0
+var y = 0
 
 const checkDuplicates = async (userName) => {
   try {
@@ -22,6 +22,8 @@ export default function Form() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    gender: "",
+    age: "",
     email: "",
     userName: "",
     password: "",  // Ensure this field is included
@@ -62,8 +64,8 @@ export default function Form() {
 
   const validateCurrentStep = () => {
     if (currentStep === 1) {
-      const { userName, firstName, email } = formData;
-      if (!userName.trim() || !firstName.trim() || !email.trim()) {
+      const { userName, firstName, email, gender, age , password} = formData;
+      if (!userName.trim() || !firstName.trim() || !email.trim() || !password.trim() || !gender.trim() || !age.trim()) {
         alert("Please fill out all compulsory fields marked with *.");
         return false;
       }
@@ -177,7 +179,7 @@ export default function Form() {
       });
 
       console.log("Registration response:", registerResponse.data);
-    } catch(error){
+    } catch (error) {
       console.log("Error Registering user")
     }
 
@@ -259,8 +261,8 @@ export default function Form() {
 
     // Check for duplicate username
     const isDuplicate = await checkDuplicates(formData.userName);
-    if (currentStep === 1 && y==0) {
-      y=1
+    if (currentStep === 1 && y == 0) {
+      y = 1
       if (isDuplicate) {
         alert("Username already exists!");
         return; // Stop execution if duplicate is found
@@ -296,11 +298,10 @@ export default function Form() {
           <div className="mb-6">
             <ul className="flex space-x-4">
               <li
-                className={`cursor-pointer ${
-                  currentStep === 1
+                className={`cursor-pointer ${currentStep === 1
                     ? "text-blue-600 font-semibold"
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleStepClick(1)}
               >
                 <a href="#" className="text-sm">
@@ -308,11 +309,10 @@ export default function Form() {
                 </a>
               </li>
               <li
-                className={`cursor-pointer ${
-                  currentStep === 2
+                className={`cursor-pointer ${currentStep === 2
                     ? "text-blue-600 font-semibold"
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleStepClick(2)}
               >
                 <a href="#" className="text-sm">
@@ -320,11 +320,10 @@ export default function Form() {
                 </a>
               </li>
               <li
-                className={`cursor-pointer ${
-                  currentStep === 3
+                className={`cursor-pointer ${currentStep === 3
                     ? "text-blue-600 font-semibold"
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleStepClick(3)}
               >
                 <a href="#" className="text-sm">
@@ -332,11 +331,10 @@ export default function Form() {
                 </a>
               </li>
               <li
-                className={`cursor-pointer ${
-                  currentStep === 4
+                className={`cursor-pointer ${currentStep === 4
                     ? "text-blue-600 font-semibold"
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleStepClick(4)}
               >
                 <a href="#" className="text-sm">
@@ -379,6 +377,42 @@ export default function Form() {
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="age"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Age
+                  </label>
+                  <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="gender"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Gender
+                  </label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">I'd prefer not to reveal</option>
+                  </select>
                 </div>
               </div>
               <div>
