@@ -9,6 +9,7 @@ const RegistrationForm = () => {
   const [oldData, setOldData] = useState({});
   const [formData, setFormData] = useState({});
   const [currentStep, setCurrentStep] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,10 +99,10 @@ const RegistrationForm = () => {
             <img
               className="w-full hidden dark:block"
               src="https://design4users.com/wp-content/uploads/2019/11/light-dark-UI-design-tips-tubik-blog.jpg"
-              
+
               style={{ width: 400, height: 400, borderRadius: 400 / 2 }}
               alt="icon"
-             
+
             />
           </div>
 
@@ -111,8 +112,8 @@ const RegistrationForm = () => {
             </h1>
             <hr className="my-6 md:my-8 border-gray-800" />
 
-            <form onSubmit={handleSubmit}>              
-              
+            <form onSubmit={handleSubmit}>
+
               {currentStep === 1 && (
                 <>
                   <div>
@@ -120,12 +121,13 @@ const RegistrationForm = () => {
                       Monthly Gross Income
                     </label>
                     <input
-                      placeholder= {oldData.monthlyGrossIncome || ""}
+                      placeholder={oldData.monthlyGrossIncome || ""}
                       type="number"
                       name="monthlyGrossIncome"
                       value={formData.monthlyGrossIncome}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -133,12 +135,13 @@ const RegistrationForm = () => {
                       Net Income
                     </label>
                     <input
-                      placeholder= {oldData.netIncome || ""}
+                      placeholder={oldData.netIncome || ""}
                       type="number"
                       name="netIncome"
                       value={formData.netIncome}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -146,25 +149,28 @@ const RegistrationForm = () => {
                       Housing Cost
                     </label>
                     <input
-                      placeholder= {oldData.housingCost || ""}
+                      placeholder={oldData.housingCost || ""}
                       type="number"
                       name="housingCost"
                       value={formData.housingCost}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
+
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[#e5e0df]">
                       Utilities
                     </label>
                     <input
-                      placeholder= {oldData.utilities || ""}
+                      placeholder={oldData.utilities || ""}
                       type="number"
                       name="utilities"
                       value={formData.utilities}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -172,12 +178,13 @@ const RegistrationForm = () => {
                       Insurance
                     </label>
                     <input
-                      placeholder= {oldData.insurance || ""}
+                      placeholder={oldData.insurance || ""}
                       type="number"
                       name="insurance"
                       value={formData.insurance}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -185,12 +192,13 @@ const RegistrationForm = () => {
                       Food And Groceries
                     </label>
                     <input
-                      placeholder= {oldData.foodAndGroceries || ""}
+                      placeholder={oldData.foodAndGroceries || ""}
                       type="number"
                       name="foodAndGroceries"
                       value={formData.foodAndGroceries}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -198,25 +206,35 @@ const RegistrationForm = () => {
                       Transport
                     </label>
                     <input
-                      placeholder= {oldData.transport || ""}
+                      placeholder={oldData.transport || ""}
                       type="number"
                       name="transport"
                       value={formData.transport}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div className="mt-6 flex justify-between">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      onClick={handleNextStep}
-                    >
-                      Next
-                    </button>
-                  </div>
+  <button
+    type="button"
+    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+    onClick={handleNextStep}
+  >
+    Next
+  </button>
+
+  <button
+    type="button"
+    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ml-4"
+    onClick={() => setIsEditing(!isEditing)} // Toggle editing mode
+  >
+    {isEditing ? "View Mode" : "Edit Mode"}
+  </button>
+</div>
+
                 </>
-                
+
               )}
               {currentStep === 2 && (
                 <>
@@ -225,12 +243,13 @@ const RegistrationForm = () => {
                       Total Debt
                     </label>
                     <input
-                      placeholder= {oldData.totalDebt || ""}
+                      placeholder={oldData.totalDebt || ""}
                       type="number"
                       name="totalDebt"
                       value={formData.totalDebt}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -238,12 +257,13 @@ const RegistrationForm = () => {
                       Repayment Plans
                     </label>
                     <input
-                      placeholder= {oldData.repaymentPlans || ""}
+                      placeholder={oldData.repaymentPlans || ""}
                       type="number"
                       name="repaymentPlans"
                       value={formData.repaymentPlans}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -251,12 +271,13 @@ const RegistrationForm = () => {
                       Investment
                     </label>
                     <input
-                      placeholder= {oldData.investment || ""}
+                      placeholder={oldData.investment || ""}
                       type="number"
                       name="investment"
                       value={formData.investment}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -264,12 +285,13 @@ const RegistrationForm = () => {
                       PF Funds
                     </label>
                     <input
-                      placeholder= {oldData.pfFunds || ""}
+                      placeholder={oldData.pfFunds || ""}
                       type="number"
                       name="pfFunds"
                       value={formData.pfFunds}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -277,12 +299,13 @@ const RegistrationForm = () => {
                       Property
                     </label>
                     <input
-                      placeholder= {oldData.property || ""}
+                      placeholder={oldData.property || ""}
                       type="number"
                       name="property"
                       value={formData.property}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -290,12 +313,13 @@ const RegistrationForm = () => {
                       Emergency Funds
                     </label>
                     <input
-                      placeholder= {oldData.emergencyFunds || ""}
+                      placeholder={oldData.emergencyFunds || ""}
                       type="number"
                       name="emergencyFunds"
                       value={formData.emergencyFunds}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div className="mt-6 flex justify-between">
@@ -305,6 +329,13 @@ const RegistrationForm = () => {
                       onClick={handlePreviousStep}
                     >
                       Previous
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      onClick={() => setIsEditing(!isEditing)} // Toggle editing mode
+                    >
+                      {isEditing ? "View Mode" : "Edit Mode"}
                     </button>
                     <button
                       type="button"
@@ -323,12 +354,13 @@ const RegistrationForm = () => {
                       Entertainment
                     </label>
                     <input
-                      placeholder= {oldData.entertainment || ""}
+                      placeholder={oldData.entertainment || ""}
                       type="number"
                       name="entertainment"
                       value={formData.entertainment}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -336,12 +368,13 @@ const RegistrationForm = () => {
                       Healthcare
                     </label>
                     <input
-                      placeholder= {oldData.healthcare || ""}
+                      placeholder={oldData.healthcare || ""}
                       type="number"
                       name="healthcare"
                       value={formData.healthcare}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -349,12 +382,13 @@ const RegistrationForm = () => {
                       Education
                     </label>
                     <input
-                      placeholder= {oldData.education || ""}
+                      placeholder={oldData.education || ""}
                       type="number"
                       name="education"
                       value={formData.education}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -362,12 +396,13 @@ const RegistrationForm = () => {
                       Savings
                     </label>
                     <input
-                      placeholder= {oldData.savings || ""}
+                      placeholder={oldData.savings || ""}
                       type="number"
                       name="savings"
                       value={formData.savings}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div>
@@ -375,12 +410,13 @@ const RegistrationForm = () => {
                       Others
                     </label>
                     <input
-                      placeholder= {oldData.others || ""}
+                      placeholder={oldData.others || ""}
                       type="number"
                       name="others"
                       value={formData.others}
                       onChange={handleInputChange}
                       className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#e5e0df]"
+                      disabled={!isEditing}
                     />
                   </div>
                   <div className="mt-6 flex justify-between">
@@ -390,6 +426,13 @@ const RegistrationForm = () => {
                       onClick={handlePreviousStep}
                     >
                       Previous
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-[#e5e0df] bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      onClick={() => setIsEditing(!isEditing)} // Toggle editing mode
+                    >
+                      {isEditing ? "View Mode" : "Edit Mode"}
                     </button>
                     <button
                       type="submit"
