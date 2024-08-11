@@ -52,14 +52,17 @@ const ParentComponent = () => {
     } catch (err) {
       console.error(err.response.data.msg);
     }
-    try {
-      console.log('Fetching recommendations for user:', userName); // Debugging
-      const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
-      console.log("completed");
-      
-      const data = await response.json();
-    } catch(err){
-      console.error(err.response.data.msg);
+    if(((amount/walletData.field3) *100) > 0.1)
+    {
+      try {
+        console.log('Fetching recommendations for user:', userName); // Debugging
+        const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
+        console.log("completed");
+        
+        const data = await response.json();
+      } catch(err){
+        console.error(err.response.data.msg);
+      }
     }
 
   };
@@ -78,15 +81,18 @@ const ParentComponent = () => {
     } catch (err) {
       console.error(err.response.data.msg);
     }
-    try {
-      console.log('Fetching recommendations for user:', userName); // Debugging
-      const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
-      console.log("completed");
-      
-      const data = await response.json();
-    } catch(err){
-      console.error(err.response.data.msg);
-    }
+    if(((amount/walletData.field3) *100) > 0.1)
+      {
+        try {
+          console.log('Fetching recommendations for user:', userName); // Debugging
+          const response = await fetch(`http://localhost:12000/daily-rec?userName=${userName}`);
+          console.log("completed");
+          
+          const data = await response.json();
+        } catch(err){
+          console.error(err.response.data.msg);
+        }
+      }
   };
 
   const handleInputChange = (event) => {
