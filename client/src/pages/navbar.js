@@ -83,7 +83,7 @@ const Navbar = () => {
           </button>
           {/* Dropdown menu */}
           <div
-            className={`absolute right-0 mt-2 w-48 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-800 dark:divide-black ${isDropdownOpen ? 'block' : 'hidden'}`}
+            className={`absolute right-0 mt-2 w-48 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-[#111827] dark:divide-black ${isDropdownOpen ? 'block' : 'hidden'}`}
             style={{ top: '100%' }}
             id="user-dropdown"
           >

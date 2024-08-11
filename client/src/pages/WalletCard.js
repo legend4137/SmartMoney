@@ -40,7 +40,7 @@ const PlanCard = ({ userName }) => {
   };
 
   return (
-    <div className="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-[#ddd4c0] dark:border-[#522922]">
+    <div className="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-[#cfc6b1] dark:border-[#522922]">
       <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-[#111827]">Wallet Balance</h5>
       <div className="flex items-baseline text-gray-900 dark:text-[#111827]">
         <span className="text-3xl font-semibold">₹</span>
@@ -52,7 +52,7 @@ const PlanCard = ({ userName }) => {
       <ul role="list" className="space-y-5 my-7">
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-[#111827] ms-3">Last Deposit</span>
-          <div className="ml-auto text-2xl font-bold text-blue-600 dark:text-blue-400 animated-text">₹{data.posamount}</div>
+          <div className="ml-auto text-2xl font-bold text-blue-800 dark:text-blue-800 animated-text">₹{data.posamount}</div>
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-[#111827] ms-3">Last Withdrawal</span>
@@ -60,7 +60,7 @@ const PlanCard = ({ userName }) => {
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-[#111827] ms-3">Debt</span>
-          <div className="ml-auto text-2xl font-bold text-red-600 dark:text-red-400 animated-text">₹{data.debt}</div>
+          <div className="ml-auto text-2xl font-bold text-red-800 dark:text-red-600 animated-text">₹{data.debt}</div>
         </li>
       </ul>
       <button

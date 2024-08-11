@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import backgroundImage from '../assets/among-us.png';
+import backgroundImage from '../assets/among-us.jpg';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
