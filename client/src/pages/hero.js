@@ -1,214 +1,30 @@
-import { ReactLenis } from "lenis/dist/lenis-react";
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { SiSpacex } from "react-icons/si";
-import { FiArrowRight, FiMapPin } from "react-icons/fi";
-import { useRef } from "react";
-import { RevealBento } from "./aboutUs";
-
-export const SmoothScrollHero = () => {
+export default function HeroSection() {
   return (
-    <div className="bg-[#1f2937]">
-      <ReactLenis
-        root
-        options={{
-          // Learn more -> https://github.com/darkroomengineering/lenis?tab=readme-ov-file#instance-settings
-          lerp: 0.05,
-          //   infinite: true,
-          // syncTouch: true,
-        }}
-      >
-
-        <Hero />
-        <RevealBento />
-        <Schedule />
-      </ReactLenis>
-    </div>
+    <>
+      <main className="w-full">
+        <section className="relative pt-10 xl:pt-14">
+          <div className="mx-auto lg:max-w-7xl w-full px-5 sm:px-10 md:px-12 lg:px-5 flex flex-col lg:flex-row gap-8 lg:gap-10 xl:gap-12">
+            <div className="mx-auto text-center lg:text-left flex flex-col max-w-3xl justify-center lg:justify-start lg:py-8 flex-1 lg:w-1/2 lg:max-w-none">
+              <h1 className="text-indigo-950 dark:text-white text-4xl/snug sm:text-6xl/tight lg:text-5xl/tight xl:text-6xl/tight font-semibold">
+                Let us be your finance advisor
+              </h1>
+              <p className="mt-4 text-gray-700 dark:text-gray-300 lg:text-3xl max-w-3xl lg:max-w-none mx-auto leading-relaxed font-bold text-xl">
+                SmartMoney
+              </p>
+              <div className="mt-6 flex gap-4 justify-center lg:justify-start flex-wrap">
+                <a href="/dashboard" className="relative px-6 py-3 before:absolute before:inset-0 before:rounded-lg before:transition active:before:bg-indigo-700 text-white hover:before:bg-indigo-800 before:bg-indigo-600 hover:before:scale-105">
+                  <span className="relative">
+                    Get Started
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div className="flex flex-1 lg:w-1/2 relative max-w-3xl mx-auto lg:max-w-none">
+              <img src="/hero_new.png" alt="happy team" width={1850} height="auto" className="lg:absolute w-full lg:inset-x-0 object-cover lg:h-full" />
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
   );
-};
-
-const Nav = () => {
-  return (
-    <nav className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-3 text-white">
-      <SiSpacex className="text-3xl mix-blend-difference" />
-      <button
-        onClick={() => {
-          document.getElementById("launch-schedule")?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }}
-        className="flex items-center gap-1 text-xs text-zinc-400"
-      >
-        LAUNCH SCHEDULE <FiArrowRight />
-      </button>
-    </nav>
-  );
-};
-
-const SECTION_HEIGHT = 1500;
-
-const Hero = () => {
-  return (
-    <div
-      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
-      className="relative w-full"
-    >
-      <CenterImage />
-
-      <ParallaxImages />
-
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-[#1f2937]" />
-    </div>
-  );
-};
-
-const CenterImage = () => {
-  const { scrollY } = useScroll();
-
-  const clip1 = useTransform(scrollY, [0, 1500], [25, 0]);
-  const clip2 = useTransform(scrollY, [0, 1500], [75, 100]);
-
-  const clipPath = useMotionTemplate`polygon(${clip1}% ${clip1}%, ${clip2}% ${clip1}%, ${clip2}% ${clip2}%, ${clip1}% ${clip2}%)`;
-
-  const backgroundSize = useTransform(
-    scrollY,
-    [0, SECTION_HEIGHT + 500],
-    ["170%", "100%"]
-  );
-  const opacity = useTransform(
-    scrollY,
-    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
-    [1, 0]
-  );
-
-  return (
-    <motion.div
-      className="sticky top-0 h-screen w-full relative"
-      style={{
-        clipPath,
-        backgroundSize,
-        opacity,
-        backgroundImage: "url(/hero_main2.jpg)",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div
-        className="absolute bottom-10 left-0 right-0 flex justify-center items-center"
-        style={{ zIndex: 2, color: "#fff", fontSize: "4rem", fontWeight: "bold" }}
-      >
-        SMART MONEY
-      </div>
-    </motion.div>
-  );
-
-};
-
-const ParallaxImages = () => {
-  return (
-    <div className="mx-auto max-w-5xl px-4 pt-[200px]">
-      <ParallaxImg
-        src="/hero_sec2.jpg"
-        alt="And example of a space launch"
-        start={-200}
-        end={200}
-        className="w-1/3 rounded-3xl"
-      />
-      <ParallaxImg
-        src="/hero_sec3.jpg"
-        alt="An example of a space launch"
-        start={200}
-        end={-250}
-        className="mx-auto w-2/3 rounded-3xl"
-      />
-      <ParallaxImg
-        src="/hero_sec6.jpg"
-        alt="Orbiting satellite"
-        start={-200}
-        end={200}
-        className="ml-auto w-1/3 rounded-3xl"
-      />
-      <ParallaxImg
-        src="/hero_sec1.jpg"
-        alt="Orbiting satellite"
-        start={0}
-        end={-500}
-        className="ml-24 w-5/12 rounded-3xl"
-      />
-    </div>
-  );
-};
-
-const ParallaxImg = ({ className, alt, src, start, end }) => {
-  const ref = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: [`${start}px end`, `end ${end * -1}px`],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0.75, 1], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0.75, 1], [1, 0.85]);
-
-  const y = useTransform(scrollYProgress, [0, 1], [start, end]);
-  const transform = useMotionTemplate`translateY(${y}px) scale(${scale})`;
-
-  return (
-    <motion.img
-      src={src}
-      alt={alt}
-      className={className}
-      ref={ref}
-      style={{ transform, opacity }}
-    />
-  );
-};
-
-const Schedule = () => {
-  return (
-    <section
-      id="launch-schedule"
-      className="mx-auto max-w-5xl px-4 py-48 text-white"
-    >
-      <motion.h1
-        initial={{ y: 48, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ ease: "easeInOut", duration: 0.75 }}
-        className="mb-20 text-4xl font-black uppercase text-zinc-50"
-      >
-        Features of Our Website
-      </motion.h1>
-      <ScheduleItem title="Wallet" date="checkout your daily expenses through logs and update your expenses in your personalized wallet" link="/wallet" />
-      <ScheduleItem title="Health Score" date="Get to know your financial health score on the basis of your spendings" link="/dashboard" />
-      <ScheduleItem title="Daily Recommendation" date="Daily Recomendation on the basis of your Salary abd spending" link="/wallet"/>
-      <ScheduleItem title="ChatBot" date="ask your financial doubts here, an intutive way to discuss financial goals and get best recommendations" link="/chatbot"/>
-      <ScheduleItem title="Graph" date="visualize your daily basis expenses through the graph at your dashboard" link="/dashboard" />
-
-    </section>
-  );
-};
-
-const ScheduleItem = ({ title, date, link }) => {
-  return (
-    <motion.div
-      initial={{ y: 48, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      transition={{ ease: "easeInOut", duration: 0.75 }}
-      className="mb-9 flex items-center justify-between border-b border-zinc-800 px-3 pb-9"
-    >
-      <div>
-        <a href={link} className="mb-1.5 text-xl text-zinc-50 hover:underline">
-          {title}
-        </a>
-        <p className="text-sm uppercase text-zinc-500">{date}</p>
-      </div>
-      <div className="flex items-center gap-1.5 text-end text-sm uppercase text-zinc-500">
-        {/* Add additional icons or buttons here if needed */}
-      </div>
-    </motion.div >
-  );
-};
+}

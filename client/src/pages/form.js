@@ -292,8 +292,8 @@ export default function Form() {
   };
 
   return (
-    <div className="min-h-screen bg-[#90AEAD] flex items-center justify-center">
-      <div className="w-full max-w-4xl p-6 bg-gray-700 shadow-md rounded-lg">
+    <div className="min-h-screen bg-gray-600 flex items-center justify-center">
+      <div className="w-full max-w-4xl p-6 bg-gray-800 shadow-md rounded-lg">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="mb-6">
             <ul className="flex space-x-4">

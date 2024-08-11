@@ -177,13 +177,13 @@ const SalesChart = () => {
   }, []);
 
   return (
-    <div className="max-w-lg w-full bg-white rounded-lg shadow dark:bg-[#ddd4c0] dark:border-[#522922]">
+    <div className="max-w-lg w-full bg-white rounded-lg shadow dark:bg-[#c5bdab] dark:border-[#522922]">
       <div className="flex justify-between p-4 md:p-6 pb-0 md:pb-0">
         <div>
           <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-[#1f2937] pb-2">₹{monthlyExpenses}</h5>
           <p className="text-base font-normal text-gray-500 dark:text-[#1f2937]">Monthly Expenses</p>
         </div>
-        <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+        <div className="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-700 text-center">
           {percentageChange}%
           <svg className="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
