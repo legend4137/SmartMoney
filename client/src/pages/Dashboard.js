@@ -67,7 +67,7 @@ function Dashboard() {
     <div className="dashboard">
       <div className="navbar-container">
       </div>
-      <section className="bg-[#111827] pt-32">
+      <section className="bg-[#001f41] pt-32">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
           {/* <h1 className="mb-4 text-3xl font-bold tracking-tight leading-none text-[#9ca3af] md:text-5xl lg:text-6xl dark:text-white">
             Hi {userName}!
@@ -87,7 +87,7 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="bg-[#1f2937]">
+      <section className="bg-[#002956]">
         <div className="gap-8 items-center mt-0 py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <PlanCard userName={userName} />
           <div className="mt-4 md:mt-0">
@@ -95,7 +95,7 @@ function Dashboard() {
           </div>
         </div>
       </section>
-      <section className="bg-[#111827]">
+      <section className="bg-[#001f41]">
         <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
           <div className="mt-4 md:mt-0">
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-[#9ca3af]">
@@ -104,6 +104,22 @@ function Dashboard() {
             <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-[#9ca3af]">
               Checkout your health score here based on the responses you gave to us. Also below are some of the comments based on the health score.
             </p>
+            <div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-[#fff7e2] dark:text-[#1f2937]" role="alert">
+            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+              <ul></ul>
+              <span className="font-medium text-base">
+                <ul>
+                  <li><MarkdownRenderer content={data.alert1} /></li>
+                  <li><MarkdownRenderer content={data.alert2} /></li>
+                  <li><MarkdownRenderer content={data.alert3} /></li>
+                </ul>
+              </span>
+            </div>
+          </div>
           </div>
 
           <GaugeComponent
@@ -125,7 +141,7 @@ function Dashboard() {
             value={data.healthscore}
           />
 
-          <div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-[#fff7e2] dark:text-[#1f2937]" role="alert">
+          {/* <div class="flex items-center p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-[#fff7e2] dark:text-[#1f2937]" role="alert">
             <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
@@ -140,7 +156,7 @@ function Dashboard() {
                 </ul>
               </span>
             </div>
-          </div>
+          </div> */}
 
         </div>
       </section>

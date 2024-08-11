@@ -56,7 +56,7 @@ const PlanCard = ({ userName }) => {
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-[#111827] ms-3">Last Withdrawal</span>
-          <div className="ml-auto text-2xl font-bold text-green-600 dark:text-green-400 animated-text">₹{data.negamount}</div>
+          <div className="ml-auto text-2xl font-bold text-green-600 dark:text-green-500 animated-text">₹{data.negamount}</div>
         </li>
         <li className="flex items-center">
           <span className="text-base font-normal leading-tight text-gray-500 dark:text-[#111827] ms-3">Debt</span>
