@@ -1,10 +1,10 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');  // Path to your service account key
+const serviceAccount = require('./serviceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-const db = admin.firestore();  // Use Firestore
+const db = admin.firestore();
 
 module.exports = { db };

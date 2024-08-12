@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-// Middleware to check if a request is authenticated
 const authMiddleware = (req, res, next) => {
   const token = req.header('x-auth-token');
   
