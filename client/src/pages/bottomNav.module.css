@@ -9,10 +9,10 @@
   width: 50%;
   margin: 0 auto;
   box-shadow: 0 -2px 5px black;
-  z-index: 1000; /* Ensure it is above other content */
-  position: relative; /* Removed fixed positioning */
+  z-index: 1000; 
+  position: relative; 
   bottom: 0;
-  margin-top: 80px; /* Adjust as needed */
+  margin-top: 80px;
 }
 
 .text-input {
@@ -75,7 +75,7 @@
   border-radius: 5px;
   display: none;
   position: absolute;
-  bottom: 100%; /* Position above the button */
+  bottom: 100%; 
   left: 0;
   background-color: #fff;
   min-width: 160px;
@@ -110,12 +110,12 @@
 
 .bottomNavbar {
   width: 100%;
-  background-color: #1f2937; /* bg-gray-800 */
+  background-color: #1f2937;
   color: white;
   margin-top: 80px;
   z-index: 0;
-  padding: 1rem; /* Adjust as needed */
-  position: relative; /* Removed fixed positioning */
+  padding: 1rem; 
+  position: relative; 
   bottom: 0;
 }
 
@@ -137,7 +137,7 @@
 
 .btn {
   padding: 0.5rem 1rem;
-  background-color: #2563eb; /* bg-blue-700 */
+  background-color: #2563eb; 
   color: white;
   border: none;
   border-radius: 0.25rem;
@@ -145,5 +145,5 @@
 }
 
 .btn:hover {
-  background-color: #1d4ed8; /* bg-blue-800 */
+  background-color: #1d4ed8; 
 }

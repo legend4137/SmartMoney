@@ -6,7 +6,7 @@ import Navbar from './navbar';
 const TodoPage = () => {
   return (
     <div className="h-screen bg-gray-900 flex flex-col">
-      <Navbar /> {/* Navbar stays at the top */}
+      <Navbar /> 
       <div className="flex-1 flex items-center justify-center">
         <TodoList />
       </div>

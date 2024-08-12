@@ -21,7 +21,6 @@ const EditableFields = ({ data }) => {
         </button>
       </div>
 
-      {/* Drawer component */}
       <div
         id="drawer-contact"
         className={`fixed top-16 left-0 z-40 h-screen p-4 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}
@@ -87,7 +86,7 @@ const EditableFields = ({ data }) => {
             <input
               type="text"
               id="balance"
-              value={data.field3} // Update this to the correct field for balance
+              value={data.field3} 
               readOnly
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Balance"

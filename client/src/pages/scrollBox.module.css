@@ -1,15 +1,14 @@
-/* src/components/ProductTable.css */
 .table-container {
-  max-width: 100%; /* Adjust the max width as needed */
-  overflow-x: auto; /* Allow horizontal scrolling */
-  margin: 0 auto; /* Center the table container */
-  padding: 10px; /* Optional padding */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better visualization */
+  max-width: 100%; 
+  overflow-x: auto; 
+  margin: 0 auto; 
+  padding: 10px; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 .table-wrapper {
-  max-height: 500px; /* Set the desired height */
-  overflow-y: auto; /* Allow vertical scrolling */
+  max-height: 500px; 
+  overflow-y: auto; 
 }
 
 .product-table {

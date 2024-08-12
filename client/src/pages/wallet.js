@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import EditableFields from './parentComponent';
 import ScrollBox from './scrollBox';
 import BottomNavbar from './bottomNav';
-// import Navbar from './navbar';
 import ParentComponent from './parentComponent';
-import styles from './wallet.module.css'; // Adjust import if using CSS modules
+import styles from './wallet.module.css'; 
 import ChatPopup from './ChatPopup';
 
 const Wallet = () => {

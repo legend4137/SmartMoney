@@ -1,61 +1,59 @@
 .wallet-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Full viewport height */
+  height: 100vh; 
 }
 
 .navbar {
-  width: 100%; /* Full width */
+  width: 100%; 
 }
 
 .main-content {
-  flex: 1; /* Takes up available space between navbar and bottom navbar */
+  flex: 1; 
   display: flex;
-  flex-direction: column; /* Stack items vertically */
+  flex-direction: column; 
 }
 
 .editable-fields {
-  flex: 0 1 auto; /* Adjust to fit content and not grow */
+  flex: 0 1 auto; 
   padding: 16px;
-  box-sizing: border-box; /* Include padding in width/height calculations */
+  box-sizing: border-box; 
 }
 
 .scroll-box-container-wrapper {
-  flex: 1; /* Takes up remaining space */
+  flex: 1; 
   padding: 16px;
-  box-sizing: border-box; /* Include padding in width/height calculations */
+  box-sizing: border-box; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .bottom-navbar {
-  width: 100%; /* Full width */
-  /* Additional styles for bottom navbar */
+  width: 100%; 
 }
 
-/* Media Queries for Responsive Design */
 
 @media (max-width: 768px) {
   .main-content {
-    flex-direction: column; /* Stack items vertically on smaller screens */
+    flex-direction: column; 
   }
 
   .editable-fields, .scroll-box-container-wrapper {
-    flex: 1 1 100%; /* Full width on smaller screens */
-    padding: 8px; /* Adjust padding for smaller screens */
+    flex: 1 1 100%; 
+    padding: 8px; 
   }
 }
 
 @media (max-width: 480px) {
   .editable-fields, .scroll-box-container-wrapper {
-    padding: 4px; /* Further adjust padding for very small screens */
+    padding: 4px; 
   }
 }
 
 .scroll-box-container {
   width: 100%;
-  max-width: 64rem; /* Tailwind's max-w-4xl */
+  max-width: 64rem; 
   margin: 0 auto;
-  height: 20rem; /* Tailwind's h-80 */
+  height: 20rem;
 }

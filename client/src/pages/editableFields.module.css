@@ -2,9 +2,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%; /* Ensures the drawer extends to the full height of the viewport */
-  width: 100%; /* Preserves the width of the drawer */
+  height: 100%; 
+  width: 100%; 
   background-color: white;
-  z-index: 40; /* Keeps the drawer above other content */
-  transition: transform 0.3s ease-in-out; /* Smooth transition for showing/hiding */
+  z-index: 40; 
+  transition: transform 0.3s ease-in-out; 
 }

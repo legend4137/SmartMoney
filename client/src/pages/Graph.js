@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const SalesChart = () => {
   const chartRef = useRef(null);
-  const chartInstance = useRef(null); // Ref to hold the chart instance
+  const chartInstance = useRef(null); 
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [percentageChange, setPercentageChange] = useState(0);
   const userName = localStorage.getItem("username");
@@ -15,9 +15,9 @@ const SalesChart = () => {
         const response = await axios.get(`http://localhost:12000/scrolling?userName=${userName}`);
         const logs = response.data;
 
-        const dailyExpenses = {}; // To store total withdrawals per day
-        const monthlyExpenses = {}; // To store total withdrawals per month
-        const monthlyData = {}; // To store monthly data for comparison
+        const dailyExpenses = {}; 
+        const monthlyExpenses = {}; 
+        const monthlyData = {}; 
 
         Object.keys(logs).forEach((key) => {
           const log = logs[key];
@@ -26,19 +26,16 @@ const SalesChart = () => {
           const monthYear = `${date.getMonth() + 1}-${date.getFullYear()}`;
 
           if (log.transaction === 'withdraw') {
-            // Daily expenses
             if (!dailyExpenses[day]) {
               dailyExpenses[day] = 0;
             }
             dailyExpenses[day] += log.amount;
 
-            // Monthly expenses
             if (!monthlyExpenses[monthYear]) {
               monthlyExpenses[monthYear] = 0;
             }
             monthlyExpenses[monthYear] += log.amount;
 
-            // Collect data for percentage change
             if (!monthlyData[monthYear]) {
               monthlyData[monthYear] = 0;
             }
@@ -46,19 +43,15 @@ const SalesChart = () => {
           }
         });
 
-        // Prepare data for the chart
         const categories = Object.keys(dailyExpenses);
         const seriesData = categories.map(date => dailyExpenses[date]);
 
-        // Get current month and previous month
         const currentMonth = `${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
         const previousMonth = `${new Date().getMonth()}-${new Date().getFullYear()}`;
 
-        // Calculate monthly expenses
         const currentMonthExpenses = monthlyExpenses[currentMonth] || 0;
         const previousMonthExpenses = monthlyExpenses[previousMonth] || 0;
 
-        // Calculate percentage change
         const change = previousMonthExpenses > 0
           ? ((currentMonthExpenses - previousMonthExpenses) / previousMonthExpenses) * 100
           : 0;
@@ -66,7 +59,6 @@ const SalesChart = () => {
         setMonthlyExpenses(currentMonthExpenses);
         setPercentageChange(change.toFixed(2));
 
-        // Update chart options
         const options = {
           xaxis: {
             show: true,
@@ -97,14 +89,14 @@ const SalesChart = () => {
                 return '₹' + value;
               }
             },
-            min: Math.min(...seriesData) * 0.9, // Dynamic min value with margin
-            max: Math.max(...seriesData) * 1.1, // Dynamic max value with margin
+            min: Math.min(...seriesData) * 0.9, 
+            max: Math.max(...seriesData) * 1.1, 
           },
           series: [
             {
               name: "Daily Expenses",
               data: seriesData,
-              color: "#FF5733", // Different color for expenses
+              color: "#FF5733", 
             }
           ],
           chart: {
@@ -123,7 +115,7 @@ const SalesChart = () => {
             },
           },
           tooltip: {
-            enabled: false, // Disable tooltip
+            enabled: false, 
           },
           fill: {
             type: "gradient",
@@ -149,16 +141,13 @@ const SalesChart = () => {
         };
 
         if (chartRef.current) {
-          // Only create the chart if it hasn't been created yet
           if (!chartInstance.current) {
             chartInstance.current = new ApexCharts(chartRef.current, options);
             chartInstance.current.render();
           } else {
-            // Update existing chart
             chartInstance.current.updateOptions(options);
           }
 
-          // Cleanup on unmount
           return () => {
             if (chartInstance.current) {
               chartInstance.current.destroy();

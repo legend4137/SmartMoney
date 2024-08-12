@@ -15,17 +15,17 @@ const PlanCard = ({ userName }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(`Fetching data for userName: ${userName}`); // Log userName
+        console.log(`Fetching data for userName: ${userName}`); 
         const response = await axios.get(`http://localhost:12000/wallet-card`, {
-          params: { userName } // Use axios params for query strings
+          params: { userName } 
         });
-        console.log('Response data:', response.data); // Log API response data
+        console.log('Response data:', response.data); 
 
         setData({
           posamount: response.data.posamount || 0,
           negamount: response.data.negamount || 0,
           debt: parseInt(response.data.totalDebt) || 0,
-          balance: response.data.balance || 0, // Add balance to the state
+          balance: response.data.balance || 0,
         });
       } catch (error) {
         console.error('Error fetching wallet data:', error);

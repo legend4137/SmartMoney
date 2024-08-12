@@ -20,7 +20,7 @@ export const TypewriterEffect = ({ text, className, cursorClassName, typingSpeed
       timeout = setTimeout(() => {
         setDisplayedText('');
         setIsTyping(true);
-      }, typingSpeed * 20); // Adjust the delay before restarting
+      }, typingSpeed * 20); 
     }
 
     return () => clearTimeout(timeout);

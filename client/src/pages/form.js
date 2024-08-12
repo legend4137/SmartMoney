@@ -26,7 +26,7 @@ export default function Form() {
     age: "",
     email: "",
     userName: "",
-    password: "",  // Ensure this field is included
+    password: "",  
     monthlyGrossIncome: "",
     netIncome: "",
     housingCost: "",
@@ -172,10 +172,9 @@ export default function Form() {
       return;
     }
     try {
-      // Register the user
       const registerResponse = await axios.post("http://localhost:12000/api/auth/register", {
         userName: formData.userName,
-        password: formData.password, // Include password here
+        password: formData.password, 
       });
 
       console.log("Registration response:", registerResponse.data);
@@ -184,7 +183,6 @@ export default function Form() {
     }
 
     try {
-      // Submit form data to Firebase
       const formResponse = await fetch("http://localhost:12000/api/form", {
         method: "POST",
         headers: {
@@ -196,7 +194,6 @@ export default function Form() {
       const formResult = await formResponse.json();
       console.log(formResult);
 
-      // Create a new user in MongoDB collection 'wallets'
       const walletResponse = await fetch(
         "http://localhost:12000/wallet/create",
         {
@@ -204,13 +201,12 @@ export default function Form() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userName: formData.userName }), // Send the userName
+          body: JSON.stringify({ userName: formData.userName }), 
         }
       );
       const walletResult = await walletResponse.json();
       console.log(walletResult);
 
-      // Store username in localStorage
       localStorage.clear();
       localStorage.setItem("username", formData.userName);
       console.log(
@@ -222,14 +218,13 @@ export default function Form() {
     }
     try {
       console.log(`This is a check statement: ${formData.userName}`);
-      console.log(`Fetching data for userName: ${formData.userName}`); // Log userName
+      console.log(`Fetching data for userName: ${formData.userName}`); 
       const parameter = formData.userName;
       console.log(`Parameter value: ${parameter}`);
       const response = await axios.get("http://localhost:12000/health-rec", {
-        params: { userName: parameter }, // Use axios params for query strings
+        params: { userName: parameter }, 
       });
-      // setHealthscore(response.data.number); // Set healthscore state
-      console.log("Response data:", response.data.number); // Log API response data
+      console.log("Response data:", response.data.number); 
     } catch (error) {
       console.error("Error fetching wallet data:", error);
     }
@@ -238,12 +233,12 @@ export default function Form() {
   const healthScoreSubmit = async (e) => {
     try {
       console.log(`This is a check statement: ${userName}`);
-      console.log(`Fetching data for userName: ${userName}`); // Log userName
+      console.log(`Fetching data for userName: ${userName}`); 
       const response = await axios.get("http://localhost:12000/health-rec", {
-        params: { userName }, // Use axios params for query strings
+        params: { userName }, 
       });
-      setHealthscore(response.data.number); // Set healthscore state
-      console.log("Response data:", response.data.number); // Log API response data
+      setHealthscore(response.data.number); 
+      console.log("Response data:", response.data.number); 
     } catch (error) {
       console.error("Error fetching wallet data:", error);
     }
@@ -259,13 +254,12 @@ export default function Form() {
       return;
     }
 
-    // Check for duplicate username
     const isDuplicate = await checkDuplicates(formData.userName);
     if (currentStep === 1 && y == 0) {
       y = 1
       if (isDuplicate) {
         alert("Username already exists!");
-        return; // Stop execution if duplicate is found
+        return;
       }
     }
     try {

@@ -15,7 +15,7 @@ const RegistrationForm = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:12000/wallet-card`, {
-          params: { userName } // Use axios params for query strings
+          params: { userName } 
         });
         setOldData(response.data);
         console.log("Old data:", response.data);
@@ -78,14 +78,13 @@ const RegistrationForm = () => {
     }
     try {
       console.log(`This is a check statement: ${formData.userName}`);
-      console.log(`Fetching data for userName: ${formData.userName}`); // Log userName
+      console.log(`Fetching data for userName: ${formData.userName}`); 
       const parameter = localStorage.getItem("username");
       console.log(`Parameter value: ${parameter}`);
       const response = await axios.get("http://localhost:12000/health-rec", {
-        params: { userName: parameter }, // Use axios params for query strings
+        params: { userName: parameter },
       });
-      // setHealthscore(response.data.number); // Set healthscore state
-      console.log("Response data:", response.data.number); // Log API response data
+      console.log("Response data:", response.data.number); 
     } catch (error) {
       console.error("Error fetching wallet data:", error);
     }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import styles from './bottomNav.module.css'; // Adjust import if needed
+import styles from './bottomNav.module.css';
 
 const BottomNavbar = ({
   inputValue,
@@ -32,11 +32,11 @@ const BottomNavbar = ({
       <div className="max-w-screen-xl flex flex-wrap items-center justify-center mx-auto p-4">
         <div className="flex items-center space-x-4 relative"> {/* Adjusted gap here */}
           <input
-            type="number" // Changed to number input
+            type="number" 
             placeholder="Enter a number..."
             className={styles.textInput}
-            value={inputValue} // Use inputValue directly
-            onChange={handleInputChange} // Handle input changes
+            value={inputValue}
+            onChange={handleInputChange} 
           />
           <div className={styles.buttonContainer}>
             <button className="btn" onClick={() => addMoneyToWallet(Number(inputValue))}>ADD MONEY</button>
@@ -54,7 +54,7 @@ const BottomNavbar = ({
                         href="#"
                         className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                         onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
+                          e.preventDefault(); 
                           handleOptionSelect(option);
                         }}
                       >
