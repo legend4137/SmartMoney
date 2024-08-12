@@ -2,24 +2,20 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const authRoutes = require('./routes/auth'); // Import auth routes
+const authRoutes = require('./routes/auth');
 const authMiddleware = require('./routes/middleware');
 
 require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
-// import Realm, { ObjectSchema } from "realm";
-const bodyParser = require("body-parser");
-// const { body, validationResult } = require('express-validator');
 
-const { db } = require("./firebase"); // Import Firestore instance
-//const {mongoDb} = require("./mongodb")
-// Import Google Generative AI SDK
+const bodyParser = require("body-parser");
+const { db } = require("./firebase"); 
 
 const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
-  secure: false, // Use `true` for port 465, `false` for all other ports
+  secure: false, 
   auth: {
     user: "rajubaba7900@gmail.com",
     pass: "jn7jnAPss4f63QBp6D",
@@ -38,35 +34,32 @@ const port = 12000;
 x = 0;
 
 
-// MongoDB connection URI
+
 const uri =
   "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-// Connect to MongoDB
+
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Failed to connect to MongoDB Atlas:", err));
 
-// Initialize Google Generative AI client
+
 const gemini = new GoogleGenerativeAI({
-  apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", // Your actual Gemini API key
+  apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", 
 });
 
-// Import Wallet model
+
 const Wallet = require('./models/Wallet');
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Enable CORS
 app.use(cors());
 
 app.use('/api/auth', authRoutes);
 
 module.exports = { Wallet };
 
-// Add Goals
 app.post("/financialgoals/add",async (req,res)=>{
   const {userName,goalName} = req.body;
 
@@ -92,7 +85,6 @@ app.post("/financialgoals/add",async (req,res)=>{
   }
 });
 
-//Fetch Goals
 app.get("/financialgoals/:userName", async(req,res)=>{
   const { userName } = req.params;
 
@@ -111,18 +103,15 @@ app.get("/financialgoals/:userName", async(req,res)=>{
 
 });
 
-//Remove a goal
 app.post("/financialgoals/remove", async(req,res)=>{
   const { userName, goalNo } = req.body;
 
-  // Check for missing input
   if (!userName || goalNo === undefined) {
     console.log("Missing userName or goalNo");
     return res.status(400).json({ msg: "UserName and goalNo are required!" });
   }
 
   try {
-    // Find the user's wallet
     const wallet = await Wallet.findOne({ userName });
     console.log("Found wallet:", wallet);
 
@@ -131,13 +120,12 @@ app.post("/financialgoals/remove", async(req,res)=>{
       return res.status(404).json({ msg: "Goal List Not Found!" });
     }
 
-    // Check if goalNo is a valid index
     if (goalNo < 0 || goalNo >= wallet.goals.length) {
       console.log("Invalid goal number:", goalNo);
       return res.status(400).json({ msg: "Invalid goal number!" });
     }
 
-    // Remove the goal
+    
     wallet.goals.splice(goalNo, 1);
     await wallet.save();
     console.log("Goal removed successfully");
@@ -149,7 +137,6 @@ app.post("/financialgoals/remove", async(req,res)=>{
   }
 });
 
-// Create a new wallet
 app.post("/wallet/create", async (req, res) => {
   const { userName } = req.body;
 
@@ -175,7 +162,6 @@ app.post("/wallet/create", async (req, res) => {
   }
 });
 
-// Add money to wallet
 app.post("/wallet/add", async (req, res) => {
   const { userName, amount } = req.body;
 
@@ -212,7 +198,6 @@ app.post("/wallet/add", async (req, res) => {
   }
 });
 
-// Deduct money from wallet
 app.post("/wallet/deduct", async (req, res) => {
   const { userName, amount, tag } = req.body;
 
@@ -258,7 +243,6 @@ app.post("/wallet/deduct", async (req, res) => {
   }
 });
 
-// Get wallet by username
 app.get("/wallet/:userName", async (req, res) => {
   const { userName } = req.params;
 
@@ -286,14 +270,13 @@ app.get("/wallet/:userName/last-deposit", async (req, res) => {
       return res.status(404).json({ msg: "Wallet not found" });
     }
 
-    // Filter the logs to find those with reason "deposit"
+  
     const depositLogs = wallet.logs.filter((log) => log.transaction === "deposit");
 
     if (depositLogs.length === 0) {
       return res.status(404).json({ msg: "No deposit logs found" });
     }
 
-    // Get the last deposit log
     const lastDepositLog = depositLogs[depositLogs.length - 1];
 
     res.json(lastDepositLog);
@@ -313,14 +296,12 @@ app.get("/wallet/:userName/last-withdraw", async (req, res) => {
       return res.status(404).json({ msg: "Wallet not found" });
     }
 
-    // Filter the logs to find those with reason "deposit"
     const depositLogs = wallet.logs.filter((log) => log.transaction === "withdraw");
 
     if (depositLogs.length === 0) {
       return res.status(404).json({ msg: "No withdraw logs found" });
     }
 
-    // Get the last deposit log
     const lastDepositLog = depositLogs[depositLogs.length - 1];
 
     res.json(lastDepositLog);
@@ -330,7 +311,6 @@ app.get("/wallet/:userName/last-withdraw", async (req, res) => {
   }
 });
 
-// Route to handle form submission (Firestore)
 app.post("/api/form", async (req, res) => {
   const {
     firstName,
@@ -359,7 +339,7 @@ app.post("/api/form", async (req, res) => {
     emergencyFunds,
   } = req.body;
 
-  const docId = userName; // Use timestamp as a simple unique ID
+  const docId = userName; 
   const healthScore = 0;
   const alert1 = "";
   const alert2 = "";
@@ -370,10 +350,10 @@ app.post("/api/form", async (req, res) => {
   const dailyrec4 ="";
 
   try {
-    // Check if document already exists
+    
     const userDoc = await db.collection("formSubmissions").doc(docId).get();
     if (userDoc.exists && x == 0) {
-      // If the document exists, send an alert message
+      
       return res.json({
         success: false,
         message: "An account with this username already exists",
@@ -381,7 +361,6 @@ app.post("/api/form", async (req, res) => {
     }
     x = x + 1;
 
-    // Create a new document if it does not exist
     await db.collection("formSubmissions").doc(docId).set({
       firstName,
       lastName,
@@ -456,7 +435,6 @@ app.get("/handleDuplicates", async (req, res) => {
   }
 });
 
-// Route to get user information by document ID (Firestore)
 app.get("/api/get/user/:docId", async (req, res) => {
   const docId = req.params.docId;
 
@@ -479,7 +457,6 @@ app.get("/api/get/user/:docId", async (req, res) => {
   }
 });
 
-// Route to generate alerts based on user data using Gemini API
 app.post("/api/get/alerts", async (req, res) => {
   const { docId } = req.body;
 
@@ -519,7 +496,7 @@ app.post("/api/get/alerts", async (req, res) => {
 
         Based on this information, provide a financial alert or recommendation.
       `,
-      max_tokens: 150, // Adjust as needed
+      max_tokens: 150, 
     };
 
     const response = await gemini.generateContent({
@@ -541,7 +518,6 @@ app.post("/api/get/alerts", async (req, res) => {
   }
 });
 
-// Wallet API routes
 app.post("/wallet/create", async (req, res) => {
   const wallet = new Wallet();
   await wallet.save();
@@ -787,13 +763,11 @@ app.post("/update_account", async (req, res) => {
       return res.status(400).json({ error: "No valid fields to update" });
     }
 
-    // Use .set with merge option to update the document without overwriting it completely
     await db
       .collection("formSubmissions")
       .doc(accountId)
       .set(updateFields, { merge: true });
 
-    // Fetch the updated document to return
     const updatedAccountDoc = await db
       .collection("accounts")
       .doc(accountId)
@@ -917,7 +891,6 @@ Provide detailed recommendations based on the provided data under each label. Do
 });
 
 
-// Route to handle form submission (Firestore) taxes
 app.post("/api/formtaxes", async (req, res) => {
   const {
     userName,
@@ -939,13 +912,12 @@ app.post("/api/formtaxes", async (req, res) => {
     charitableContributions,
   } = req.body;
 
-  const docId = userName; // Use timestamp as a simple unique ID
+  const docId = userName; 
 
   try {
-    // Check if document already exists
     const userDoc = await db.collection("formSubmissionstaxes").doc(docId).get();
     if (userDoc.exists && x == 0) {
-      // If the document exists, send an alert message
+      
       return res.json({
         success: false,
         message: "An account with this username already exists",
@@ -953,7 +925,6 @@ app.post("/api/formtaxes", async (req, res) => {
     }
     x = x + 1;
 
-    // Create a new document if it does not exist
     await db.collection("formSubmissionstaxes").doc(docId).set({
       userName,
 
@@ -1022,7 +993,7 @@ app.get("/health-rec-update", async (req, res) => {
   };
 
   for (let key in old_data) {
-    // Check if the key also exists in new_data and compare values
+    
     if (old_data[key] !== new_data[key]) {
       const flag = true;
     }
@@ -1144,9 +1115,9 @@ app.get("/daily-rec", async (req, res) => {
     if (!wallet) {
       return res.status(404).json({ msg: "Wallet not found" });
     }
-    // console.log(wallet);
+    
     const log = wallet.logs;
-    // console.log(log);
+    
 
     const type = {
       Entertainment: 0,
@@ -1158,7 +1129,7 @@ app.get("/daily-rec", async (req, res) => {
       Uncategorized: 0,
       Transportation: 0,
     };
-    //  console.log(type);
+    
     for (let i = 0; i < log.length && i < 100; i++) {
       if (log[i].transaction == "withdraw") {
         const event = log[i].tag;
@@ -1224,9 +1195,9 @@ app.get("/daily-rec", async (req, res) => {
 
 app.get("/wallet-card", async (req, res) => {
   const userName = req.query.userName;
-  console.log(`Received request for userName: ${userName}`); // Log request
+  console.log(`Received request for userName: ${userName}`); 
   try {
-    // Fetch data from Firestore
+    
     const userDoc = await db.collection("formSubmissions").doc(userName).get();
     let firestoreData = {};
     if (userDoc.exists) {
@@ -1235,13 +1206,12 @@ app.get("/wallet-card", async (req, res) => {
       return res.status(404).json({ error: "User not found in Firestore" });
     }
 
-    // Fetch data from MongoDB
+    
     const mongoData = await Wallet.findOne({ userName });
     if (!mongoData) {
       return res.status(404).json({ error: "User not found in MongoDB" });
     }
 
-    // Find the latest positive and negative log entries
     let latestPositiveLog = null;
     let latestNegativeLog = null;
 
@@ -1263,12 +1233,11 @@ app.get("/wallet-card", async (req, res) => {
       }
     });
 
-    // Add the amounts and balance to the Firestore data
     const combinedData = {
       ...firestoreData,
       posamount: latestPositiveLog ? latestPositiveLog.amount : 0,
       negamount: latestNegativeLog ? latestNegativeLog.amount : 0,
-      balance: mongoData.balance || 0, // Add balance to the combined data
+      balance: mongoData.balance || 0, 
     };
 
     res.setHeader("Content-Type", "application/json");
@@ -1281,24 +1250,21 @@ app.get("/wallet-card", async (req, res) => {
 
 app.get("/scrolling", async (req, res) => {
   const userName = req.query.userName;
-  console.log(`Received request for userName: ${userName}`); // Log request
+  console.log(`Received request for userName: ${userName}`); 
 
   try {
-    // Fetch data from MongoDB
+    
     const mongoData = await Wallet.findOne({ userName });
     if (!mongoData) {
       return res.status(404).json({ error: "User not found in MongoDB" });
     }
 
-    // Extract and sort logs by logDate in descending order
     const sortedLogs = mongoData.logs.sort(
       (a, b) => new Date(b.logDate) - new Date(a.logDate)
     );
 
-    // Take the latest 100 logs
     const latestLogs = sortedLogs.slice(0, 100);
 
-    // Format logs as individual JSON objects
     const logs = {};
     latestLogs.forEach((log, index) => {
       logs[`log${index + 1}`] = {
@@ -1366,7 +1332,7 @@ app.post("/chatbot-", async (req, res) => {
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
-    // history : req.body.context.history,
+    
     generationConfig: {
       maxOutputTokens: 500,
     },
@@ -1413,4 +1379,3 @@ app.post("/chatbot-", async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 });
-
