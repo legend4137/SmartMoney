@@ -47,10 +47,7 @@ This section highlights the key frameworks and libraries that were utilized to b
     cd SmartMoney
     ```
 3. **Environment Setup**:
-    ```bash
-    cp .env.example .env
-    # Update .env with the following configuration
-    ```
+   
     ### Database Configuration
 
     Follow these steps to set up the necessary databases and environment variables for the project.
@@ -84,9 +81,22 @@ This section highlights the key frameworks and libraries that were utilized to b
     2. Add the JSON file that you downloaded earlier and the following environment variables to the `.env` file:
 
         ```bash
-        FIREBASE_PRIVATE_KEY=path/to/your/firebase/private/key.json
-        MONGODB_KEY=your_mongodb_connection_string
-        GEMINI_API_KEY=your_gemini_api_key
+        SERVICE_ACCOUNT_KEY = `{
+    "type": "service_account",
+    "project_id": "project_id",
+    "private_key_id": "private_key_id",
+    "private_key": "private_key"
+    "client_email": "client_email",
+    "client_id": "client_id",
+    "auth_uri": "auth_uri",
+    "token_uri": "toekn_uri",
+    "auth_provider_x509_cert_url": "auth_provider",
+    "client_x509_cert_url": "client_cert_url",
+    "universe_domain": "googleapis.com"
+    }`
+    MONGODB_KEY = "mongo_uri"
+    GEMINI_API_KEY="your_gemini_api_key"
+    JWT_SECRET=CHAD_RAID_2024
         ```
 
 ### 5. Final Steps
@@ -96,22 +106,14 @@ This section highlights the key frameworks and libraries that were utilized to b
 
 4. **Installing Dependencies**:
     ```bash
-    npm install
+    npm install  #In both the server and client
     ```
-5. **Building the Project**:
+5. **Building and Running the Project**:
     ```bash
-    npm run build
+    npm start      #In the client
+    npm run start  #In the server
     ```
-6. **Running the Project**:
-    ```bash
-    npm start
-    # For development:
-    npm run dev
-    ```
-7. **Running Tests**:
-    ```bash
-    npm test
-    ```
+
 
 #
 
