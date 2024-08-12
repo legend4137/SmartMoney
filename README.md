@@ -51,43 +51,43 @@ This section highlights the key frameworks and libraries that were utilized to b
     cp .env.example .env
     # Update .env with the following configuration
     ```
-    ## Database Setup
+    ### Database Configuration
 
-Follow these steps to set up the necessary databases and environment variables for the project.
+    Follow these steps to set up the necessary databases and environment variables for the project.
 
-### 1. Create a Firebase Database
+    #### 1. Create a Firebase Database
 
-1. Log in to the Firebase console.
-2. Create a new project or use an existing one.
-3. Navigate to the **Firestore Database** section.
-4. Create a new database and name it **`formSubmissions`**.
-5. In the Firebase console, go to **Project Settings** > **Service Accounts**.
-6. Click on **Generate new private key** to download a JSON file containing your Firebase credentials.
-7. Place this JSON file in the root directory of your project and refer to it in your `.env` file.
+    1. Log in to the Firebase console.
+    2. Create a new project or use an existing one.
+    3. Navigate to the **Firestore Database** section.
+    4. Create a new database and name it **`formSubmissions`**.
+    5. In the Firebase console, go to **Project Settings** > **Service Accounts**.
+    6. Click on **Generate new private key** to download a JSON file containing your Firebase credentials.
+    7. Place this JSON file in the root directory of your project and refer to it in your `.env` file.
 
-### 2. Create a MongoDB Database
+    #### 2. Create a MongoDB Database
 
-1. Set up a MongoDB cluster using MongoDB Atlas or run a local MongoDB server.
-2. Create a database named **`test`**.
-3. Inside the `test` database, create a collection called **`wallets`**.
-4. Obtain your MongoDB connection string (API key).
-5. Add the MongoDB connection string to the `.env` file with the variable name **`MONGODB_KEY`**.
+    1. Set up a MongoDB cluster using MongoDB Atlas or run a local MongoDB server.
+    2. Create a database named **`test`**.
+    3. Inside the `test` database, create a collection called **`wallets`**.
+    4. Obtain your MongoDB connection string (API key).
+    5. Add the MongoDB connection string to the `.env` file with the variable name **`MONGODB_KEY`**.
 
-### 3. Create a Gemini API Key
+    #### 3. Create a Gemini API Key
 
-1. Register on the Gemini platform and create a new API key.
-2. Add the Gemini API key to the `.env` file with the variable name **`GEMINI_API_KEY`**.
+    1. Register on the Gemini platform and create a new API key.
+    2. Add the Gemini API key to the `.env` file with the variable name **`GEMINI_API_KEY`**.
 
-### 4. Setting Up the `.env` File
+    #### 4. Setting Up the `.env` File
 
-1. Create a `.env` file in the **server** folder of your project.
-2. Add the following environment variables to the `.env` file:
+    1. Create a `.env` file in the **server** folder of your project.
+    2. Add the following environment variables to the `.env` file:
 
-    ```bash
-    FIREBASE_PRIVATE_KEY=path/to/your/firebase/private/key.json
-    MONGODB_KEY=your_mongodb_connection_string
-    GEMINI_API_KEY=your_gemini_api_key
-    ```
+        ```bash
+        FIREBASE_PRIVATE_KEY=path/to/your/firebase/private/key.json
+        MONGODB_KEY=your_mongodb_connection_string
+        GEMINI_API_KEY=your_gemini_api_key
+        ```
 
 ### 5. Final Steps
 
