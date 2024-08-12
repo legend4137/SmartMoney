@@ -99,27 +99,30 @@ This section highlights the key frameworks and libraries that were utilized to b
         JWT_SECRET=CHAD_RAID_2024
         ```
 
-### 5. Final Steps
+###  Final Steps
 
 - Ensure the `.env` file is included in the server folder.
 - **Important:** Do not commit the `.env` file to version control to keep your API keys secure.
 
-4. **Installing Dependencies**:
-   - Navigate to SmartMoney/client/
+1. **Installing Dependencies**:
+   
     ```bash
+    # SmartMoney/client
     npm install 
     ```
-   - Navigate to SmartMoney/server/
     ```bash
+    # SmartMoney/server
     npm install 
     ```
-6. **Building and Running the Project**:
+2. **Running the Client**:
     ```bash
-    npm start      #In the client
-    npm run start  #In the server
+    # SmartMoney/client
+    npm start    
     ```
-
-
-#
+3. **Running the Server**:
+   ```bash
+    # SmartMoney/server
+    npm run start
+    ```
 
 
