@@ -28,11 +28,7 @@ const port = 12000;
 x = 0;
 
 const MongoDB_KEY = process.env.MONGODB_KEY;
-const API_KEY_REC = process.env.APIKEY_REC;
-const API_KEY_TAX = process.env.APIKEY_TAX;
-const API_KEY_UPDATE = process.env.APIKEY_UPDATE;
-const API_KEY_DAILY = process.env.APIKEY_DAILY;
-const API_KEY_CHATBOT = process.env.APIKEY_CHATBOT;
+const GEMINI_KEY=process.env.GEMINI_API_KEY;
 // MongoDB connection URI
 const uri = MongoDB_KEY;
 // Connect to MongoDB
@@ -568,7 +564,7 @@ app.get("/health-rec", async (req, res) => {
   console.log(req.query.userName);
   const user = req.query.userName;
   const genAI = new GoogleGenerativeAI(
-    API_KEY_REC
+    GEMINI_KEY
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
@@ -788,7 +784,7 @@ app.get("/tax-rec", async (req, res) => {
   console.log(req.query.userName);
   const user = req.query.userName;
   const genAI = new GoogleGenerativeAI(
-    API_KEY_TAX
+    GEMINI_KEY
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
@@ -995,7 +991,7 @@ app.get("/health-rec-update", async (req, res) => {
   try {
     if (flag == true) {
       const genAI = new GoogleGenerativeAI(
-        API_KEY_UPDATE
+        GEMINI_KEY
       );
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const chat = model.startChat({
@@ -1130,7 +1126,7 @@ app.get("/daily-rec", async (req, res) => {
       }
     }
     const genAI = new GoogleGenerativeAI(
-      API_KEY_DAILY
+      GEMINI_KEY
     );
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const chat = model.startChat({
@@ -1293,35 +1289,11 @@ app.post("/chatbot-", async (req, res) => {
   }
 
   console.log(mongoData.balance);
-  
-
-  const old_data = {
-    gender: doc.gender.stringValue,
-    age: doc.age.stringValue,
-    monthlyGrossIncome: doc.monthlyGrossIncome.stringValue,
-    netIncome: doc.netIncome.stringValue,
-    housingCost: doc.housingCost.stringValue,
-    utilities: doc.utilities.stringValue,
-    foodAndGroceries: doc.foodAndGroceries.stringValue,
-    transport: doc.transport.stringValue,
-    insurance: doc.insurance.stringValue,
-    entertainment: doc.entertainment.stringValue,
-    healthcare: doc.healthcare.stringValue,
-    education: doc.education.stringValue,
-    savings: doc.savings.stringValue,
-    others: doc.others.stringValue,
-    totalDebt: doc.totalDebt.stringValue,
-    repaymentPlans: doc.repaymentPlans.stringValue,
-    investment: doc.investment.stringValue,
-    pfFunds: doc.pfFunds.stringValue,
-    property: doc.property.stringValue,
-    emergencyFunds: doc.emergencyFunds.stringValue,
-  };
 
   console.log(context);
   try{
   const genAI = new GoogleGenerativeAI(
-    API_KEY_CHATBOT
+    GEMINI_KEY
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
