@@ -79,8 +79,7 @@ export default function Chat_App() {
               />
             );
           })}
-
-\          {loading && <Loading />} 
+          {loading && <Loading />} 
         </div>
 
         <Input

@@ -10,17 +10,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const bodyParser = require("body-parser");
-const { db } = require("./firebase"); 
+// const { body, validationResult } = require('express-validator');
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
-  port: 587,
-  secure: false, 
-  auth: {
-    user: "rajubaba7900@gmail.com",
-    pass: "jn7jnAPss4f63QBp6D",
-  },
-});
+const { db } = require("./firebase"); // Import Firestore instance
+//const {mongoDb} = require("./mongodb")
+// Import Google Generative AI SDK
 
 const {
   GoogleGenerativeAI,
@@ -33,22 +27,21 @@ const app = express();
 const port = 12000;
 x = 0;
 
-
-
-const uri =
-  "mongodb+srv://b23mt1007:mDyT1vJyK8kEWykM@cluster0.0ilb9tn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-
+const MongoDB_KEY = process.env.MONGODB_KEY;
+const API_KEY_REC = process.env.APIKEY_REC;
+const API_KEY_TAX = process.env.APIKEY_TAX;
+const API_KEY_UPDATE = process.env.APIKEY_UPDATE;
+const API_KEY_DAILY = process.env.APIKEY_DAILY;
+const API_KEY_CHATBOT = process.env.APIKEY_CHATBOT;
+// MongoDB connection URI
+const uri = MongoDB_KEY;
+// Connect to MongoDB
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Failed to connect to MongoDB Atlas:", err));
 
-
-const gemini = new GoogleGenerativeAI({
-  apiKey: "AIzaSyBt_v5abOVdWQXYukxRbDp6iT3KLLOUaz4", 
-});
-
-
+// Import Wallet model
 const Wallet = require('./models/Wallet');
 
 app.use(bodyParser.json());
@@ -575,7 +568,7 @@ app.get("/health-rec", async (req, res) => {
   console.log(req.query.userName);
   const user = req.query.userName;
   const genAI = new GoogleGenerativeAI(
-    "AIzaSyBtuZOsDwsnL25GcAsCGI7VFHpbauWkMxk"
+    API_KEY_REC
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
@@ -795,7 +788,7 @@ app.get("/tax-rec", async (req, res) => {
   console.log(req.query.userName);
   const user = req.query.userName;
   const genAI = new GoogleGenerativeAI(
-    "AIzaSyCT6B82xDit5PhHjeBXzoyZ0jiFwnblUCw"
+    API_KEY_TAX
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
@@ -1002,7 +995,7 @@ app.get("/health-rec-update", async (req, res) => {
   try {
     if (flag == true) {
       const genAI = new GoogleGenerativeAI(
-        "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+        API_KEY_UPDATE
       );
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const chat = model.startChat({
@@ -1137,7 +1130,7 @@ app.get("/daily-rec", async (req, res) => {
       }
     }
     const genAI = new GoogleGenerativeAI(
-      "AIzaSyDFB_IUcOxuX4m4zhWwqueQYQ7yIJc8EAo"
+      API_KEY_DAILY
     );
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const chat = model.startChat({
@@ -1328,7 +1321,7 @@ app.post("/chatbot-", async (req, res) => {
   console.log(context);
   try{
   const genAI = new GoogleGenerativeAI(
-    "AIzaSyD__M1hTQ3uZ13DvDUMHSV3GNoPfjCuuIQ"
+    API_KEY_CHATBOT
   );
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const chat = model.startChat({
