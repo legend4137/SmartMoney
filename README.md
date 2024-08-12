@@ -63,7 +63,7 @@ This section highlights the key frameworks and libraries that were utilized to b
     4. Create a new database and name it **`formSubmissions`**.
     5. In the Firebase console, go to **Project Settings** > **Service Accounts**.
     6. Click on **Generate new private key** to download a JSON file containing your Firebase credentials.
-    7. Place this JSON file in the root directory of your project and refer to it in your `.env` file.
+    7. Place this JSON file in your `.env` file.
 
     #### 2. Create a MongoDB Database
 
@@ -81,7 +81,7 @@ This section highlights the key frameworks and libraries that were utilized to b
     #### 4. Setting Up the `.env` File
 
     1. Create a `.env` file in the **server** folder of your project.
-    2. Add the following environment variables to the `.env` file:
+    2. Add the JSON file that you downloaded earlier and the following environment variables to the `.env` file:
 
         ```bash
         FIREBASE_PRIVATE_KEY=path/to/your/firebase/private/key.json
