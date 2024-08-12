@@ -105,10 +105,15 @@ This section highlights the key frameworks and libraries that were utilized to b
 - **Important:** Do not commit the `.env` file to version control to keep your API keys secure.
 
 4. **Installing Dependencies**:
+   - Navigate to SmartMoney/client/
     ```bash
-    npm install  #In both the server and client
+    npm install 
     ```
-5. **Building and Running the Project**:
+   - Navigate to SmartMoney/server/
+    ```bash
+    npm install 
+    ```
+6. **Building and Running the Project**:
     ```bash
     npm start      #In the client
     npm run start  #In the server
