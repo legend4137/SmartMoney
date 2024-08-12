@@ -37,92 +37,91 @@ This section highlights the key frameworks and libraries that were utilized to b
 
 
 
-## How to Get Started
+# How to Get Started
 
-1. **Prerequisites**: Install Node.js v14.17.0 or higher, npm v7.10.0 or higher, and Git.
+## 1. Prerequisites:
+   Install Node.js v14.17.0 or higher, npm v7.10.0 or higher, and Git.
 
-2. **Cloning the Repository**:
-    ```bash
-    git clone https://github.com/legend4137/SmartMoney.git
-    cd SmartMoney
-    ```
-3. **Environment Setup**:
+## 2. Cloning the Repository:
+```bash
+git clone https://github.com/legend4137/SmartMoney.git
+cd SmartMoney
+```
+## 3. Environment Setup:
    
-    ### Database Configuration
+### Database Configuration
 
-    Follow these steps to set up the necessary databases and environment variables for the project.
+Follow these steps to set up the necessary databases and environment variables for the project.
 
-    #### 1. Create a Firebase Database
+#### 1. Create a Firebase Database
 
-    1. Log in to the Firebase console.
-    2. Create a new project or use an existing one.
-    3. Navigate to the **Firestore Database** section.
-    4. Create a new database and name it **`formSubmissions`**.
-    5. In the Firebase console, go to **Project Settings** > **Service Accounts**.
-    6. Click on **Generate new private key** to download a JSON file containing your Firebase credentials.
-    7. Place this JSON file in your `.env` file.
+1. Log in to the Firebase console.
+2. Create a new project or use an existing one.
+3. Navigate to the **Firestore Database** section.
+4. Create a new database and name it **`formSubmissions`**.
+5. In the Firebase console, go to **Project Settings** > **Service Accounts**.
+6. Click on **Generate new private key** to download a JSON file containing your Firebase credentials.
+7. Place this JSON file in your `.env` file.
 
-    #### 2. Create a MongoDB Database
+#### 2. Create a MongoDB Database
 
-    1. Set up a MongoDB cluster using MongoDB Atlas or run a local MongoDB server.
-    2. Create a database named **`test`**.
-    3. Inside the `test` database, create a collection called **`wallets`**.
-    4. Obtain your MongoDB connection string (API key).
-    5. Add the MongoDB connection string to the `.env` file with the variable name **`MONGODB_KEY`**.
+1. Set up a MongoDB cluster using MongoDB Atlas or run a local MongoDB server.
+2. Create a database named **`test`**.
+3. Inside the `test` database, create a collection called **`wallets`**.
+4. Obtain your MongoDB connection string (API key).
+5. Add the MongoDB connection string to the `.env` file with the variable name **`MONGODB_KEY`**.
 
-    #### 3. Create a Gemini API Key
+#### 3. Create a Gemini API Key
 
-    1. Register on the Gemini platform and create a new API key.
-    2. Add the Gemini API key to the `.env` file with the variable name **`GEMINI_API_KEY`**.
+1. Register on the Gemini platform and create a new API key.
+2. Add the Gemini API key to the `.env` file with the variable name **`GEMINI_API_KEY`**.
 
-    #### 4. Setting Up the `.env` File
+#### 4. Setting Up the `.env` File
 
-    1. Create a `.env` file in the **server** folder of your project.
-    2. Add the JSON file that you downloaded earlier and the following environment variables to the `.env` file:
+1. Create a `.env` file in the **server** folder of your project.
+2. Add the JSON file that you downloaded earlier and the following environment variables to the `.env` file:
 
-        ```bash
-        SERVICE_ACCOUNT_KEY = {
-        "type": "service_account",
-        "project_id": "project_id",
-        "private_key_id": "private_key_id",
-        "private_key": "private_key"
-        "client_email": "client_email",
-        "client_id": "client_id",
-        "auth_uri": "auth_uri",
-        "token_uri": "toekn_uri",
-        "auth_provider_x509_cert_url": "auth_provider",
-        "client_x509_cert_url": "client_cert_url",
-        "universe_domain": "googleapis.com"
-        }
-        MONGODB_KEY = "mongo_uri"
-        GEMINI_API_KEY="your_gemini_api_key"
-        JWT_SECRET=CHAD_RAID_2024
-        ```
-
-###  Final Steps
+    ```bash
+    SERVICE_ACCOUNT_KEY = `{
+    "type": "service_account",
+    "project_id": "project_id",
+    "private_key_id": "private_key_id",
+    "private_key": "private_key"
+    "client_email": "client_email",
+    "client_id": "client_id",
+    "auth_uri": "auth_uri",
+    "token_uri": "toekn_uri",
+    "auth_provider_x509_cert_url": "auth_provider",
+    "client_x509_cert_url": "client_cert_url",
+    "universe_domain": "googleapis.com"
+    }`
+    MONGODB_KEY = "mongo_uri"
+    GEMINI_API_KEY="your_gemini_api_key"
+    JWT_SECRET=CHAD_RAID_2024
+    ```
 
 - Ensure the `.env` file is included in the server folder.
 - **Important:** Do not commit the `.env` file to version control to keep your API keys secure.
 
-1. **Installing Dependencies**:
+## 4. Installing Dependencies:
    
-    ```bash
-    # SmartMoney/client
-    npm install 
-    ```
-    ```bash
-    # SmartMoney/server
-    npm install 
-    ```
-2. **Running the Client**:
-    ```bash
-    # SmartMoney/client
-    npm start    
-    ```
-3. **Running the Server**:
-   ```bash
-    # SmartMoney/server
-    npm run start
-    ```
+```bash
+# SmartMoney/client
+npm install 
+```
+```bash
+# SmartMoney/server
+npm install 
+```
+## 5.  Running the Client:
+```bash
+# SmartMoney/client
+npm start    
+```
+## 6. Running the Server:
+```bash
+# SmartMoney/server
+npm run start
+```
 
 
