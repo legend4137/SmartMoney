@@ -12,16 +12,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9f9f9; /* Adjust as needed */
+  background-color: #f9f9f9; 
 }
 
 .formbold-main-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px; /* Adjust as needed */
+  padding: 24px; 
   width: 100%;
-  max-width: 600px; /* Ensure the form doesn't stretch too wide */
+  max-width: 600px; 
 }
 
 .formbold-form-wrapper {

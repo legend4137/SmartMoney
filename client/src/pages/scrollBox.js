@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './scrollBox.module.css'; // Import your CSS for styling
+import './scrollBox.module.css'; 
 import axios from 'axios';
 
 const ScrollBox = ({ refresh }) => {

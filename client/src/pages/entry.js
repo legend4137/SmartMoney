@@ -12,21 +12,17 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      // Authenticate the user using the login API
       const response = await axios.post('http://localhost:12000/api/auth/login', {
         userName: username,
         password: password,
       });
 
       if (response.data.token) {
-        // Save the username and token to session storage
         localStorage.setItem('username', username);
         localStorage.setItem('token', response.data.token);
 
-        // Navigate to the dashboard  
         navigate(`/dashboard?username=${username}`);
       } else {
-        // Handle case where authentication fails
         alert('Invalid credentials. Please try again.');
       }
     } catch (error) {

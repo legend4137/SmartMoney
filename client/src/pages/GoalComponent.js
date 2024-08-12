@@ -6,7 +6,7 @@ const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const userName = localStorage.getItem("username"); // Replace with dynamic user name if applicable
+  const userName = localStorage.getItem("username"); 
 
   useEffect(() => {
     fetchTodos();
@@ -14,7 +14,7 @@ const TodoList = () => {
 
   const fetchTodos = async () => {
     setLoading(true);
-    setError(null); // Reset error before fetching
+    setError(null); 
 
     try {
       const response = await axios.get(`http://localhost:12000/financialgoals/${userName}`);

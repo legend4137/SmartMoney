@@ -7,8 +7,8 @@ const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const userName = localStorage.getItem("username"); // Replace with dynamic user name if applicable
-  const navigate = useNavigate(); // Hook for navigation
+  const userName = localStorage.getItem("username"); 
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchTodos();
@@ -16,7 +16,7 @@ const TodoList = () => {
 
   const fetchTodos = async () => {
     setLoading(true);
-    setError(null); // Reset error before fetching
+    setError(null); 
 
     try {
       const response = await axios.get(`http://localhost:12000/financialgoals/${userName}`);
@@ -71,7 +71,7 @@ const TodoList = () => {
   };
 
   const handleRedirect = () => {
-    navigate('/financialgoals'); // Replace with your target route
+    navigate('/financialgoals'); 
   };
 
   return (

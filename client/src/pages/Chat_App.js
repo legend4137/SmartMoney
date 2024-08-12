@@ -16,8 +16,8 @@ const userName = localStorage.getItem('username');
 export default function Chat_App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
-  const [history, setHistory] = useState([]); // State to manage visibility
-  const [loading, setLoading] = useState(false); // State for loading
+  const [history, setHistory] = useState([]); 
+  const [loading, setLoading] = useState(false);
 
   const username = localStorage.getItem("username");
   let data;
@@ -25,7 +25,7 @@ export default function Chat_App() {
   const handleSubmit = () => {
     const newMessage = { role: "user", content: input };
     let res = {};
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     axios
       .post("http://localhost:12000/chatbot-", {
@@ -49,13 +49,13 @@ export default function Chat_App() {
       })
       .finally(function () {
         setInput("");
-        setLoading(false); // Stop loading
+        setLoading(false); 
       });
   };
 
   const clear = () => {
     setMessages([]);
-    setHistory([]); // Show the SampleQuestionsSection again
+    setHistory([]); 
   };
 
   return (
@@ -63,7 +63,6 @@ export default function Chat_App() {
       <div className={styles.Column}>
         <h3 className={styles.Title}>Chat Messages</h3>
 
-        {/* Conditionally render ChatHero if there are no messages */}
         {messages.length === 0 && (
           <div className={styles.ChatHeroContainer}>
             <ChatHero />
@@ -81,8 +80,7 @@ export default function Chat_App() {
             );
           })}
 
-          {/* Render Loading component only if loading is true */}
-          {loading && <Loading />} 
+\          {loading && <Loading />} 
         </div>
 
         <Input
