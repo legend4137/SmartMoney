@@ -81,22 +81,22 @@ This section highlights the key frameworks and libraries that were utilized to b
     2. Add the JSON file that you downloaded earlier and the following environment variables to the `.env` file:
 
         ```bash
-        SERVICE_ACCOUNT_KEY = `{
-    "type": "service_account",
-    "project_id": "project_id",
-    "private_key_id": "private_key_id",
-    "private_key": "private_key"
-    "client_email": "client_email",
-    "client_id": "client_id",
-    "auth_uri": "auth_uri",
-    "token_uri": "toekn_uri",
-    "auth_provider_x509_cert_url": "auth_provider",
-    "client_x509_cert_url": "client_cert_url",
-    "universe_domain": "googleapis.com"
-    }`
-    MONGODB_KEY = "mongo_uri"
-    GEMINI_API_KEY="your_gemini_api_key"
-    JWT_SECRET=CHAD_RAID_2024
+        SERVICE_ACCOUNT_KEY = {
+        "type": "service_account",
+        "project_id": "project_id",
+        "private_key_id": "private_key_id",
+        "private_key": "private_key"
+        "client_email": "client_email",
+        "client_id": "client_id",
+        "auth_uri": "auth_uri",
+        "token_uri": "toekn_uri",
+        "auth_provider_x509_cert_url": "auth_provider",
+        "client_x509_cert_url": "client_cert_url",
+        "universe_domain": "googleapis.com"
+        }
+        MONGODB_KEY = "mongo_uri"
+        GEMINI_API_KEY="your_gemini_api_key"
+        JWT_SECRET=CHAD_RAID_2024
         ```
 
 ### 5. Final Steps
