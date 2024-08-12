@@ -696,7 +696,6 @@ some of the values might be null just omit them and try to calculate the score o
         alert2: point2,
         alert3: point3
       });
-      console.log(alerts);
       const pass = {
         number: text,
         alert1: point1,
