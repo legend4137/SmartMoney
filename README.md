@@ -3,6 +3,7 @@
 ## Overview
 
 **SmartMoney** is an advanced and comprehensive financial management tool meticulously crafted to empower users in taking full control of their financial well-being. With Gemini API integration, SmartMoney stands out as a robust solution that seamlessly integrates sophisticated financial analytics with user-friendly and intuitive interfaces.
+
 <img src="/client/public/Home.jpg" alt="Smart Money">
 
 ## Features
